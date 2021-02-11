@@ -1,0 +1,36 @@
+.categorySidePanel {
+  position: absolute;
+  top: 0;
+  left: 100vw;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background-color: snow;
+  transition: transform 0.5s ;
+}
+.showSidePanel{
+  transform: translateX(-100vw);
+  
+}
+
+.headElement{
+  position: relative;
+flex-basis: 8%;
+.content {
+  position: absolute;
+  top: 50%;
+  left: 3%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  &::before{
+    content: '\003C';
+    font-size: 2rem;
+    top:50%;
+    transform: translateY(-50%);
+    
+   } 
+}
+}

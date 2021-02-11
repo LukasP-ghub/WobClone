@@ -1,0 +1,10 @@
+.itemList{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-shrink: 0;
+  height:100%;
+  width:100%;
+  list-style: none;
+  transition: transform 0.5s ;
+}

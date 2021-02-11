@@ -1,0 +1,36 @@
+.sidePanel {
+  position: absolute;
+  top: 0;
+  left: -100vw;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background-color: snow;
+  transition: transform 0.5s ;
+}
+.showSidePanel{
+  transform: translateX(100vw);
+  
+}
+.closeIcon{
+  position: absolute;
+  top: 5vh;
+  right:10vw;
+  font-size: 50px;
+  color: white;
+}
+
+.bookType {
+  position: relative;
+  flex-basis: 20%;
+  background-color: purple;
+  > div {
+    position: absolute;
+    bottom: 5%;
+    color: white;
+    margin-left: 3%;
+  }
+}

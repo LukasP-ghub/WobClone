@@ -1,0 +1,23 @@
+.navComponent {
+  position: relative;
+  background-color: springgreen;
+  flex-basis: 6%;
+  border-bottom: 1px solid gray;
+  &.arrow::after{
+    position: absolute;
+    content: '\003E';
+    font-size: 2rem;
+    top:50%;
+    right: 5%;
+    transform: translateY(-50%);
+    
+   }
+   .content {
+    position: absolute;
+    top: 50%;
+    left: 3%;
+    transform: translateY(-50%);
+    
+  }
+ 
+}

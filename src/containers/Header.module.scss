@@ -1,0 +1,14 @@
+.header {
+  height: 8vh;
+  width:100vw;
+  background-color: seagreen;
+  position:fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+ z-index: 100;
+  
+}
