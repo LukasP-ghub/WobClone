@@ -1,9 +1,13 @@
+@import '../assets/colors.module.scss';
+
 .mainPage{
+  position: relative;
   display:flex;
   flex-direction: column; 
   align-items: center;
-  height:200vh;
-  width:100vw;
-  background-color: #0000ff;
-  margin-top: 8vh;
+  min-height:100vh;
+  width:100%;
+  background-color:  $white-smoke ;
+  //background-image: $gradient-bottom-3;
+  padding-top: 8vh;
 }

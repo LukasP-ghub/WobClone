@@ -5,9 +5,9 @@ import styles from './Banner.module.scss';
 
 function Banner() {
   return (
-    <main className={styles.banner} >
+    <div className={styles.banner} >
       blavla
-    </main>
+    </div>
   );
 }
 

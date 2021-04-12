@@ -1,41 +1,73 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { db } from '../../firebase';
+import { sorting } from '../../helpers/sorting';
+
+export const fetchForSearch = createAsyncThunk(
+  'searchEbook/getDataStatus',
+  async (params, { getState, requestId }) => {
+
+    let output = [];
+    let ebooksRef = await db.collection("ebooks").get();
+
+    const response = await ebooksRef.forEach((doc) => {
+      output.push(doc.data());
+    });
+    output = sorting(output, 'alphabetical');
+    return output;
+  }
+)
+
+
+/* --- SLICE --- */
 
 export const searcherSlice = createSlice({
   name: 'searcher',
   initialState: {
-    authors: ['Kowalski', 'Nowak', 'Brzęczyszkiewicz', 'Nowakowski', 'Pelczar'],
-    filterResults: { filteredAuthors: [] },
-    filterKey: '',
+    ebooks: [],
+    searchResults: [],
+    searchKey: '',
+    showSearchBar: false,
+    error: null,
+    status: 'idle',
   },
   reducers: {
-    setFilterKey: (state, action) => {
-      state.filterKey = action.payload;
+    setSearchKey: (state, action) => {
+      state.searchKey = action.payload;
     },
-    setFilterResults: (state, action) => {
-      state.filterResults.filteredAuthors = action.payload;
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
+    },
+    setShowSearchBar: (state) => {
+      state.showSearchBar = !state.showSearchBar;
     }
   },
+  extraReducers: {
+    [fetchForSearch.pending]: (state, action) => {
+      state.ebooks = [];
+      state.status = 'loading';
+      state.currentRequestId = action.meta.requestId;
+    },
+    [fetchForSearch.fulfilled]: (state, action) => {
+      state.ebooks.push(...action.payload);
+      state.status = 'idle';
+      state.currentRequestId = undefined;
+    },
+    [fetchForSearch.rejected]: (state, action) => {
+      state.status = 'idle';
+      state.error = action.payload;
+      state.currentRequestId = undefined;
+    },
+  }
 });
 
-export const { setFilterKey, setFilterResults } = searcherSlice.actions;
+/* --- SELECTORS --- */
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-/*export const incrementAsync = amount => dispatch => {
-  setTimeout(() => {
+export const selectEbooks = state => state.searcher.ebooks;
+export const selectSearchKey = state => state.searcher.searchKey;
+export const selectSearchResults = state => state.searcher.searchResults;
+export const selectShowSearchBar = state => state.searcher.showSearchBar;
 
-  }, 1000);
-};
-*/
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
+/* --- EXPORTS --- */
 
-export const selectAuthors = state => state.searcher.authors;
-export const selectFilterKey = state => state.searcher.filterKey;
-export const selectFilterResults = state => state.searcher.filterResults;
-
-
+export const { setSearchKey, setSearchResults, setShowSearchBar } = searcherSlice.actions;
 export default searcherSlice.reducer;

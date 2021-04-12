@@ -1,36 +1,44 @@
 .sidePanel {
   position: absolute;
   top: 0;
-  left: -100vw;
-  width: 100vw;
+  left: -100%;
+  width: 100%;
   height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
+
+  font-size: 1.2rem;
   background-color: snow;
-  transition: transform 0.5s ;
+  transition: transform 0.2s ;
+  z-index: 149;
+
+  .bookType {
+    position: relative;
+    flex-basis: 20%;
+    background-color: purple;
+  
+     div {
+      position: absolute;
+      bottom: 5%;
+      color: white;
+      margin-left: 3%;
+    }
+  }
+
+  .closeIcon{
+    position: absolute;
+    top: 5vh;
+    right:10%;
+    font-size: 50px;
+    color: white;
+  }
 }
 .showSidePanel{
   transform: translateX(100vw);
-  
-}
-.closeIcon{
-  position: absolute;
-  top: 5vh;
-  right:10vw;
-  font-size: 50px;
-  color: white;
 }
 
-.bookType {
-  position: relative;
-  flex-basis: 20%;
-  background-color: purple;
-  > div {
-    position: absolute;
-    bottom: 5%;
-    color: white;
-    margin-left: 3%;
-  }
-}
+
+

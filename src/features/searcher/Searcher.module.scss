@@ -1,6 +1,12 @@
-.searcher {
+.searchWrapper {
   position: relative;
   min-height: 80%;
   min-width: 15%;
-  background-color: red;
+
+  .searchIcon{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
 }

@@ -1,0 +1,17 @@
+$headHeight: 50px;
+$trTrans: transform 0.5s;
+
+
+
+@mixin panelHeadM{
+  position:fixed;
+  top:0;
+  left:100%;
+  width:100%;
+  height:$headHeight;
+  line-height: $headHeight;
+  padding: 0 5px;
+  border-bottom: 1px solid black;
+  background-color: whitesmoke;
+  transition: $trTrans;
+}

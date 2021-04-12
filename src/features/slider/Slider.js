@@ -2,7 +2,6 @@ import { React, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectCovers } from './sliderSlice';
-import { fetchCovers } from "./sliderSlice";
 
 import SliderItem from './SliderItem';
 import SliderPage from './SliderPage';
