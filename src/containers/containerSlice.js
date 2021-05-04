@@ -23,7 +23,6 @@ export const fetchCategories = createAsyncThunk(
 export const containerSlice = createSlice({
   name: 'container',
   initialState: {
-    ebooks: [],
     categories: [],
     status: 'idle',
     currentRequestId: undefined,
@@ -34,7 +33,7 @@ export const containerSlice = createSlice({
   },
   extraReducers: {
     [fetchCategories.pending]: (state, action) => {
-      state.ebooks = [];
+      state.categories = [];
       state.status = 'loading';
       state.currentRequestId = action.meta.requestId;
     },

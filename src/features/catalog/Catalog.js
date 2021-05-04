@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Filters from "./Filters";
 import FilterOptions from './FilterOptions';
 import FilterCategoriesPanel from './FilterCategoriesPanel';
-import ProductMiniCard from '../../commonComponents/productMiniCard/ProductMiniCard';
+import ProductCard from '../../commonComponents/productCard/ProductCard';
 
 import { setFilters, sortEbooks } from './catalogSlice';
 import { selectFilteredEbooks, selectFilters } from './catalogSlice';
@@ -55,7 +55,7 @@ function Catalog() {
       <ul className={containerCards}>
         {pagesCount && ebooksForScreenArr.map(ebook => {
           return (
-            <ProductMiniCard key={ebook.id} title={ebook.title} authorFirstName={ebook.author.firstName} authorLastName={ebook.author.lastName} price={ebook.price} />
+            <ProductCard key={ebook.id} ebook={ebook} />
           )
         })}
       </ul>

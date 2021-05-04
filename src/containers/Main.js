@@ -7,7 +7,8 @@ import { selectEbooks, fetchData } from './containerSlice';
 import Banner from '../features/banner/Banner'
 import Slider from '../features/slider/Slider'
 import Catalog from '../features/catalog/Catalog'
-import ProductCard from '../features/productCard/ProductCard'
+import ProductPage from '../features/productPage/ProductPage'
+//import Cart from '../features/cart/CartPage'
 
 
 import styles from './Main.module.scss';
@@ -23,13 +24,18 @@ function Main() {
     <main className={styles.mainPage} >
       <Switch>
         <Route path="/catalog/:tag" exact><Catalog /></Route>
-        <Route path="/ebook/:tags" exact render={(props) => <ProductCard {...props} />} />
+        <Route path="/ebook/:tags" exact render={(props) => <ProductPage {...props} />} />
       </Switch>
     </main>
   );
 }
 
 export default Main;
+
+/*
+
+*/
+
 
 /*
  <Banner />

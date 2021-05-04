@@ -5,11 +5,11 @@ import { selectEbooks } from './containerSlice';
 import { fetchCategories } from './containerSlice';
 
 import styles from './Header.module.scss';
-import Chart from '../features/chart/Chart';
+import Cart from '../features/cart/Cart';
 import Navigation from '../features/navigation/Navigation.js';
 import Searcher from '../features/searcher/Searcher';
 import User from '../features/user/User';
-import Logo from '../features/logo/Logo';
+import Logo from '../commonComponents/logo/Logo';
 
 
 function Header() {
@@ -25,7 +25,7 @@ function Header() {
       <Logo />
       <Searcher />
       <User />
-      <Chart />
+      <Cart />
     </div>
   );
 }

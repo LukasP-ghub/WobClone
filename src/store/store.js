@@ -7,8 +7,10 @@ import navigationReducer from '../features/navigation/navigationSlice';
 import sliderReducer from '../features/slider/sliderSlice';
 import searcherReducer from '../features/searcher/searcherSlice';
 import catalogReducer from '../features/catalog/catalogSlice';
-import productMiniCardReducer from '../commonComponents/productMiniCard/productMiniCardSlice';
-import productCardReducer from '../features/productCard/productCardSlice';
+import productPageReducer from '../features/productPage/productPageSlice';
+import productCardReducer from '../commonComponents/productCard/productCardSlice';
+
+
 
 const reducer = combineReducers({
   container: containerReducer,
@@ -16,7 +18,7 @@ const reducer = combineReducers({
   slider: sliderReducer,
   searcher: searcherReducer,
   catalog: catalogReducer,
-  productMiniCard: productMiniCardReducer,
+  productPage: productPageReducer,
   productCard: productCardReducer,
 })
 
