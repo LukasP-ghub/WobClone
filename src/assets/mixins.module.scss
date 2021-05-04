@@ -1,0 +1,18 @@
+@mixin centerVH{
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+@mixin centerH{
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+}
+
+@mixin centerV{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

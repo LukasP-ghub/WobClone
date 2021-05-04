@@ -1,0 +1,48 @@
+@import '../../assets/colors.module.scss';
+
+.wrapper{
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:  $white-smoke;
+
+  .header{
+    width: 100%;
+    min-height: 50px;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-template-rows: minmax(30px, auto);
+    background-color: $white-smoke;
+    align-items: center;
+    border-bottom: 1px solid black;
+
+    .iChevronLeft{
+      grid-column: 1/2;
+      grid-row: 1/-1;
+      justify-self: center;
+    }
+    
+    .headerContentWrapper{
+      grid-column: 2/3;
+      grid-row: 1/-1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .headerContent{
+        margin: 4px;
+        font-size: 1.3rem;
+      }
+      .headerContent:first-child{
+        font-size: 2rem;
+        font-weight: 600;
+      }
+      .headerContent:last-child{
+        margin-bottom: 10px;
+      }
+    }
+    
+  }
+}

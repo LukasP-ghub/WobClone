@@ -1,0 +1,32 @@
+
+.wrapper{
+  position: absolute;
+  width: 100%;
+  font-size: 1.5rem;
+
+  .section{
+    position: relative;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    background-color: burlywood;
+
+    .sectionContent{
+      max-height: 300px;   
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+    .indent{
+      text-indent: 20px;
+    }
+
+    .sidePanelArrow{
+      position: absolute;
+      right: 10px;
+      top:10px;
+    }
+  }
+  
+}
