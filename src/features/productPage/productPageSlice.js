@@ -30,13 +30,16 @@ export const fetchProduct = createAsyncThunk(
 export const productPageSlice = createSlice({
   name: 'productPage',
   initialState: {
+    showSidePanel: false,
     product: null,
     error: null,
     status: 'idle',
     currentRequestId: undefined,
   },
   reducers: {
-
+    setShowSidePanel: (state) => {
+      state.showSidePanel = !state.showSidePanel;
+    }
   },
   extraReducers: {
     [fetchProduct.pending]: (state, action) => {
@@ -57,11 +60,10 @@ export const productPageSlice = createSlice({
   }
 });
 
-//export const { } = productCardSlice.actions;
-
-
-// selectors
+/*  --- SELECTORS ---  */
 export const selectProduct = state => state.productPage.product;
+export const selectShowSidePanel = state => state.productPage.showSidePanel;
 
-
+/* --- EXPORTS --- */
+export const { setShowSidePanel } = productPageSlice.actions;
 export default productPageSlice.reducer;

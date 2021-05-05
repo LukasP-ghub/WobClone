@@ -12,7 +12,7 @@ function Filters() {
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const searchQuery = useLocation().search;
-  console.log(Object.entries(filters));
+  // console.log(Object.entries(filters));
   return (
     <aside className={wrapper} >
 

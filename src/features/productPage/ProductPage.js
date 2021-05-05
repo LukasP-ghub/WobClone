@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 
-import { selectProduct } from './productPageSlice';
-import { fetchProduct } from './productPageSlice';
+import { selectProduct, selectShowSidePanel } from './productPageSlice';
+import { fetchProduct, setShowSidePanel } from './productPageSlice';
 
 import SidePanel from './SidePanel';
 
@@ -14,12 +14,18 @@ const { indent, section, sectionContent, sidePanelArrow, wrapper } = styles;
 function ProductPage(props) {
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
+  const isVisible = useSelector(selectShowSidePanel);
+  const { tags } = useParams();
   const { title, authorFirstName, authorLastName } = props.location.state;
-  let { tags } = useParams();
 
   useEffect(() => {
     dispatch(fetchProduct({ title, authorFirstName, authorLastName }));
   }, [])
+
+  const showSidePanel = () => {
+
+    dispatch(setShowSidePanel());
+  }
 
   return (
     <React.Fragment>
@@ -44,7 +50,7 @@ function ProductPage(props) {
 
         <section className={section}>
           <h2>Opis</h2>
-          <button className={sidePanelArrow}>
+          <button className={sidePanelArrow} onClick={showSidePanel}>
             <svg id="i-chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
               <path d="M12 30 L24 16 12 2" />
             </svg>
