@@ -7,10 +7,13 @@
     position: relative;
     padding: 5px 15px;
     margin-bottom: 10px;
-    background-color: burlywood;
+    background-color: whitesmoke;
 
     .sectionContent{
       max-height: 300px;   
+    }
+
+    .ellipsis{
       text-overflow: ellipsis;
       overflow: hidden;
       display: -webkit-box;
@@ -28,4 +31,16 @@
     }
   }
   
+}
+
+.starIcon{
+  display: inline-block;
+  width: 32px;
+  height:32px;
+  fill:white;
+  stroke: black;
+}
+
+.starFilled{
+  fill:gold;
 }

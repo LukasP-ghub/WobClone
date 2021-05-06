@@ -31,12 +31,14 @@ function SidePanel() {
         <div className={headerContentWrapper}>
           <div className={headerContent} >
             aaaaaaaaaaaaa
-    </div>
+          </div>
           <div className={headerContent}>
             bbbbbbbbbbbbb
-    </div>
+          </div>
         </div>
       </header>
+
+      {/* CONTENT */}
       <div className={`${wrapper} ${checkShowPanel}`} >
 
         <div className={content}>
