@@ -10,12 +10,10 @@ export const fetchProduct = createAsyncThunk(
     /*if (status !== 'pending' || requestId !== currentRequestId) {
       return;
     }*/
-    console.log(params);
+
     let output = null;
     let ebooksRef = await db.collection("ebooks")
-      .where("title", "==", params.title)
-      .where("author.lastName", "==", params.authorLastName)
-      .where("author.firstName", "==", params.authorFirstName).get();
+      .where("id", "==", params.id).get();
 
     const response = await ebooksRef.forEach((doc) => {
       output = doc.data();
@@ -32,6 +30,11 @@ export const productPageSlice = createSlice({
   initialState: {
     showSidePanel: false,
     product: null,
+    sidePanelContent: {
+      title: '',
+      subtitle: '',
+      body: '',
+    },
     error: null,
     status: 'idle',
     currentRequestId: undefined,
@@ -39,6 +42,9 @@ export const productPageSlice = createSlice({
   reducers: {
     setShowSidePanel: (state) => {
       state.showSidePanel = !state.showSidePanel;
+    },
+    setSidePanelContent: (state, action) => {
+      state.sidePanelContent = action.payload;
     }
   },
   extraReducers: {
@@ -63,7 +69,9 @@ export const productPageSlice = createSlice({
 /*  --- SELECTORS ---  */
 export const selectProduct = state => state.productPage.product;
 export const selectShowSidePanel = state => state.productPage.showSidePanel;
+export const selectSidePanelContent = state => state.productPage.sidePanelContent;
 
-/* --- EXPORTS --- */
-export const { setShowSidePanel } = productPageSlice.actions;
+/* --- ACTIONS --- */
+export const { setShowSidePanel, setSidePanelContent } = productPageSlice.actions;
+
 export default productPageSlice.reducer;

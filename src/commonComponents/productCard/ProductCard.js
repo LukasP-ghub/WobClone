@@ -11,16 +11,14 @@ const { toCartBtn } = styles;
 
 function ProductCard({ ebook }) {
   const cartCtx = useContext(CartContext);
-
+  console.log('ProductCard ', ebook);
   return (
     <li className={card}>
       {/*--- CARD IS LINK TO PRODUCT PAGE ---*/}
       <Link to={{
         pathname: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,
         state: {
-          title: ebook.title,
-          authorFirstName: ebook.author.firstName,
-          authorLastName: ebook.author.lastName
+          id: ebook.id,
         }
       }}>
 

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectShowSidePanel } from './productPageSlice';
+import { selectShowSidePanel, selectSidePanelContent } from './productPageSlice';
 import { setShowSidePanel } from './productPageSlice';
+
+import ProductRating from './ProductRating';
 
 import styles from './SidePanel.module.scss';
 
@@ -10,10 +12,9 @@ const { content, header, headerContent, headerContentWrapper, showPanel, wrapper
 
 
 function SidePanel() {
-
-
   const dispatch = useDispatch();
   const isVisible = useSelector(selectShowSidePanel);
+  const { title, subtitle, body } = useSelector(selectSidePanelContent);
 
   const checkShowPanel = isVisible ? showPanel : null;
 
@@ -21,6 +22,8 @@ function SidePanel() {
   const showSidePanel = () => {
     dispatch(setShowSidePanel());
   }
+
+  console.log('body ', body);
 
   return (
     <>
@@ -30,19 +33,19 @@ function SidePanel() {
         </svg>
         <div className={headerContentWrapper}>
           <div className={headerContent} >
-            aaaaaaaaaaaaa
+            {title}
           </div>
-          <div className={headerContent}>
-            bbbbbbbbbbbbb
-          </div>
+          {subtitle && <div className={headerContent}>
+            {subtitle}
+          </div>}
         </div>
       </header>
 
-      {/* CONTENT */}
+      {/* BODY */}
       <div className={`${wrapper} ${checkShowPanel}`} >
 
         <div className={content}>
-
+          {body === 'rating' ? <ProductRating isSidePanel={true} /> : body}
         </div>
       </div>
     </>

@@ -10,7 +10,8 @@
     background-color: whitesmoke;
 
     .sectionContent{
-      max-height: 300px;   
+      max-height: 300px;  
+      margin: 5px 0; 
     }
 
     .ellipsis{
@@ -33,14 +34,4 @@
   
 }
 
-.starIcon{
-  display: inline-block;
-  width: 32px;
-  height:32px;
-  fill:white;
-  stroke: black;
-}
 
-.starFilled{
-  fill:gold;
-}
