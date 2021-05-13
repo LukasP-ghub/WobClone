@@ -11,7 +11,7 @@ const { toCartBtn } = styles;
 
 function ProductCard({ ebook }) {
   const cartCtx = useContext(CartContext);
-  console.log('ProductCard ', ebook);
+
   return (
     <li className={card}>
       {/*--- CARD IS LINK TO PRODUCT PAGE ---*/}

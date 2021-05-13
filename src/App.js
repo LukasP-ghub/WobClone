@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './containers/Header.js';
 import Main from './containers/Main.js';
 import CartPage from './features/cart/CartPage';
+import RegistrationForm from './features/registrationForm/RegistrationForm'
 
 
 import styles from './App.scss';
@@ -14,16 +15,14 @@ function App() {
     <BrowserRouter>
       <div className={styles.app}>
         <Switch>
+          <Route path="/" exact><RegistrationForm /></Route>
           <Route path="/cart" exact><CartPage /></Route>
 
           <Route path="/" >
             <Header />
             <Main />
           </Route>
-
-
         </Switch>
-
       </div>
     </BrowserRouter>
 

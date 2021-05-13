@@ -1,0 +1,27 @@
+$width: 250px;
+
+.FieldWrapper{
+  width: $width;
+  margin: 5px 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  .FieldStyle{
+    width: 100%;
+    height:40px;
+  }
+}
+
+.checkboxWrapper{
+  width:$width;
+  margin: 10px;
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  .label{
+    margin-left: 10px;
+  }
+}
+
+
+
