@@ -24,14 +24,12 @@ $padding-topBar-sync: 50px;
     left:0;
     width: 100%;
     height: $padding-topBar-sync;
-    padding: 0 2rem;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "header";
 
-    background-color: cadetblue;
-    
     .logo{
       font-size: 3rem;  
     }
