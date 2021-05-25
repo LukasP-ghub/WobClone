@@ -2,13 +2,18 @@ import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import HeaderUserLinks from '../../commonComponents/headerUserLinks/HeaderUserLinks';
+import TopBarFixed from '../../commonComponents/topBarFixed/TopBarFixed';
+import BigNextLinkBtn from '../../commonComponents/buttons/BigNextLinkBtn';
+import BigReturnBtn from '../../commonComponents/buttons/BigReturnBtn';
 import CartContext from '../../store/cartContext';
 
-import styles from './CartPage.module.scss'
 
-const { cartTab, cartTabs, price, product, productsList, productImg, productTitle, productPrice, totalDiscount, summary, topBar, wrapper } = styles;
-const { returnBtn, removeProductBtn, startPaymentBtn } = styles;
-const { centerVH, centerH } = styles;
+import styles from './CartPage.module.scss'
+import covers from '../../assets/images';
+
+const { cartTab, cartTabs, price, product, productsList, productImg, productTitle, productPrice, summary, totalDiscount, wrapper } = styles;
+const { removeProductBtn } = styles;
+const { centerVH } = styles;
 
 function CartPage() {
   const cartCtx = useContext(CartContext);
@@ -16,63 +21,60 @@ function CartPage() {
 
   const handleGoBack = () => history.goBack();
 
-  const initialValue = 0;
-  const discount = 0;
-  const nominalPrice = cartCtx.productsInCart.reduce((total, currItem) => total + currItem.price * 1, initialValue) || 0;
-  const actualPrice = nominalPrice - discount;
+
+  const discount: number = cartCtx.pricing.totalDiscount || 0;
+  const nominalPrice: number = cartCtx.pricing.nominalPrice || 0;
+  const actualPrice: number = cartCtx.pricing.actualPrice;
   const prodInCartQuantity = cartCtx.productsInCart.length;
 
+  const cartItems = cartCtx.productsInCart.map(item => {
+    const cover = covers.get(item.cover) || { small: '', medium: '' };
+    return <li key={item.id} className={product}>
+      <img src={`${cover.small}`} className={productImg} alt="" />
+      <div className={productTitle}>{item.title}</div>
+      <div className={productPrice}>{`${item.price} zł`}</div>
+      <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(item.id)}><span className={centerVH}>X</span></button>
+    </li>
+  })
 
   return (
     <div className={wrapper}>
       {/* --- HEADER --- */}
-      <div className={topBar}>
-        {/* <Link to={'/'} className={`${topBarItem} ${logo}`}>WobClone</Link>
-        <div>
-          <span className={topBarItem}>Zaloguj się</span>
-          <span className={topBarItem}>Załóż konto</span>
-        </div> */}
+      <TopBarFixed>
         <HeaderUserLinks />
-      </div>
+      </TopBarFixed>
 
       {/* ---  --- */}
       <section className={cartTabs}>
-        <div className={cartTab}>Koszyk {`(${prodInCartQuantity})`}</div>
+        <div className={cartTab}>Cart {`(${prodInCartQuantity})`}</div>
       </section>
 
       {/* --- PRODUCTS IN CART --- */}
       <section>
         <ul className={productsList}>
-          {cartCtx.productsInCart.map(item => <li key={item.id} className={product}>
-            <div className={productImg}></div>
-            <div className={productTitle}>{item.title}</div>
-            <div className={productPrice}>{`${item.price} zł`}</div>
-            <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(item.id)}><span className={centerVH}>X</span></button>
-          </li>)}
-
+          {cartItems}
         </ul>
       </section>
 
       {/* --- CART SUMMARY --- */}
       <section className={summary}>
         {discount > 0 ? <div className={price}>
-          <span>Wartość produktów:</span>
+          <span>Products value:</span>
           <span>{nominalPrice} zł</span>
         </div> : null}
 
         <div className={price}>
-          <strong >Razem:</strong>
+          <strong >Total:</strong>
           <strong >{actualPrice} zł</strong>
         </div>
 
         {discount > 0 ? <div className={totalDiscount}>
-          <strong className={centerVH}>Oszczędzasz: {discount} zł</strong>
+          <strong className={centerVH}>You save: {discount} zł</strong>
         </div> : null}
       </section>
 
-      <button className={`${startPaymentBtn} ${centerH}`}><span className={centerVH}>Przejdź do kasy</span></button>
-      {/* --- RETURN TO SHOP BTN --- */}
-      <button className={`${returnBtn} ${centerH}`} onClick={handleGoBack}><span className={centerVH}>Wróć do sklepu</span></button>
+      <BigNextLinkBtn linkPath={`${history.location.pathname}/payment`}>Go to payment</BigNextLinkBtn>
+      <BigReturnBtn clickHandler={handleGoBack}>Back to shop</BigReturnBtn>
     </div>
   );
 }

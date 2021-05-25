@@ -4,10 +4,10 @@ export const sorting = (state: ProductModel[], action: string) => {
 
   switch (action) {
     case 'lower-price':
-      state = state.sort((a, b) => a.price - b.price);
+      state = state.sort((a, b) => +a.price - +b.price);
       break;
     case 'higher-price':
-      state = state.sort((a, b) => b.price - a.price);
+      state = state.sort((a, b) => +b.price - +a.price);
       break;
     default:
       state = state.sort((a, b) => {

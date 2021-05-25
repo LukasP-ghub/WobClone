@@ -1,0 +1,32 @@
+.addressData{
+  p{
+    line-height: 1.5em;
+  }
+}
+
+.paymentOptions{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap:30px 10px;
+  align-items: center;
+  justify-items: center;
+
+  .paymentOption{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 170px;
+    border: 1px solid black;
+    border-radius: 8px;
+  }
+}
+
+.toPay{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid red;
+  padding-bottom: 8px;
+}

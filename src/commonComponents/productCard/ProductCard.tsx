@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import CartContext from '../../store/cartContext';
 import ProductModel from '../../helpers/types/ProductModel';
 import styles from './ProductCard.module.scss';
+import covers from '../../assets/images';
 
 const { card, picture, price, title } = styles;
 const { toCartBtn } = styles;
 
 const ProductCard: React.FC<{ ebook: ProductModel }> = ({ ebook }) => {
   const cartCtx = useContext(CartContext);
+  const cover = covers.get(ebook.cover) || { small: '', medium: '' };
 
   return (
     <li className={card}>
@@ -21,7 +23,11 @@ const ProductCard: React.FC<{ ebook: ProductModel }> = ({ ebook }) => {
         }
       }}>
 
-        <div className={picture}></div>
+        <picture >
+          <source srcSet={`${cover.medium}`} media="(min-width: 1000px)" />
+          <img src={`${cover.small}`} className={picture} alt="" />
+        </picture>
+
         <h3 className={title}>{ebook.title}</h3>
         <cite>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
         <div className={price}>{`${ebook.price} zł`}</div>

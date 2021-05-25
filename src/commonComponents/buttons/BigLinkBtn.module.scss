@@ -1,0 +1,35 @@
+@import '../../assets/mixins.module.scss'; 
+@import '../../assets/colors.module.scss'; 
+
+.btn{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 50px;
+  margin: 15px auto;
+  
+}
+
+.nextBtn{
+  background-color: hsla(332, 78%, 51%,1);
+}
+
+.backBtn{
+  background-color: $silver;
+  border: 1px dotted black;
+  border-radius: 10px;
+}
+
+.centerH{
+  @include centerH;
+}
+
+.centerVH{
+  @include centerVH;
+}
+
+.centerV{
+  @include centerV;
+}

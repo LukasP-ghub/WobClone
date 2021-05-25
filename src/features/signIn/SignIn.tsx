@@ -1,7 +1,7 @@
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import TextField from './fields/TextField';
+import TextField from '../../commonComponents/formFields/TextField';
 
 import styles from './SignIn.module.scss'
 

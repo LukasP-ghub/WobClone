@@ -1,43 +1,12 @@
 @import '../../assets/mixins.module.scss'; 
 @import '../../assets/colors.module.scss'; 
 
-$padding-topBar-sync: 50px;
-
-@mixin btnBig{
-  position: relative;
-  width: 80%;
-  height: 50px;
-  margin: 10px 0;
-  background-color: red;
-}
-
 .wrapper{
   width: 100%;
   min-height: 100vh;
   font-size: 1.5rem;
   padding: $padding-topBar-sync 20px 20px 20px;
   background-color: $white-smoke;
-
-  .topBar{
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    height: $padding-topBar-sync;
-
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "header";
-
-    .logo{
-      font-size: 3rem;  
-    }
-
-    .topBarItem{
-      margin: 0 0.5rem;
-    }
-  }
 
   .cartTabs{
     height: 40px;
@@ -64,7 +33,9 @@ $padding-topBar-sync: 50px;
         position: relative;
         grid-column: 1/3;
         grid-row: 1/11;
-        background-color: black;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
       }
       .productTitle{
         position: relative;
@@ -109,14 +80,6 @@ $padding-topBar-sync: 50px;
       width:100%;
       height: 3rem;
     }
-  }
-
-  .startPaymentBtn{
-    @include btnBig;
-  }
-  .returnBtn{
-    @include btnBig;
-    border-radius: 30px;
   }
 }
 

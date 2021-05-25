@@ -1,0 +1,16 @@
+@import '../../assets/mixins.module.scss'; 
+@import '../../assets/colors.module.scss'; 
+
+.topBar{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: $padding-topBar-sync;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "header";
+
+}

@@ -1,0 +1,15 @@
+@import '../../assets/mixins.module.scss'; 
+@import '../../assets/colors.module.scss'; 
+
+$padding-topBar-sync: 50px;
+
+.wrapper{
+  width: 100%;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  padding: $padding-topBar-sync 20px 20px 20px;
+  background-color: $white-smoke;
+}
+
+
+

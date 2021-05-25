@@ -7,7 +7,6 @@ import ProductModel from '../../helpers/types/ProductModel';
 interface setFiltersType {
   filter: string,
   value: string
-  [key: string]: string
 }
 
 interface catalogState {

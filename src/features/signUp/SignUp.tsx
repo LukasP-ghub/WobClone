@@ -1,9 +1,9 @@
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import TextField from './fields/TextField';
-import Checkbox from './fields/Checkbox';
-import SelectField from './fields/SelectField';
+import TextField from '../../commonComponents/formFields/TextField';
+import Checkbox from '../../commonComponents/formFields/Checkbox';
+import SelectField from '../../commonComponents/formFields/SelectField';
 
 import styles from './SignUp.module.scss'
 
