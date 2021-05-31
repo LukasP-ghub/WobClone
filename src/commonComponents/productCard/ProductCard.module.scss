@@ -1,11 +1,48 @@
 @import '../../assets/colors.module.scss';
 @import '../../assets/mixins.module.scss';
 
-.card{
+$cardFullHeight: 320px;
+$pictureFullHeight: 220px;
+$toCartBtnDimensions: 40px;
+
+
+
+.productDetails{
   position: relative;
-  height: 320px;
+  height: calc(#{$cardFullHeight} - #{$pictureFullHeight});
+    
+  .title{
+    width: 100%;
+    margin-bottom: 3px;
+  }
+
+  .price{
+    position: absolute;
+    left:1px;
+    bottom:10px;
+    text-shadow: 0px 0px 1px;
+    font-size: 1.5rem;
+  }
+}
+    
+.toCartBtn{
+  position: absolute;
+  top: calc(#{$pictureFullHeight} - #{$toCartBtnDimensions + 10px});
+  right:10px;
+  width: $toCartBtnDimensions;
+  height:  $toCartBtnDimensions;
+  border-radius: 50%;
+  background-color: black;
+  opacity: 0.5;
+  svg{
+    @include centerVH;
+  }
+}
+
+.cardFull{
+  position: relative;
+  height: $cardFullHeight;
   width:160px;
-  padding-bottom: 5px;
   background-color: $white-smoke;
   box-shadow: 0px 0px 5px 0px $silver;
   font-size: 1.35rem;
@@ -14,41 +51,61 @@
     position: relative;
     display: block;
     height: 100%;
+  }
   
-    .picture{
-      width:100%;
-      height:220px;
-      object-fit: fill;
-    }
-  
+  .picture{
+    width:100%;
+    height:$pictureFullHeight;
+    object-fit: fill;
+  }
+}
+
+.cardCover{
+  position: relative;
+  flex-shrink: 0;
+  width: 90px;
+  height: 90%;
+
+  a{
+    position: relative;
+    display: block;
+    height: 100%;
+  }
+
+  .picture{
+    width:100%;
+    height:100%;
+    object-fit: fill;
+  }
+
+  .productDetails{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top:0px;
+    left:0px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    background-color: $white-smoke;
+    font-size: 1.3rem;
+
     .title{
       width: 100%;
       margin-bottom: 3px;
+      @include ellipsis(3);
     }
-
+  
     .price{
       position: absolute;
-      left:0px;
-      bottom:0px;
+      left:1px;
+      bottom:10px;
       text-shadow: 0px 0px 1px;
       font-size: 1.5rem;
     }
   }
 
-  .toCartBtn{
-    position: absolute;
-    top:170px;
-    right:10px;
-
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: black;
-    opacity: 0.5;
-
-    svg{
-      @include centerVH;
-    }
+  .productDetails:hover{
+    opacity:0.8;
   }
-  
+
 }

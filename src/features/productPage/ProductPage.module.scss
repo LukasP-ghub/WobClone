@@ -1,3 +1,4 @@
+@import '../../assets/mixins.module.scss';
 
 .wrapper{
   width: 100%;
@@ -15,11 +16,7 @@
     }
 
     .ellipsis{
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 5; /* number of lines to show */
-      -webkit-box-orient: vertical;
+      @include ellipsis(5);
     }
     .indent{
       text-indent: 20px;

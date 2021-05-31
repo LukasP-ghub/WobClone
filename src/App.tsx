@@ -4,7 +4,8 @@ import Header from './containers/Header';
 import Main from './containers/Main';
 import SignPage from './containers/SignPage';
 import CartPage from './features/cart/CartPage';
-import PaymentPage from './features/payment/PaymentPage';
+import PaymentPage from './features/cart/paymentPage/PaymentPage';
+import PrivateRoute from './commonComponents/privateRoute/PrivateRoute';
 
 import styles from './App.module.scss';
 
@@ -16,8 +17,7 @@ function App() {
         <Switch>
           <Route path="/sign-page"><SignPage /></Route>
           <Route path="/cart" exact><CartPage /></Route>
-          <Route path="/cart/payment" exact><PaymentPage /></Route>
-
+          <PrivateRoute path="/cart/payment" component={PaymentPage} />
           <Route path="/" >
             <Header />
             <Main />
@@ -29,7 +29,3 @@ function App() {
 }
 
 export default App;
-/*
-
-
-*/

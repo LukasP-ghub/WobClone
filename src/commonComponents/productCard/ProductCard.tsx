@@ -6,15 +6,17 @@ import ProductModel from '../../helpers/types/ProductModel';
 import styles from './ProductCard.module.scss';
 import covers from '../../assets/images';
 
-const { card, picture, price, title } = styles;
+const { cardCover, cardFull, picture, price, productDetails, title } = styles;
 const { toCartBtn } = styles;
 
-const ProductCard: React.FC<{ ebook: ProductModel }> = ({ ebook }) => {
+type cardStyleVersionType = 'full' | 'cover';
+
+const ProductCard: React.FC<{ ebook: ProductModel, cardStyleVersion: cardStyleVersionType }> = ({ ebook, cardStyleVersion }) => {
   const cartCtx = useContext(CartContext);
   const cover = covers.get(ebook.cover) || { small: '', medium: '' };
 
   return (
-    <li className={card}>
+    <li className={`${cardStyleVersion === 'cover' ? cardCover : cardFull}`}>
       {/*--- CARD IS LINK TO PRODUCT PAGE ---*/}
       <Link to={{
         pathname: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,
@@ -28,9 +30,11 @@ const ProductCard: React.FC<{ ebook: ProductModel }> = ({ ebook }) => {
           <img src={`${cover.small}`} className={picture} alt="" />
         </picture>
 
-        <h3 className={title}>{ebook.title}</h3>
-        <cite>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
-        <div className={price}>{`${ebook.price} zł`}</div>
+        <div className={productDetails}>
+          <h3 className={title}>{ebook.title}</h3>
+          <cite>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
+          <div className={price}>{`${ebook.price} zł`}</div>
+        </div>
       </Link>
 
       {/* --- BUTTON ADD TO CART ---  */}

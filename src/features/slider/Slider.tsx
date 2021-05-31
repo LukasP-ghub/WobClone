@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { useAppSelector } from '../../helpers/types/hooks';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
-import { selectCovers } from './sliderSlice';
+import { selectProducts, fetchRandomEbooks } from './sliderSlice';
+import ProductCard from '../../commonComponents/productCard/ProductCard';
 
-import SliderItem from './SliderItem';
 import SliderPage from './SliderPage';
 
 import styles from './Slider.module.scss';
@@ -16,16 +16,11 @@ function Slider() {
   const [slidePage, setSlidePage] = useState(0);
   const [pagesArray, setPagesArray] = useState([]);
 
-  const covers = useAppSelector(selectCovers);
-  //const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(selectProducts);
   const pagesContRef = useRef<HTMLDivElement>(null);
 
   let pagesArr: any = [];
-
-  useEffect(() => {
-    createPages();
-  }, [])
-
 
   // function for changing slider pages
   const turnPage = (count: number) => {
@@ -41,24 +36,31 @@ function Slider() {
   }
 
   //function calculate and fill number of pages and it elements
-  const createPages = () => {
-    let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / 70 - 1);
-    let pagesCount = Math.ceil(covers.length / maxItemsCountPerPage);
+  const createPages = useCallback(() => {
+    let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / 90 - 1);
+    let pagesCount = Math.ceil(products.length / maxItemsCountPerPage);
     let index = 0;
 
     for (let i = 0; i < pagesCount; i++) {
       const itemsForPageArr = [];
       for (let i = 0; i < maxItemsCountPerPage; i++) {
-        if (index === covers.length) break;
-        itemsForPageArr.push(<SliderItem key={Math.random()} content={covers[index]} />);
+        if (index === products.length) break;
+        itemsForPageArr.push(<ProductCard key={products[index].id} ebook={products[index]} cardStyleVersion='cover' />);
         index++;
       }
       pagesArr.push(itemsForPageArr);
     }
     setPagesArray(pagesArr);
-  }
+  }, [products]);
 
+  useEffect(() => {
+    dispatch(fetchRandomEbooks({ productsCount: 12, category: 'Wszystkie Ebooki' }));
 
+  }, [])
+
+  useEffect(() => {
+    createPages();
+  }, [createPages])
 
 
   return (

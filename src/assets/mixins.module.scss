@@ -19,3 +19,11 @@ $padding-topBar-sync: 50px;
   transform: translateY(-50%);
 }
 
+@mixin ellipsis($value){
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: $value; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+

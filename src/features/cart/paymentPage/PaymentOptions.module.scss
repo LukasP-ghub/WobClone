@@ -21,6 +21,11 @@
     border: 1px solid black;
     border-radius: 8px;
   }
+
+  .selectedPayment{
+    border-color: blue;
+    box-shadow: 0 0 5px blue;
+  }
 }
 
 .toPay{
@@ -29,4 +34,9 @@
   align-items: center;
   border-bottom: 1px solid red;
   padding-bottom: 8px;
+
+  .price{
+    font-size: 2rem;
+    font-weight: 500;
+  }
 }

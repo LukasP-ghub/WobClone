@@ -4,11 +4,12 @@ import styles from './BigLinkBtn.module.scss';
 const { centerH, centerV, centerVH, btn, nextBtn } = styles;
 
 export interface BigNextLinkBtnProps {
-  linkPath: string,
+  linkPath: any,
+  clickHandler: () => void,
 }
 
-const BigNextLinkBtn: React.FC<BigNextLinkBtnProps> = ({ linkPath, children }) => {
-  return <Link to={linkPath} className={`${btn} ${nextBtn}`}>{children}</Link>;
+const BigNextLinkBtn: React.FC<BigNextLinkBtnProps> = ({ linkPath, clickHandler, children }) => {
+  return <Link to={linkPath} onClick={clickHandler} className={`${btn} ${nextBtn}`}>{children}</Link>;
 }
 
 export default BigNextLinkBtn;

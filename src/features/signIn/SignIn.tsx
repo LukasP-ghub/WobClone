@@ -1,5 +1,7 @@
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../store/AuthContext';
 
 import TextField from '../../commonComponents/formFields/TextField';
 
@@ -13,6 +15,8 @@ interface Values {
 }
 
 const SignIn = () => {
+  const { signIn } = useAuth();
+  const history = useHistory();
 
   const validation: any = {
     email: Yup.string()
@@ -35,17 +39,21 @@ const SignIn = () => {
       }}
       validationSchema={Yup.object(validation)}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
+        signIn(values.email, values.password)
+          .then((res) => {
+            actions.setSubmitting(false);
+            history.push('/');
+          })
+          .catch((error) => {
+            alert(`${error.code} ${error.message}`);
+          });
       }}
     >
       {(props: FormikProps<Values>) => (
         <Form>
           <TextField name="email" type="email" label="Email" />
           <TextField name="password" type="password" label="Password" />
-          <button type="submit" className={submitBtn}><span className={centerVH}>Sign In</span></button>
+          <button type="submit" className={submitBtn} disabled={props.isSubmitting}><span className={centerVH}>Sign In</span></button>
         </Form>
       )}
     </Formik>

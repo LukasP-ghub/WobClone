@@ -1,5 +1,7 @@
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../store/AuthContext';
 
 import TextField from '../../commonComponents/formFields/TextField';
 import Checkbox from '../../commonComponents/formFields/Checkbox';
@@ -16,6 +18,8 @@ interface Values {
 }
 
 const SignUp = () => {
+  const { signUp } = useAuth();
+  const history = useHistory();
 
   const validation: any = {
     email: Yup.string()
@@ -51,10 +55,14 @@ const SignUp = () => {
       }}
       validationSchema={Yup.object(validation)}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
+        signUp(values.email, values.password)
+          .then((res) => {
+            actions.setSubmitting(false);
+            history.push('/');
+          })
+          .catch((error) => {
+            alert(`${error.code} ${error.message}`);
+          });
       }}
     >
       {(props: FormikProps<Values>) => (
@@ -70,7 +78,7 @@ const SignUp = () => {
           <Checkbox prop={{ name: "acceptedTerms" }}>
             I accept the terms and conditions
           </Checkbox>
-          <button type="submit" className={submitBtn}><span className={centerVH}>Submit</span></button>
+          <button type="submit" className={submitBtn} disabled={props.isSubmitting}><span className={centerVH}>Submit</span></button>
         </Form>
       )}
     </Formik>

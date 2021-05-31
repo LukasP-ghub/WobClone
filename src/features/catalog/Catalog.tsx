@@ -12,6 +12,7 @@ import { selectFilteredEbooks } from './catalogSlice';
 import { fetchEbooks } from './catalogSlice';
 
 import styles from './Catalog.module.scss';
+import ProductModel from '../../helpers/types/ProductModel';
 
 const { containerCards, wrapper, paginationWrapper } = styles;
 
@@ -28,9 +29,9 @@ const Catalog: React.FC = () => {
   const searchQuery = useLocation().search;
 
   let { tag } = useParams<ParamsType>();
-  let itemsPerPage = 2;
-  let pagesCount = Math.ceil(filteredEbooks.length / itemsPerPage) || 0;
-  let ebooksForScreenArr = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page);
+  let itemsPerPage = 4;
+  let pagesCount: number = Math.ceil(filteredEbooks.length / itemsPerPage) || 0;
+  let ebooksForScreenArr: ProductModel[] = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page);
 
   const handleSetPage = (e: any) => {
     const target = e.target as Element;
@@ -64,7 +65,7 @@ const Catalog: React.FC = () => {
       <ul className={containerCards}>
         {pagesCount && ebooksForScreenArr.map(ebook => {
           return (
-            <ProductCard key={ebook.id} ebook={ebook} />
+            <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
           )
         })}
       </ul>

@@ -7,11 +7,13 @@ import BigNextLinkBtn from '../../commonComponents/buttons/BigNextLinkBtn';
 import BigReturnBtn from '../../commonComponents/buttons/BigReturnBtn';
 import CartContext from '../../store/cartContext';
 
+import PriceSummary from './PriceSummary';
+
 
 import styles from './CartPage.module.scss'
 import covers from '../../assets/images';
 
-const { cartTab, cartTabs, price, product, productsList, productImg, productTitle, productPrice, summary, totalDiscount, wrapper } = styles;
+const { cartTab, cartTabs, product, productsList, productImg, productTitle, productPrice, wrapper } = styles;
 const { removeProductBtn } = styles;
 const { centerVH } = styles;
 
@@ -21,10 +23,6 @@ function CartPage() {
 
   const handleGoBack = () => history.goBack();
 
-
-  const discount: number = cartCtx.pricing.totalDiscount || 0;
-  const nominalPrice: number = cartCtx.pricing.nominalPrice || 0;
-  const actualPrice: number = cartCtx.pricing.actualPrice;
   const prodInCartQuantity = cartCtx.productsInCart.length;
 
   const cartItems = cartCtx.productsInCart.map(item => {
@@ -44,7 +42,7 @@ function CartPage() {
         <HeaderUserLinks />
       </TopBarFixed>
 
-      {/* ---  --- */}
+      {/* --- TABS  --- */}
       <section className={cartTabs}>
         <div className={cartTab}>Cart {`(${prodInCartQuantity})`}</div>
       </section>
@@ -55,25 +53,9 @@ function CartPage() {
           {cartItems}
         </ul>
       </section>
+      <PriceSummary />
 
-      {/* --- CART SUMMARY --- */}
-      <section className={summary}>
-        {discount > 0 ? <div className={price}>
-          <span>Products value:</span>
-          <span>{nominalPrice} zł</span>
-        </div> : null}
-
-        <div className={price}>
-          <strong >Total:</strong>
-          <strong >{actualPrice} zł</strong>
-        </div>
-
-        {discount > 0 ? <div className={totalDiscount}>
-          <strong className={centerVH}>You save: {discount} zł</strong>
-        </div> : null}
-      </section>
-
-      <BigNextLinkBtn linkPath={`${history.location.pathname}/payment`}>Go to payment</BigNextLinkBtn>
+      <BigNextLinkBtn linkPath={`cart/payment`} clickHandler={() => { }}>Go to payment</BigNextLinkBtn>
       <BigReturnBtn clickHandler={handleGoBack}>Back to shop</BigReturnBtn>
     </div>
   );

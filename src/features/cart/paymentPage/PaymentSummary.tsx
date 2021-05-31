@@ -1,13 +1,18 @@
+import { useContext } from 'react';
+import CartContext from '../../../store/cartContext';
+
+import PriceSummary from '../PriceSummary';
 import Section from './Section';
 import styles from './PaymentSummary.module.scss';
 
-const { addressData, twoColumns } = styles;
+const { addressData, itemPrice, listItem, twoColumns } = styles;
 
 export interface PaymentSummaryProps {
 
 }
 
 const PaymentSummary: React.FC<PaymentSummaryProps> = () => {
+  const cartCtx = useContext(CartContext);
   return <>
     <Section hTitle="Order details">
       <div className={twoColumns}>
@@ -20,14 +25,22 @@ const PaymentSummary: React.FC<PaymentSummaryProps> = () => {
         </div>
         <div className={addressData}>
           <h4>Payment Method</h4>
-          <p>Bank</p>
+          <p>{cartCtx.paymentMethod}</p>
         </div>
       </div>
     </Section>
 
     <Section hTitle='Products'>
-
+      <ul>
+        {cartCtx.productsInCart.map((item) => {
+          return <li key={item.id} className={listItem}>
+            <span>{item.title}</span>
+            <span className={itemPrice}>{item.price} zł</span>
+          </li>
+        })}
+      </ul>
     </Section>
+    <PriceSummary />
   </>
 }
 
