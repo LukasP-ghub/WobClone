@@ -29,7 +29,7 @@ export const fetchCategories = createAsyncThunk(
     //  }
     let output: any = [];
     const categoriesRef = await db.collection("categories").get();
-    const response = await categoriesRef.forEach((doc) => {
+    await categoriesRef.forEach((doc) => {
       output.push(doc.data());
     })
     return output;

@@ -15,7 +15,6 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
 
   const dispatch = useAppDispatch();
   const product = useAppSelector(selectProduct);
-  // const isVisible = useAppSelector(selectShowSidePanel);
   const { id } = location.state;
 
   const showSidePanel = (params: { title: string, subtitle: string | null, body: string }) => {
@@ -25,7 +24,7 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
 
   useEffect(() => {
     dispatch(fetchProduct({ id }));
-  }, [])
+  }, [dispatch, id])
 
   return (
     <React.Fragment>

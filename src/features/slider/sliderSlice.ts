@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import { db } from '../../firebase';
-import { sorting } from '../../helpers/sorting';
 import ProductModel from '../../helpers/types/ProductModel';
 
 // Define a type for the slice state
@@ -40,11 +39,11 @@ export const fetchRandomEbooks = createAsyncThunk<any, any, { state: RootState }
         ebooksRef = await db.collection("ebooks").where("category", "==", params.category).where("id", "in", IDarrPortion).get();
       }
 
-      const response = await ebooksRef.forEach((doc: any) => {
+      await ebooksRef.forEach((doc: any) => {
         output.push(doc.data());
       });
     }
-    console.log('output' + output);
+
     return output;
   }
 )

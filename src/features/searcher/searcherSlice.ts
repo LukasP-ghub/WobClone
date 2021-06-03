@@ -44,9 +44,10 @@ export const fetchForSearch = createAsyncThunk(
     let output: any = [];
     let ebooksRef = await db.collection("ebooks").get();
 
-    const response = await ebooksRef.forEach((doc) => {
+    await ebooksRef.forEach((doc) => {
       output.push(doc.data());
     });
+
     output = sorting(output, 'alphabetical');
     return output;
   }

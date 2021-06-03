@@ -42,7 +42,7 @@ export const fetchProduct = createAsyncThunk(
     let ebooksRef = await db.collection("ebooks")
       .where("id", "==", params.id).get();
 
-    const response = await ebooksRef.forEach((doc) => {
+    await ebooksRef.forEach((doc) => {
       output = doc.data();
     });
 

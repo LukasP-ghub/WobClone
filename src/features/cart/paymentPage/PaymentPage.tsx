@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import TopBarFixed from '../../../commonComponents/topBarFixed/TopBarFixed';
@@ -21,7 +21,6 @@ export interface PaymentPageProps {
 const PaymentPage: React.FC<PaymentPageProps> = () => {
   const [paymentStep, setPaymentStep] = useState(2);
   const history = useHistory();
-  let currPath = history.location.pathname;
 
   const handleGoBack = () => {
     history.goBack();

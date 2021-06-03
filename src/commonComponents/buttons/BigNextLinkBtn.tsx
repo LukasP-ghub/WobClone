@@ -1,7 +1,7 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './BigLinkBtn.module.scss';
 
-const { centerH, centerV, centerVH, btn, nextBtn } = styles;
+const { btn, nextBtn } = styles;
 
 export interface BigNextLinkBtnProps {
   linkPath: any,

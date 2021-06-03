@@ -58,7 +58,7 @@ const SearchBar: React.FC = () => {
   //fetching all ebooks for searching simulation 
   useEffect(() => {
     dispatch(fetchForSearch());
-  }, [])
+  }, [dispatch])
 
   //searching with debounce and avoid empty key searching, 
   useEffect((): any => {
@@ -72,7 +72,7 @@ const SearchBar: React.FC = () => {
 
     window.addEventListener('click', () => { dispatch(setSearchResults([])) }, { once: true });
     return () => clearTimeout(timer);
-  }, [searchKey]);
+  }, [searchKey, dispatch]);
 
   //Handling arrow key navigation through list
   const onKeyHandle = (e: any) => {

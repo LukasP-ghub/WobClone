@@ -6,17 +6,23 @@ import ProductModel from '../../helpers/types/ProductModel';
 import styles from './ProductCard.module.scss';
 import covers from '../../assets/images';
 
-const { cardCover, cardFull, picture, price, productDetails, title } = styles;
+const { card, cardCover, cardFull, picture, price, productDetails, title } = styles;
 const { toCartBtn } = styles;
 
 type cardStyleVersionType = 'full' | 'cover';
 
-const ProductCard: React.FC<{ ebook: ProductModel, cardStyleVersion: cardStyleVersionType }> = ({ ebook, cardStyleVersion }) => {
+interface ProductCardType {
+  ebook: ProductModel,
+  cardStyleVersion: cardStyleVersionType,
+  itemWidth?: number,
+}
+
+const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemWidth }, ref) => {
   const cartCtx = useContext(CartContext);
   const cover = covers.get(ebook.cover) || { small: '', medium: '' };
 
   return (
-    <li className={`${cardStyleVersion === 'cover' ? cardCover : cardFull}`}>
+    <li className={`${card} ${cardStyleVersion === 'cover' ? cardCover : cardFull}`} style={{ width: `${itemWidth}px` }}>
       {/*--- CARD IS LINK TO PRODUCT PAGE ---*/}
       <Link to={{
         pathname: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,

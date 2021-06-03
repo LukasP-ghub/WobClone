@@ -1,5 +1,4 @@
-import { useContext, useRef, useState } from 'react';
-import { withRouter } from "react-router";
+import { useContext, useState } from 'react';
 
 import CartContext from '../../../store/cartContext';
 import Section from './Section';

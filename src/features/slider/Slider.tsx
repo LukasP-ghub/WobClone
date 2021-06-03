@@ -10,17 +10,13 @@ import styles from './Slider.module.scss';
 
 const { slider, arrow, leftArr, rightArr, pagesContainer, sliderPages, sliderPage, active } = styles;
 
-
-
-function Slider() {
+const Slider: React.FC = () => {
   const [slidePage, setSlidePage] = useState(0);
   const [pagesArray, setPagesArray] = useState([]);
 
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
   const pagesContRef = useRef<HTMLDivElement>(null);
-
-  let pagesArr: any = [];
 
   // function for changing slider pages
   const turnPage = (count: number) => {
@@ -37,17 +33,21 @@ function Slider() {
 
   //function calculate and fill number of pages and it elements
   const createPages = useCallback(() => {
-    let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / 90 - 1);
+    const itemWidth: number = 90;
+    let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / itemWidth - 1);
     let pagesCount = Math.ceil(products.length / maxItemsCountPerPage);
     let index = 0;
+    let pagesArr: any = [];
 
     for (let i = 0; i < pagesCount; i++) {
       const itemsForPageArr = [];
+
       for (let i = 0; i < maxItemsCountPerPage; i++) {
         if (index === products.length) break;
-        itemsForPageArr.push(<ProductCard key={products[index].id} ebook={products[index]} cardStyleVersion='cover' />);
+        itemsForPageArr.push(<ProductCard key={products[index].id} ebook={products[index]} cardStyleVersion='cover' itemWidth={itemWidth} />);
         index++;
       }
+
       pagesArr.push(itemsForPageArr);
     }
     setPagesArray(pagesArr);
@@ -55,8 +55,7 @@ function Slider() {
 
   useEffect(() => {
     dispatch(fetchRandomEbooks({ productsCount: 12, category: 'Wszystkie Ebooki' }));
-
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     createPages();

@@ -55,7 +55,7 @@ export const fetchEbooks = createAsyncThunk<any, any, { state: RootState }>(
       ebooksRef = await db.collection("ebooks").where("category", "==", getFilters.categoryFilter).get();
     }
 
-    const response = await ebooksRef.forEach((doc) => {
+    await ebooksRef.forEach((doc) => {
       output.push(doc.data());
     });
 

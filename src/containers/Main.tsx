@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import { useAppDispatch } from '../helpers/types/hooks';
 
 import StartPage from '../features/startPage/StartPage'
 import Catalog from '../features/catalog/Catalog'
@@ -13,7 +12,6 @@ import styles from './Main.module.scss';
 const { mainPage } = styles;
 
 function Main() {
-  // const dispatch = useAppDispatch();
 
   return (
     <main className={mainPage} >
@@ -27,10 +25,3 @@ function Main() {
 }
 
 export default Main;
-
-/*
- <Banner />
-      <Slider />
-      <Banner />
-      <Slider />
-*/

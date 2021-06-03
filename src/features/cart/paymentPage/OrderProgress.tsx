@@ -1,5 +1,3 @@
-import { useContext, useEffect } from 'react';
-import CartContext from '../../../store/cartContext';
 import styles from './OrderProgress.module.scss';
 
 const { active, orderProgressSeparator, orderProgressStep, orderProgressWrapper } = styles;
@@ -9,7 +7,6 @@ export interface OrderProgressProps {
 }
 
 const OrderProgress: React.FC<OrderProgressProps> = ({ step }) => {
-  // const cartCtx = useContext(CartContext);
 
   return (
     <div className={orderProgressWrapper}>

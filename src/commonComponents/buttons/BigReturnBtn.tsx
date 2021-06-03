@@ -1,6 +1,6 @@
 import styles from './BigLinkBtn.module.scss';
 
-const { centerH, centerV, centerVH, btn, backBtn } = styles;
+const { btn, backBtn } = styles;
 
 export interface BigReturnBtnProps {
   clickHandler: () => void

@@ -25,7 +25,6 @@ const Catalog: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const filteredEbooks = useAppSelector(selectFilteredEbooks);
-  //const filters = useAppSelector(selectFilters);
   const searchQuery = useLocation().search;
 
   let { tag } = useParams<ParamsType>();
@@ -34,18 +33,17 @@ const Catalog: React.FC = () => {
   let ebooksForScreenArr: ProductModel[] = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page);
 
   const handleSetPage = (e: any) => {
-    const target = e.target as Element;
     setPage(e.target.innerText * 1)
   }
 
   useEffect(() => {
     dispatch(setFilters({ filter: 'categoryFilter', value: tag }));
-  }, [tag])
+  }, [tag, dispatch])
 
   //fetching ebooks by url tag
   useEffect(() => {
     dispatch(fetchEbooks(''));
-  }, [tag])
+  }, [tag, dispatch])
 
   //sorting results in store by url query
   useEffect(() => {
@@ -53,7 +51,7 @@ const Catalog: React.FC = () => {
     for (let param of query.entries()) {
       dispatch(sortEbooks(param[1]));
     }
-  }, [searchQuery]);
+  }, [searchQuery, dispatch]);
 
   return (
     <div className={wrapper}>
