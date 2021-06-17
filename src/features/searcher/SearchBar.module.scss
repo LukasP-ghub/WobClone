@@ -1,4 +1,5 @@
 @import '../../assets/colors.module.scss';
+@import '../../assets/mixins.module.scss';
 
 .searchBar{
   position:absolute;
@@ -15,6 +16,7 @@
     left:50%;
     height: 80%;
     width:80%;
+    max-width: 400px;
 
     display: flex;
     justify-content: center;
@@ -68,5 +70,27 @@
   }
 }
 
+.ellipsis{
+  @include ellipsis(1);
+}
 
+@media  (min-width:950px) {
+  .searchBar{
+    position: static;
+    grid-area: searcher;
+    background-color: transparent;
+    z-index: 500;
 
+    .closeIcon{
+      display: none;
+    }
+
+    .searchInput{
+      width: 250px;
+    }
+
+    .searchResultsList{
+      width: 250px;
+    }
+  }
+}

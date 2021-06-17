@@ -28,10 +28,10 @@ export const navigationSlice = createSlice({
 });
 
 /* --- SELECTORS --- */
-
-export const selectCategories = (state: RootState) => state.container.categories;
 export const selectIsVisibleNavSP = (state: RootState) => state.navigation.isVisibleNavSP;
 export const selectIsVisibleCatSP = (state: RootState) => state.navigation.isVisibleCatSP;
+export const selectCategories = (state: RootState) => state.container.categories;
+export const selectError = (state: RootState) => state.container.error;
 
 /* --- EXPORTS --- */
 

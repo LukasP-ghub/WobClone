@@ -18,10 +18,10 @@ function Cart() {
           <circle cx="25" cy="27" r="2" />
           <circle cx="12" cy="27" r="2" />
         </svg>
+        <div className={cartItemsCounterWrapper}>
+          <span className={cartItemsCounter}>{cartCtx.productsInCart.length}</span>
+        </div>
       </Link>
-      <div className={cartItemsCounterWrapper}>
-        <span className={cartItemsCounter}>{cartCtx.productsInCart.length}</span>
-      </div>
     </div>
   );
 }

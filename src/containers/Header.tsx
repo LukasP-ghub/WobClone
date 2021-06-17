@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../helpers/types/hooks';
 
-
 import { fetchCategories } from './containerSlice';
 
 import styles from './Header.module.scss';

@@ -5,14 +5,15 @@
 }
 
 .paymentOptions{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap:30px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  justify-items: center;
+  gap:20px 15px;
+  
 
   .paymentOption{
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,15 +29,8 @@
   }
 }
 
-.toPay{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid red;
-  padding-bottom: 8px;
+@media (min-width:950px){
+  .paymentOptions{
 
-  .price{
-    font-size: 2rem;
-    font-weight: 500;
   }
 }

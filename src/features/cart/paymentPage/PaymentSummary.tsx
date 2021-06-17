@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import CartContext from '../../../store/cartContext';
 
-import PriceSummary from '../PriceSummary';
 import Section from './Section';
 import styles from './PaymentSummary.module.scss';
 
@@ -40,7 +39,6 @@ const PaymentSummary: React.FC<PaymentSummaryProps> = () => {
         })}
       </ul>
     </Section>
-    <PriceSummary />
   </>
 }
 

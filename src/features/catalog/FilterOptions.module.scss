@@ -1,3 +1,4 @@
+@import '../../assets/colors.module.scss';
 @import 'catalogMixins.scss';
 
 .wrapper{
@@ -5,8 +6,9 @@
   top:0;
   left:100%;
   width:100%;
+  height: 100%;
   padding-top: $headHeight;
-  background-color: lightgray;
+  background-color: $silver;
   z-index: 198;
   transition: $trTrans;
 
@@ -22,7 +24,13 @@
 .panelHead{
   @include panelHeadM;
   z-index: 199;
-
+  
+  & .title::before{
+    content: '\003C';
+    font-size: 2rem;
+    margin-right: 5px;
+   } 
+   
   .clearFiltersBtn{
     position: absolute;
     right:20px;
@@ -39,9 +47,10 @@
 .optionsGroup{
   position: relative;
   width: 100%;
+  min-height: 30px;
   padding: 0.5rem 0.5rem;
   margin-bottom: 10px;
-  background-color: whitesmoke;
+  background-color: white;
 
   button{
     position: absolute;
@@ -89,7 +98,8 @@
       width: 100px;
       height: 60px;
       font-size: 1.5rem;
-      border: 1px solid gray;
+      border: 1px dotted $light-blue;
+      border-radius: 10px;
     
       a {
         position: relative;
@@ -105,8 +115,31 @@
           text-align:center;
         }
       }
+      
+      &:hover{
+        box-shadow: 0px 0px 5px 1px inset $light-blue;
+      }
     }
   }
 }
 
+@media (min-width:950px){
+  .panelHead{
+    display: none;
+  }
 
+ .wrapper{
+   grid-column: 1/2;
+   position: static;
+   height: min-content;
+   padding-top: 0;
+   margin-top: $desktopMarginTop;
+   box-shadow: 0 0 5px 1px $silver;
+   background-color: transparent;
+   z-index: auto;
+
+   .showCategoryListBtn{
+     display: none;
+   }
+ }
+}

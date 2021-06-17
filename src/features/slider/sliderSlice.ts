@@ -13,11 +13,12 @@ interface SliderState {
 
 export const fetchRandomEbooks = createAsyncThunk<any, any, { state: RootState }>(
   'sliderEbooks/getDataStatus',
-  async (params: { productsCount: number, category: string }, { getState }) => {
-    //const { currentRequestId, status } = getState().catalog;
-    /*if (status !== 'pending' || requestId !== currentRequestId) {
+  async (params: { productsCount: number, category: string }, { getState, requestId }) => {
+    const { currentRequestId, status } = getState().slider;
+    if (status !== 'pending' || requestId !== currentRequestId) {
       return;
-    }*/
+    }
+
     let output: any = [];
     const IDarr: number[] = [];
     let ebooksRef: any;
@@ -66,31 +67,35 @@ export const sliderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRandomEbooks.pending, (state, action) => {
-      state.products = [];
-      state.status = 'loading';
-      state.currentRequestId = action.meta.requestId;
+      if (state.status === 'idle') {
+        state.products = [];
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId;
+      }
     })
     builder.addCase(fetchRandomEbooks.fulfilled, (state, action) => {
-      state.products = [...action.payload];
-      state.status = 'idle';
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.products = [...action.payload];
+        state.status = 'idle';
+        state.currentRequestId = undefined;
+      }
     })
     builder.addCase(fetchRandomEbooks.rejected, (state, action) => {
-      state.status = 'idle';
-      state.error = action.payload;
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.status = 'idle';
+        state.error = action.error;
+        state.currentRequestId = undefined;
+      }
     })
   }
 });
 
 //export const { } = sliderSlice.actions;
 
-
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
 export const selectProducts = (state: RootState) => state.slider.products;
+export const selectError = (state: RootState) => state.slider.error;
 
 
 

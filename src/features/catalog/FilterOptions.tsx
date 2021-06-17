@@ -3,20 +3,24 @@ import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
 import { setShowFilterOptions, setShowCategoriesPanel, setFilters } from './catalogSlice';
-import { selectCategories, selectFilters, selectShowFilterOptions } from './catalogSlice';
+import { selectCategories, selectFilters, selectShowFilterOptions, selectError } from './catalogSlice';
+
+import ShowError from '../../commonComponents/showError/ShowError';
 
 import styles from './FilterOptions.module.scss';
 
-const { clearFiltersBtn, filter, filtersGroup, optionsGroup, panelHead, shiftBtn, shiftBtnActive, show, title, wrapper } = styles;
+const { clearFiltersBtn, filter, filtersGroup, optionsGroup, panelHead, shiftBtn, shiftBtnActive, show, showCategoryListBtn, title, wrapper } = styles;
 
 const FilterOptions: React.FC = () => {
   const dispatch = useAppDispatch();
   const isVisible = useAppSelector(selectShowFilterOptions);
   const categories = useAppSelector(selectCategories);
   const filters = useAppSelector(selectFilters);
+  const fetchError = useAppSelector(selectError);
 
   return (
     <React.Fragment>
+
       <div className={`${panelHead} ${isVisible ? show : null}`}>
         <h2 className={title} onClick={() => dispatch(setShowFilterOptions())}>Filtry i kategorie</h2>
         <button className={clearFiltersBtn}>Wyczyść filtry</button>
@@ -25,7 +29,7 @@ const FilterOptions: React.FC = () => {
       <div className={`${wrapper} ${isVisible ? show : null}`}>
         <div className={optionsGroup}>
           <h3 className={title}>Tylko w promocji</h3>
-          <button className={`${shiftBtn} ${filters.promotion ? shiftBtnActive : null}`} onClick={() => dispatch(setFilters({ filter: 'promotion', value: filters.promotion ? 'true' : '' }))} />
+          <button className={`${shiftBtn} ${filters.promotion === 'true' ? shiftBtnActive : null}`} onClick={() => dispatch(setFilters({ filter: 'promotion', value: filters.promotion === 'true' ? '' : 'true' }))} />
         </div>
 
         <div className={optionsGroup}>
@@ -38,11 +42,11 @@ const FilterOptions: React.FC = () => {
         </div>
 
         <div className={optionsGroup}>
-          <h3 className={title}>Kategorie</h3>
-          <button onClick={() => dispatch(setShowCategoriesPanel())}>Lista</button>
+          <h3 className={title}>Polecane</h3>
+          <button className={showCategoryListBtn} onClick={() => dispatch(setShowCategoriesPanel())}>Lista</button>
 
           <ul className={filtersGroup}>
-            {categories.map(category => {
+            {fetchError ? <ShowError /> : categories.map(category => {
               return (category.popular &&
                 <li className={filter} key={category.category}>
                   {<Link to={'/catalog/' + category.category}

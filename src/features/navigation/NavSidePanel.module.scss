@@ -1,3 +1,5 @@
+@import '../../assets/colors.module.scss';
+
 .sidePanel {
   position: absolute;
   top: 0;
@@ -7,38 +9,62 @@
 
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   justify-content: flex-start;
 
   font-size: 1.2rem;
-  background-color: snow;
+  background-color: $white-smoke;
   transition: transform 0.2s ;
   z-index: 149;
 
-  .bookType {
+  .header {
     position: relative;
     flex-basis: 20%;
+    flex-shrink: 0;
+    min-height: 100px;
     background-color: purple;
   
-     div {
+     .productType {
       position: absolute;
-      bottom: 5%;
+      bottom: 8%;
       color: white;
       margin-left: 3%;
     }
-  }
 
-  .closeIcon{
-    position: absolute;
-    top: 5vh;
-    right:10%;
-    font-size: 50px;
-    color: white;
+    .closeIcon{
+      position: absolute;
+      top: 5%;
+      right:10%;
+      font-size: 50px;
+      color: white;
+    }
   }
 }
+
 .showSidePanel{
   transform: translateX(100vw);
 }
 
 
+@media  (min-width:750px) {
+  .sidePanel{
+    width:400px;
+  }
+}
 
+@media  (min-width:950px) {
+  .sidePanel{
+    position:static;
+    grid-area: nav;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 0 10px;
+    background-color: $green;
+
+    .header{
+      display: none;
+    }
+
+  }
+}

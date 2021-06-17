@@ -17,7 +17,7 @@ interface ProductCardType {
   itemWidth?: number,
 }
 
-const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemWidth }, ref) => {
+const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemWidth }) => {
   const cartCtx = useContext(CartContext);
   const cover = covers.get(ebook.cover) || { small: '', medium: '' };
 

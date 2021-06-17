@@ -3,15 +3,17 @@
 
 .wrapper{
   width: 100%;
+  max-width: 900px;
   min-height: 100vh;
   font-size: 1.5rem;
   padding: $padding-topBar-sync 20px 20px 20px;
+  margin: 0 auto;
   background-color: $white-smoke;
 
   .cartTabs{
     height: 40px;
     width:80%;
-    margin:10px auto;
+    margin:20px auto;
     border-bottom: 1px dotted gray;
 
     .cartTab{
@@ -21,13 +23,13 @@
 
   .productsList{
     
-
     .product{
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       grid-template-rows: repeat(10, 1fr);
       min-height:100px;
-      margin: 10px 0;
+      max-width: 400px;
+      margin: 10px auto;
       box-shadow: 0 0 5px $silver;
       
       .productImg{
@@ -77,4 +79,13 @@
 
 .centerH{
   @include centerH;
+}
+
+@media(min-width:950px){
+  .wrapper{
+    .cartTabs{
+      margin: 10px auto 30px auto;
+    }
+  }
+  
 }

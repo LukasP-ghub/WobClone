@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
-import { selectProducts, fetchRandomEbooks } from './sliderSlice';
-import ProductCard from '../../commonComponents/productCard/ProductCard';
+import { selectProducts, selectError, fetchRandomEbooks } from './sliderSlice';
 
+import ProductCard from '../../commonComponents/productCard/ProductCard';
+import ShowError from '../../commonComponents/showError/ShowError';
 import SliderPage from './SliderPage';
 
 import styles from './Slider.module.scss';
@@ -16,6 +17,7 @@ const Slider: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
+  const fetchError = useAppSelector(selectError);
   const pagesContRef = useRef<HTMLDivElement>(null);
 
   // function for changing slider pages
@@ -58,7 +60,7 @@ const Slider: React.FC = () => {
   }, [dispatch])
 
   useEffect(() => {
-    createPages();
+    if (!fetchError) createPages();
   }, [createPages])
 
 
@@ -66,7 +68,7 @@ const Slider: React.FC = () => {
     <div className={slider}>
       {/* slider pages */}
       <div className={pagesContainer} ref={pagesContRef} >
-        {pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
+        {fetchError ? <ShowError /> : pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
       </div>
 
       {/* elements for selecting page  */}

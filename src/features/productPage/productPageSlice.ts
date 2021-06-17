@@ -28,15 +28,13 @@ const initialState: ProductPageState = {
   currentRequestId: undefined,
 }
 
-export const fetchProduct = createAsyncThunk(
+export const fetchProduct = createAsyncThunk<any, any, { state: RootState }>(
   'ebook/getDataStatus',
   async (params: any, { getState, requestId }) => {
-    //const { currentRequestId, status } = getState().catalog;
-
-    // const tags = getState().productMiniCard.productTags;
-    /*if (status !== 'pending' || requestId !== currentRequestId) {
+    const { currentRequestId, status } = getState().productPage;
+    if (status !== 'pending' || requestId !== currentRequestId) {
       return;
-    }*/
+    }
 
     let output = null;
     let ebooksRef = await db.collection("ebooks")
@@ -65,19 +63,27 @@ export const productPageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProduct.pending, (state, action) => {
-      state.product = null;
-      state.status = 'loading';
-      state.currentRequestId = action.meta.requestId;
+      if (state.status === 'idle') {
+        state.product = null;
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId;
+      }
     })
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
-      state.product = action.payload;
-      state.status = 'idle';
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.product = action.payload;
+        state.status = 'idle';
+        state.currentRequestId = undefined;
+      }
     })
     builder.addCase(fetchProduct.rejected, (state, action) => {
-      state.status = 'idle';
-      state.error = action.payload;
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.status = 'idle';
+        state.error = action.error;
+        state.currentRequestId = undefined;
+      }
     })
   }
 });
@@ -86,6 +92,7 @@ export const productPageSlice = createSlice({
 export const selectProduct = (state: RootState) => state.productPage.product;
 export const selectShowSidePanel = (state: RootState) => state.productPage.showSidePanel;
 export const selectSidePanelContent = (state: RootState) => state.productPage.sidePanelContent;
+export const selectError = (state: RootState) => state.productPage.error;
 
 /* --- ACTIONS --- */
 export const { setShowSidePanel, setSidePanelContent } = productPageSlice.actions;

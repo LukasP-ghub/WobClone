@@ -1,22 +1,37 @@
+import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
-import { showCatSidePanel, selectIsVisibleCatSP, selectCategories } from './navigationSlice';
+import { showCatSidePanel } from './navigationSlice';
+import { selectIsVisibleCatSP, selectCategories, selectError } from './navigationSlice';
+import useWidth from '../../helpers/useWidth';
 
+import Backdrop from '../../commonComponents/backdrop/Backdrop';
+import ShowError from '../../commonComponents/showError/ShowError';
 import NavComponent from './NavComponent';
-import styles from './CategorySidePanel.module.scss'
+import styles from './CategorySidePanel.module.scss';
+
+const { categorySidePanel, showSidePanel, headElement, content } = styles;
 
 function CategoryPanel() {
   const isVisibleCat = useAppSelector(selectIsVisibleCatSP);
   const categories = useAppSelector(selectCategories)
+  const fetchError = useAppSelector(selectError);
   const dispatch = useAppDispatch();
+  const { currWidth } = useWidth();
+
+  useEffect(() => {
+    if (isVisibleCat && currWidth >= 950) window.addEventListener('click', () => dispatch(showCatSidePanel()), { once: true });
+  }, [isVisibleCat, dispatch])
 
   return (
-    <div className={`${styles.categorySidePanel} ${isVisibleCat ? styles.showSidePanel : null}`}>
-      <div className={styles.headElement} onClick={() => dispatch(showCatSidePanel())}>
-        <div className={styles.content}>Powrót</div>
+    <>
+      {isVisibleCat && currWidth < 950 ? <Backdrop /> : null}
+      <div className={`${categorySidePanel} ${isVisibleCat ? showSidePanel : null}`}>
+        <div className={headElement} onClick={() => dispatch(showCatSidePanel())}>
+          <div className={content}>Powrót</div>
+        </div>
+        {fetchError ? <ShowError /> : categories.map(item => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} /> })}
       </div>
-      {categories.map(item => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} /> })}
-    </div>
-
+    </>
   );
 }
 

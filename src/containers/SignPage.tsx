@@ -1,9 +1,10 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 
-import SignUp from '../features/signUp/SignUp'
-import SignIn from '../features/signIn/SignIn'
-import HeaderUserLinks from '../commonComponents/headerUserLinks/HeaderUserLinks'
+import SignUp from '../features/signUp/SignUp';
+import SignIn from '../features/signIn/SignIn';
+import HeaderUserLinks from '../commonComponents/headerUserLinks/HeaderUserLinks';
+import TopBarFixed from '../commonComponents/topBarFixed/TopBarFixed';
 
 import styles from './SignPage.module.scss'
 
@@ -13,7 +14,9 @@ const SignPage = () => {
   const { currentUser } = useAuth();
 
   return <div className={wrapper}>
-    <HeaderUserLinks />
+    <TopBarFixed>
+      <HeaderUserLinks />
+    </TopBarFixed>
     <main className={main}>
       <Switch>
         {currentUser ? <Redirect to="/" /> : null}

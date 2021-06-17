@@ -1,21 +1,20 @@
 @import '../../assets/mixins.module.scss';
 
 .cartIconWrapper {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 80%;
   min-width: 15%;
   
   .cartIcon{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    position: relative;
   }
 
   .cartItemsCounterWrapper{
     position: absolute;
-    bottom: 3px;
-    right:3px;
+    bottom: -3px;
+    right:-5px;
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -27,5 +26,11 @@
       font-size: 1.5rem;
      
     }
+  }
+}
+
+@media  (min-width:950px) {
+  .cartIconWrapper{
+    grid-area: cart;
   }
 }

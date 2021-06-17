@@ -2,39 +2,41 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
+import ProductCard from '../../commonComponents/productCard/ProductCard';
+import ShowError from '../../commonComponents/showError/ShowError';
 import Filters from "./Filters";
 import FilterOptions from './FilterOptions';
 import FilterCategoriesPanel from './FilterCategoriesPanel';
-import ProductCard from '../../commonComponents/productCard/ProductCard';
+import Pagination from './Pagination';
+
 
 import { setFilters, sortEbooks } from './catalogSlice';
-import { selectFilteredEbooks } from './catalogSlice';
+import { selectFilteredEbooks, selectError } from './catalogSlice';
 import { fetchEbooks } from './catalogSlice';
 
 import styles from './Catalog.module.scss';
 import ProductModel from '../../helpers/types/ProductModel';
 
-const { containerCards, wrapper, paginationWrapper } = styles;
+const { containerCards, containerCardsWrapper, wrapper } = styles;
 
 interface ParamsType {
   tag: string
 }
 
 const Catalog: React.FC = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   const dispatch = useAppDispatch();
   const filteredEbooks = useAppSelector(selectFilteredEbooks);
+  const fetchError = useAppSelector(selectError);
   const searchQuery = useLocation().search;
 
   let { tag } = useParams<ParamsType>();
   let itemsPerPage = 4;
   let pagesCount: number = Math.ceil(filteredEbooks.length / itemsPerPage) || 0;
-  let ebooksForScreenArr: ProductModel[] = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page);
+  let ebooksForScreenArr: ProductModel[] = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page) || [];
 
-  const handleSetPage = (e: any) => {
-    setPage(e.target.innerText * 1)
-  }
+
 
   useEffect(() => {
     dispatch(setFilters({ filter: 'categoryFilter', value: tag }));
@@ -56,48 +58,19 @@ const Catalog: React.FC = () => {
   return (
     <div className={wrapper}>
       <Filters />
+      {/*List of products */}
+      <div className={containerCardsWrapper}>
+        <ul className={containerCards}>
+          {ebooksForScreenArr.length > 0 && ebooksForScreenArr.map(ebook => {
+            return <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
+          })}
+        </ul>
+        <Pagination pagesCount={pagesCount} ebooksForScreenArrLength={ebooksForScreenArr.length} page={page} setPage={setPage} />
+      </div>
+
       <FilterOptions />
       <FilterCategoriesPanel />
-
-      {/*List of products */}
-      <ul className={containerCards}>
-        {pagesCount && ebooksForScreenArr.map(ebook => {
-          return (
-            <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
-          )
-        })}
-      </ul>
-
-      {/* Pagination*/}
-      {pagesCount && <ul className={paginationWrapper}>
-
-        {<li onClick={() => { return page <= 1 ? null : setPage(prevPage => --prevPage) }}>
-
-          <svg id="i-chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <path d="M20 30 L8 16 20 2" />
-          </svg>
-
-        </li>}
-
-        <li onClick={() => setPage(1)}><span>1</span></li>
-
-        {page > 4 ? <li><span>...</span></li> : null}
-        {pagesCount > 1 ? <li onClick={handleSetPage}><span>{page <= 4 ? 2 : (page >= pagesCount - 3) ? pagesCount - 5 : page - 2}</span></li> : null}
-        {pagesCount > 2 ? <li onClick={handleSetPage}><span>{page <= 4 ? 3 : (page >= pagesCount - 3) ? pagesCount - 4 : page - 1}</span></li> : null}
-        {pagesCount > 3 ? <li onClick={handleSetPage}><span>{page <= 4 ? 4 : (page >= pagesCount - 3) ? pagesCount - 3 : page}</span></li> : null}
-        {pagesCount > 4 ? <li onClick={handleSetPage}><span>{page <= 4 ? 5 : (page >= pagesCount - 3) ? pagesCount - 2 : page + 1}</span></li> : null}
-        {pagesCount > 5 ? <li onClick={handleSetPage}><span>{(page <= 4) ? 6 : (page >= pagesCount - 3) ? pagesCount - 1 : page + 2}</span></li> : null}
-        {page < pagesCount - 3 ? <li><span>...</span></li> : null}
-
-        {pagesCount > 5 ? <li onClick={() => setPage(pagesCount)}><span>{pagesCount}</span></li> : null}
-
-        {<li onClick={() => { return page >= pagesCount ? null : setPage(prevPage => ++prevPage) }} >
-          <svg id="i-chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <path d="M12 30 L24 16 12 2" />
-          </svg>
-        </li>}
-      </ul>}
-
+      {fetchError ? <ShowError /> : null}
     </div>
   );
 }

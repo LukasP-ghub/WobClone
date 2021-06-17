@@ -1,15 +1,44 @@
 @import '../../../assets/mixins.module.scss'; 
 @import '../../../assets/colors.module.scss'; 
 
-$padding-topBar-sync: 50px;
-
 .wrapper{
   width: 100%;
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: max-content;
   font-size: 1.5rem;
   padding: $padding-topBar-sync 20px 20px 20px;
+  margin: 0 auto;
   background-color: $white-smoke;
+  
 }
 
+
+@media(min-width:950px){
+  .wrapper{
+    grid-template-columns: 70% 30%;
+    grid-template-rows: repeat(3, max-content);
+    grid-template-areas: "progress price"
+                         "routes price"
+                         "bottom .";
+
+    .routesWrapper{
+      grid-area: routes;
+    }
+
+    .nextBtn{
+      width: 90%;
+      grid-area: price;
+      align-self: center;
+      justify-self:center;
+      background-color: $light-gray;
+      border-radius: 30px;
+    }
+    .prevBtn{
+      grid-area: bottom;
+    }
+  }
+}
 
 

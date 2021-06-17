@@ -1,7 +1,8 @@
-$headHeight: 50px;
+@import '../../assets/colors.module.scss';
+
+$headHeight: 60px;
 $trTrans: transform 0.5s;
-
-
+$desktopMarginTop: 30px;
 
 @mixin panelHeadM{
   position:fixed;
@@ -12,6 +13,6 @@ $trTrans: transform 0.5s;
   line-height: $headHeight;
   padding: 0 5px;
   border-bottom: 1px solid black;
-  background-color: whitesmoke;
+  background-color: $light-green;
   transition: $trTrans;
 }

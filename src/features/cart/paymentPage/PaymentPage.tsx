@@ -6,13 +6,14 @@ import HeaderUserLinks from '../../../commonComponents/headerUserLinks/HeaderUse
 import BigNextLinkBtn from '../../../commonComponents/buttons/BigNextLinkBtn';
 import BigReturnBtn from '../../../commonComponents/buttons/BigReturnBtn';
 
+import PriceSummary from '../PriceSummary';
 import OrderProgress from './OrderProgress';
 import PaymentOptions from './PaymentOptions';
 import PaymentSummary from './PaymentSummary';
 
 import styles from './PaymentPage.module.scss';
 
-const { wrapper } = styles;
+const { nextBtn, prevBtn, routesWrapper, wrapper } = styles;
 
 export interface PaymentPageProps {
 
@@ -40,13 +41,17 @@ const PaymentPage: React.FC<PaymentPageProps> = () => {
 
       <OrderProgress step={paymentStep} />
 
-      <Switch>
-        <Route path={`/cart/payment`} exact ><PaymentOptions /></Route>
-        <Route path={`/cart/payment/summary`} exact><PaymentSummary /> </Route>
-      </Switch>
-
-      {paymentStep !== 3 ? <BigNextLinkBtn linkPath={`/cart/payment/summary`} clickHandler={handleGoNext}>Go to summary</BigNextLinkBtn> : null}
-      <BigReturnBtn clickHandler={handleGoBack}>Back</BigReturnBtn>
+      <div className={routesWrapper}>
+        <Switch>
+          <Route path={`/cart/payment`} exact ><PaymentOptions /></Route>
+          <Route path={`/cart/payment/summary`} exact><PaymentSummary /> </Route>
+        </Switch>
+      </div>
+      <span className={nextBtn}>
+        <PriceSummary />
+        {paymentStep !== 3 ? <BigNextLinkBtn linkPath={`/cart/payment/summary`} clickHandler={handleGoNext}>Go to summary</BigNextLinkBtn> : null}
+      </span>
+      <span className={prevBtn}><BigReturnBtn clickHandler={handleGoBack}>Back</BigReturnBtn></span>
     </div>
   );
 }

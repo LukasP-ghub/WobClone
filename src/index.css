@@ -8,6 +8,11 @@
 
 button,a{
   all:unset;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+a:visited{
+  color:black;
 }
 
 html{
@@ -30,6 +35,6 @@ code {
 }
 #root{
   overflow-x: hidden;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }

@@ -5,7 +5,7 @@ import Section from './Section';
 import styles from './PaymentOptions.module.scss';
 
 
-const { addressData, price, paymentOption, paymentOptions, selectedPayment, toPay, } = styles;
+const { addressData, paymentOption, paymentOptions, selectedPayment, } = styles;
 
 export interface PaymentOptionsProps {
 
@@ -42,11 +42,6 @@ const PaymentOptions: React.FC<PaymentOptionsProps> = () => {
         <div className={paymentOption} >PayU</div>
       </div>
     </Section>
-
-    <section className={toPay}>
-      <h3>To pay:</h3>
-      <span className={price}>{cartCtx.pricing.actualPrice} zł</span>
-    </section>
   </>
 }
 

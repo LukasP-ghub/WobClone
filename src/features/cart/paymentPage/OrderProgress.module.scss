@@ -41,3 +41,9 @@
     background-color: black;
   }
 }
+
+@media(min-width:950px){
+  .orderProgressWrapper{
+    grid-area: progress;
+  }
+}

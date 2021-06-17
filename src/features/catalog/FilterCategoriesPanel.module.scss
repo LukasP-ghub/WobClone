@@ -24,10 +24,17 @@
   @include panelHeadM;
   z-index: 201;
 
+  & .title::before{
+    content: '\003C';
+    font-size: 2rem;
+    margin-right: 5px;
+   } 
+
   .clearFiltersBtn{
     position: absolute;
     right:20px;
     line-height: $headHeight;
+    font-size: 1.5rem;
   }
 
   &.show{
@@ -41,17 +48,76 @@
   list-style: none;
   font-size: 2rem;
   
-  li{
+  .catListItemWarp{
     width: 100%;
     flex-basis: 5rem;
     line-height: 5rem;
     padding: 0 1rem;
     border-bottom:1px solid gray;
 
+    &:first-child{
+      background-color: lightgray;
+      border-bottom: none;
+    }
+  }
+}
+
+
+@media (min-width:950px){
+  .panelHead{
+    display: none;
   }
 
-  li:first-child{
-    background-color: lightgray;
-    border-bottom: none;
+ .wrapper{
+   grid-column: 1/2;
+   position: static;
+   height: fit-content;
+   padding-top: 0;
+   box-shadow: 0 0 5px 1px $silver;
+   background-color: transparent;
+   z-index: auto;
+
+   .categoryList{
+    font-size: 1.8rem;
+    
+    .catListItemWarp{
+      flex-basis: 2rem;
+      line-height: 2rem;
+      padding: 0.4em 0;
+      border-bottom:none;
+      text-align: center;
+      transition: transform 0.1s;
+
+      &:hover{
+        transform: scale(1.2);
+      }
+
+      &:first-child{
+        background-color: $light-skyblue;
+        border-bottom: none;
+        transform: none;
+      }
+
+      .catListItemLink{
+        position: relative;
+
+         &::after{
+            position: absolute;
+            content: '';
+            bottom: -1px;
+            left: 50%;
+            width: 100%;
+            border-bottom: 1px solid $light-blue;
+            transform: translateX(-50%) scaleX(0);
+            transition: transform 0.2s;
+        }
+
+        &:hover::after{
+          transform: translateX(-50%) scaleX(1);
+        }
+      }
+      
+    }
   }
+ }
 }

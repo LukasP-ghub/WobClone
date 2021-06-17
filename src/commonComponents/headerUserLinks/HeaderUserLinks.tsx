@@ -19,15 +19,14 @@ const HeaderUserLinks: React.FC<HeaderUserLinksProps> = () => {
         <span>
           <Link to='/sign-page/login' className={margins}>
             Sign In
-        </Link>
+          </Link>
           <Link to='/sign-page/register' className={margins}>
             Sign Up
-        </Link>
+          </Link>
         </span> :
         <span>
           <button onClick={signOut} className={margins}>Sign Out</button>
         </span>}
-
 
     </header>
   );

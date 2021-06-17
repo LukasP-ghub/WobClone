@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { db } from '../firebase';
+import { RootState } from '../store/store';
 
 type containerState = {
   categories: { category: string, popular: string }[],
@@ -20,13 +21,13 @@ const initialState: containerState = {
   error: null,
 }
 
-export const fetchCategories = createAsyncThunk(
+export const fetchCategories = createAsyncThunk<any, any, { state: RootState }>(
   'categories/getCategoriesStatus',
   async (params: any, { getState, requestId }) => {
-    // const { currentRequestId, status } = getState().container;
-    // if (status !== 'pending' || requestId !== currentRequestId) {
-    //   return;
-    //  }
+    const { currentRequestId, status } = getState().container;
+    if (status !== 'pending' || requestId !== currentRequestId) {
+      return;
+    }
     let output: any = [];
     const categoriesRef = await db.collection("categories").get();
     await categoriesRef.forEach((doc) => {
@@ -46,25 +47,33 @@ export const containerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCategories.pending, (state, action) => {
-      state.categories = [];
-      state.status = 'loading';
-      state.currentRequestId = action.meta.requestId;
+      if (state.status === 'idle') {
+        state.categories = [];
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId;
+      }
     })
     builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = [...action.payload];
-      state.status = 'idle';
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.categories = [...action.payload];
+        state.status = 'idle';
+        state.currentRequestId = undefined;
+      }
     })
     builder.addCase(fetchCategories.rejected, (state, action) => {
-      state.status = 'idle';
-      state.error = action.payload;
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.status = 'idle';
+        state.error = action.error;
+        state.currentRequestId = undefined;
+      }
     })
   }
 });
 
 /* --- SELECTORS --- */
-
+export const selectError = (state: RootState) => state.container.error;
 
 /* --- EXPORTS --- */
 //export const { } = sliderSlice.actions;

@@ -37,9 +37,13 @@ const initialState: SearcherState = {
   error: null,
 }
 
-export const fetchForSearch = createAsyncThunk(
+export const fetchForSearch = createAsyncThunk<any, any, { state: RootState }>(
   'searchEbook/getDataStatus',
-  async (params, { getState, requestId }) => {
+  async (params: any, { getState, requestId }) => {
+    const { currentRequestId, status } = getState().searcher;
+    if (status !== 'pending' || requestId !== currentRequestId) {
+      return;
+    }
 
     let output: any = [];
     let ebooksRef = await db.collection("ebooks").get();
@@ -66,25 +70,33 @@ export const searcherSlice = createSlice({
     setSearchResults: (state, action: PayloadAction<SearchResultsPayload[] | []>) => {
       state.searchResults = action.payload;
     },
-    setShowSearchBar: (state) => {
-      state.showSearchBar = !state.showSearchBar;
+    setShowSearchBar: (state, action: PayloadAction<boolean | undefined>) => {
+      state.showSearchBar = action.payload ?? !state.showSearchBar;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchForSearch.pending, (state, action) => {
-      state.ebooks = [];
-      state.status = 'loading';
-      state.currentRequestId = action.meta.requestId;
+      if (state.status === 'idle') {
+        state.ebooks = [];
+        state.status = 'pending';
+        state.currentRequestId = action.meta.requestId;
+      }
     })
     builder.addCase(fetchForSearch.fulfilled, (state, action) => {
-      state.ebooks.push(...action.payload);
-      state.status = 'idle';
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.ebooks.push(...action.payload);
+        state.status = 'idle';
+        state.currentRequestId = undefined;
+      }
     })
     builder.addCase(fetchForSearch.rejected, (state, action) => {
-      state.status = 'idle';
-      state.error = action.payload;
-      state.currentRequestId = undefined;
+      const { requestId } = action.meta;
+      if (state.status === 'pending' && state.currentRequestId === requestId) {
+        state.status = 'idle';
+        state.error = action.error;
+        state.currentRequestId = undefined;
+      }
     })
   },
 });
@@ -95,6 +107,7 @@ export const selectEbooks = (state: RootState) => state.searcher.ebooks;
 export const selectSearchKey = (state: RootState) => state.searcher.searchKey;
 export const selectSearchResults = (state: RootState) => state.searcher.searchResults;
 export const selectShowSearchBar = (state: RootState) => state.searcher.showSearchBar;
+export const selectError = (state: RootState) => state.searcher.error;
 
 /* --- EXPORTS --- */
 

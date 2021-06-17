@@ -1,5 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
+import useWidth from '../../helpers/useWidth';
+
 import { selectShowSearchBar, setShowSearchBar } from './searcherSlice';
 
 import SearchBar from './SearchBar';
@@ -10,9 +12,15 @@ const { searchIcon, searchWrapper } = styles;
 function Searcher() {
   const dispatch = useAppDispatch();
   const isVisible = useAppSelector(selectShowSearchBar);
+  const { currWidth, prevWidth } = useWidth();
+
+  useEffect(() => {
+    if (currWidth < 950 && prevWidth >= 950) dispatch(setShowSearchBar(false));
+    if (currWidth >= 950) dispatch(setShowSearchBar(true));
+  }, [currWidth, prevWidth, dispatch])
 
   return (
-    <React.Fragment>
+    <>
       <div className={searchWrapper} onClick={() => { dispatch(setShowSearchBar()) }}>
         <div className={searchIcon}>
           <svg id="i-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
@@ -22,7 +30,7 @@ function Searcher() {
         </div>
       </div>
       {isVisible ? <SearchBar /> : null}
-    </React.Fragment>
+    </>
   );
 }
 
