@@ -1,0 +1,2 @@
+(this["webpackJsonpwob-clone"]=this["webpackJsonpwob-clone"]||[]).push([[25],{156:function(n,e,a){n.exports={banner:"Banner_banner__3zia2"}},301:function(n,e,a){"use strict";a.r(e);var c=a(156),r=a.n(c),s=a(1);e.default=function(){return Object(s.jsx)("div",{className:r.a.banner,children:"blavla"})}}}]);
+//# sourceMappingURL=25.05322053.chunk.js.map

@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/commonComponents/showError/ShowError.module.scss"],"names":[],"mappings":"AAAA,sBACE,YAAa,CACb,oBAAqB,CACrB,aAAc,CACd,aAAc","file":"0.2e039238.chunk.css","sourcesContent":[".err{\r\n  display: grid;\r\n  place-content: center;\r\n  margin: 0 auto;\r\n  font-size: 2em;\r\n}"]}
