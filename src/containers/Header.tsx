@@ -19,13 +19,13 @@ function Header() {
   }, [dispatch])
 
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Navigation />
       <Logo />
       <Searcher />
       <User />
       <Cart />
-    </div>
+    </header>
   );
 }
 

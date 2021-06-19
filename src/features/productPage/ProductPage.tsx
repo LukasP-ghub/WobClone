@@ -5,12 +5,13 @@ import useWidth from '../../helpers/useWidth';
 import { selectProduct, selectError } from './productPageSlice';
 import { fetchProduct, setShowSidePanel, setSidePanelContent } from './productPageSlice';
 
-import covers from '../../assets/images'
 import ShowError from '../../commonComponents/showError/ShowError';
 import SidePanel from './SidePanel';
 import ProductRating from './ProductRating';
 import ProductBuy from './ProductBuy';
 
+import covers from '../../assets/images'
+import ChevronRight from '../../assets/svg/ChevronRight';
 import styles from './ProductPage.module.scss';
 
 const { ellipsis, indent, picture, productInfo, productRating, productDescription, section, sectionContent, sidePanelArrow, wrapper } = styles;
@@ -77,9 +78,7 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
             body: 'rating',
           })}>
 
-          <svg id="i-chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <path d="M12 30 L24 16 12 2" />
-          </svg>
+          <ChevronRight />
         </button>
 
         <article className={`${sectionContent} ${indent}`}>
@@ -100,9 +99,7 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
             body: product.description,
           })}>
 
-          <svg id="i-chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <path d="M12 30 L24 16 12 2" />
-          </svg>
+          <ChevronRight />
         </button>
 
         <article className={`${sectionContent} ${indent} ${currWidth < 950 ? ellipsis : null}`}>

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../helpers/types/hooks';
 
 import { selectProduct } from './productPageSlice';
 
+import StarIcon from '../../assets/svg/StarIcon';
 import styles from './ProductRating.module.scss';
 
 const { flexColumn, numberRating, starIcon, starFilled, wrapper } = styles;
@@ -33,11 +34,7 @@ const ProductRating: React.FC<{ isSidePanel: boolean }> = ({ isSidePanel }) => {
 
   return (
     <div className={`${wrapper} ${checkSidePanel}`}>
-      <svg id="i-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" style={{ display: 'none' }}>
-        <symbol id="star">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.5" d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
-        </symbol>
-      </svg>
+      <StarIcon />
       <div className={numberRating}>{`${product.rating.value} / ${product.rating.maxValue}`}</div>
       <span>{ratingStarsArr}</span>
     </div>

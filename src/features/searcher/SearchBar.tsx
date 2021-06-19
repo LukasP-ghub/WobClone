@@ -2,23 +2,22 @@ import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 import { Link } from 'react-router-dom';
 
-import { selectEbooks, selectSearchKey, selectSearchResults, selectError } from './searcherSlice';
+import { selectEbooks, selectSearchKey, selectSearchResults } from './searcherSlice';
 import { setShowSearchBar, setSearchKey, setSearchResults } from './searcherSlice';
 import { fetchForSearch } from './searcherSlice';
 import { SearchResultsPayload } from './searcherSlice';
 
-import ShowError from '../../commonComponents/showError/ShowError';
-
+import SearchIcon from '../../assets/svg/SearchIcon';
+import CloseIcon from '../../assets/svg/CloseIcon';
 import styles from './SearchBar.module.scss';
 
-const { closeIcon, ellipsis, searchBar, searchInput, searchResultsList, underText, wrapper } = styles;
+const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchResultsList, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const ebooks = useAppSelector(selectEbooks);
   const searchKey = useAppSelector(selectSearchKey);
   const searchResults = useAppSelector(selectSearchResults);
-  const fetchError = useAppSelector(selectError);
   const listElRef = useRef<HTMLAnchorElement[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -104,21 +103,14 @@ const SearchBar: React.FC = () => {
       tabIndex={-1}>
       <div className={wrapper}>
 
-        <button>
-          <svg id="i-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <circle cx="14" cy="14" r="12" />
-            <path d="M23 23 L30 30" />
-          </svg>
+        <button className={searchBtn}>
+          <SearchIcon />
         </button>
 
-        {/*---INPUT---*/}
         <input className={searchInput} ref={inputRef} type="text" autoComplete='off' placeholder="Szukaj" name="searchField" onChange={(e) => { dispatch(setSearchKey(e.target.value)) }} />
 
-        {/*---Close Icon--- */}
         <button className={closeIcon} onClick={() => { dispatch(setShowSearchBar()) }}>
-          <svg id="i-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <path d="M2 30 L30 2 M30 30 L2 2" />
-          </svg>
+          <CloseIcon />
         </button>
 
         {/*---Search Dropdown--- */}

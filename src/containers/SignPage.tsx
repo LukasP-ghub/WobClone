@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 

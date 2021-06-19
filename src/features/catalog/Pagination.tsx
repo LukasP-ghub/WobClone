@@ -1,3 +1,5 @@
+import ChevronLeft from '../../assets/svg/ChevronLeft';
+import ChevronRight from '../../assets/svg/ChevronRight';
 import styles from './Pagination.module.scss';
 
 const { dots, paginationWrapper } = styles;
@@ -19,11 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagesCount, ebooksForScreenArrL
     {ebooksForScreenArrLength > 0 && <ul className={paginationWrapper}>
 
       <li onClick={() => { return page <= 1 ? null : setPage(prevPage => --prevPage) }}>
-
-        <svg id="i-chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-          <path d="M20 30 L8 16 20 2" />
-        </svg>
-
+        <ChevronLeft width={20} height={20} />
       </li>
 
       <li onClick={() => setPage(1)}><span>1</span></li>
@@ -39,9 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagesCount, ebooksForScreenArrL
       {pagesCount > 5 ? <li onClick={() => setPage(pagesCount)}><span>{pagesCount}</span></li> : null}
 
       <li onClick={() => { return page >= pagesCount ? null : setPage(prevPage => ++prevPage) }} >
-        <svg id="i-chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-          <path d="M12 30 L24 16 12 2" />
-        </svg>
+        <ChevronRight />
       </li>
     </ul>}
   </>

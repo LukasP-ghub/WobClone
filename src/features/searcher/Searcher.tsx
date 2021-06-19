@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 import useWidth from '../../helpers/useWidth';
 
 import { selectShowSearchBar, setShowSearchBar } from './searcherSlice';
 
-import SearchBar from './SearchBar';
+import SearchIcon from '../../assets/svg/SearchIcon';
 import styles from './Searcher.module.scss';
+
+const SearchBar = lazy(() => import('./SearchBar'));
 
 const { searchIcon, searchWrapper } = styles;
 
@@ -23,13 +25,10 @@ function Searcher() {
     <>
       <div className={searchWrapper} onClick={() => { dispatch(setShowSearchBar()) }}>
         <div className={searchIcon}>
-          <svg id="i-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-            <circle cx="14" cy="14" r="12" />
-            <path d="M23 23 L30 30" />
-          </svg>
+          <SearchIcon />
         </div>
       </div>
-      {isVisible ? <SearchBar /> : null}
+      {isVisible ? <Suspense fallback={<div>Loading...</div>}><SearchBar /></Suspense> : null}
     </>
   );
 }

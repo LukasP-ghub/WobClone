@@ -5,6 +5,7 @@ import CartContext from '../../store/cartContext';
 import ProductModel from '../../helpers/types/ProductModel';
 import styles from './ProductCard.module.scss';
 import covers from '../../assets/images';
+import CartIcon from '../../assets/svg/CartIcon';
 
 const { card, cardCover, cardFull, picture, price, productDetails, title } = styles;
 const { toCartBtn } = styles;
@@ -45,11 +46,7 @@ const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemW
 
       {/* --- BUTTON ADD TO CART ---  */}
       <button className={toCartBtn} onClick={() => cartCtx.addToCart(ebook)}>
-        <svg id="i-cart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-          <path d="M6 6 L30 6 27 19 9 19 M27 23 L10 23 5 2 2 2" />
-          <circle cx="25" cy="27" r="2" />
-          <circle cx="12" cy="27" r="2" />
-        </svg>
+        <CartIcon width={26} height={26} strokeColor='white' />
       </button>
     </li>
   );

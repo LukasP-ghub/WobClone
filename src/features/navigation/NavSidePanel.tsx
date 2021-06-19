@@ -5,6 +5,8 @@ import { selectIsVisibleNavSP, selectIsVisibleCatSP } from './navigationSlice';
 
 import Backdrop from '../../commonComponents/backdrop/Backdrop';
 import NavComponent from './NavComponent';
+
+import CloseIcon from '../../assets/svg/CloseIcon';
 import styles from './NavSidePanel.module.scss';
 
 const { header, productType, sidePanel, showSidePanel, closeIcon } = styles;
@@ -17,13 +19,11 @@ function NavSidePanel() {
   return (
     <>
       {isVisible ? <Backdrop /> : null}
-      <div className={`${sidePanel} ${isVisible ? showSidePanel : null}`} >
+      <nav className={`${sidePanel} ${isVisible ? showSidePanel : null}`} >
         <div className={header}>
           <div className={productType}>Ebooki</div>
           <div className={closeIcon} onClick={() => dispatch(showNavSidePanel())}>
-            <svg id="i-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
-              <path d="M2 30 L30 2 M30 30 L2 2" />
-            </svg>
+            <CloseIcon />
           </div>
         </div>
         <NavComponent name="Kategorie" extended={true}
@@ -34,7 +34,7 @@ function NavSidePanel() {
         <NavComponent name="Nowości" onClick={() => { dispatch(showNavSidePanel()) }} />
         <NavComponent name="Top 100" onClick={() => { dispatch(showNavSidePanel()) }} />
         <NavComponent name="Darmowe ebooki" onClick={() => { dispatch(showNavSidePanel()) }} />
-      </div>
+      </nav>
     </>
   );
 }
