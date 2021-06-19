@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/WobClone/static/css/main.0eccbffd.chunk.css",
+    "main.css": "/WobClone/static/css/main.89262473.chunk.css",
     "main.js": "/WobClone/static/js/main.94ac091c.chunk.js",
     "main.js.map": "/WobClone/static/js/main.94ac091c.chunk.js.map",
     "runtime-main.js": "/WobClone/static/js/runtime-main.7297a49a.js",
@@ -34,7 +34,7 @@
     "static/css/7.e2b3fba6.chunk.css.map": "/WobClone/static/css/7.e2b3fba6.chunk.css.map",
     "static/css/8.b6cd5f02.chunk.css.map": "/WobClone/static/css/8.b6cd5f02.chunk.css.map",
     "static/css/9.e59b30dd.chunk.css.map": "/WobClone/static/css/9.e59b30dd.chunk.css.map",
-    "static/css/main.0eccbffd.chunk.css.map": "/WobClone/static/css/main.0eccbffd.chunk.css.map",
+    "static/css/main.89262473.chunk.css.map": "/WobClone/static/css/main.89262473.chunk.css.map",
     "static/js/3.f91f3e32.chunk.js.LICENSE.txt": "/WobClone/static/js/3.f91f3e32.chunk.js.LICENSE.txt",
     "static/media/blue-butterfly-medium.8a5789da.jpg": "/WobClone/static/media/blue-butterfly-medium.8a5789da.jpg",
     "static/media/blue-butterfly-small.25ddfdf8.jpg": "/WobClone/static/media/blue-butterfly-small.25ddfdf8.jpg",
@@ -50,7 +50,7 @@
   "entrypoints": [
     "static/js/runtime-main.7297a49a.js",
     "static/js/3.f91f3e32.chunk.js",
-    "static/css/main.0eccbffd.chunk.css",
+    "static/css/main.89262473.chunk.css",
     "static/js/main.94ac091c.chunk.js"
   ]
 }
