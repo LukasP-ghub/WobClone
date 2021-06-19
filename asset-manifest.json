@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/WobClone/static/css/main.0eccbffd.chunk.css",
-    "main.js": "/WobClone/static/js/main.39b495bd.chunk.js",
-    "main.js.map": "/WobClone/static/js/main.39b495bd.chunk.js.map",
+    "main.js": "/WobClone/static/js/main.94ac091c.chunk.js",
+    "main.js.map": "/WobClone/static/js/main.94ac091c.chunk.js.map",
     "runtime-main.js": "/WobClone/static/js/runtime-main.7297a49a.js",
     "runtime-main.js.map": "/WobClone/static/js/runtime-main.7297a49a.js.map",
     "static/js/2.fdd2084a.chunk.js": "/WobClone/static/js/2.fdd2084a.chunk.js",
@@ -51,6 +51,6 @@
     "static/js/runtime-main.7297a49a.js",
     "static/js/3.f91f3e32.chunk.js",
     "static/css/main.0eccbffd.chunk.css",
-    "static/js/main.39b495bd.chunk.js"
+    "static/js/main.94ac091c.chunk.js"
   ]
 }
