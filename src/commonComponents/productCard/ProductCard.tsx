@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemW
 
   return (
     <li className={`${card} ${cardStyleVersion === 'cover' ? cardCover : cardFull}`} style={{ width: `${itemWidth}px` }}>
-      {/*--- CARD IS LINK TO PRODUCT PAGE ---*/}
+
       <Link to={{
         pathname: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,
         state: {

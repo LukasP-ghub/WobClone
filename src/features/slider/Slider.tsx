@@ -1,15 +1,15 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { lazy, Suspense, useState, useEffect, useCallback, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
 import { selectProducts, selectError, fetchRandomEbooks } from './sliderSlice';
 
-import ProductCard from '../../commonComponents/productCard/ProductCard';
-import ShowError from '../../commonComponents/showError/ShowError';
-import SliderPage from './SliderPage';
-
 import styles from './Slider.module.scss';
 
 const { slider, arrow, leftArr, rightArr, pagesContainer, sliderPages, sliderPage, active } = styles;
+
+const ProductCard = lazy(() => import('../../commonComponents/productCard/ProductCard'));
+const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
+const SliderPage = lazy(() => import('./SliderPage'));
 
 const Slider: React.FC = () => {
   const [slidePage, setSlidePage] = useState(0);
@@ -66,24 +66,26 @@ const Slider: React.FC = () => {
 
   return (
     <div className={slider}>
-      {/* slider pages */}
-      <div className={pagesContainer} ref={pagesContRef} >
-        {fetchError ? <ShowError /> : pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* slider pages */}
+        <div className={pagesContainer} ref={pagesContRef} >
+          {fetchError ? <ShowError /> : pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
+        </div>
 
-      {/* elements for selecting page  */}
-      <ul className={sliderPages}>
-        {pagesArray.map((item, index) => {
-          return <li
-            key={Math.random()}
-            className={`${sliderPage} ${slidePage === index ? active : null}`}
-            onClick={() => turnPage(index + 100)} />
-        })}
-      </ul>
+        {/* elements for selecting page  */}
+        <ul className={sliderPages}>
+          {pagesArray.map((item, index) => {
+            return <li
+              key={Math.random()}
+              className={`${sliderPage} ${slidePage === index ? active : null}`}
+              onClick={() => turnPage(index + 100)} />
+          })}
+        </ul>
 
-      {/* elements for turning page*/}
-      <span className={`${arrow} ${leftArr} `} onClick={() => turnPage(-1)}>&lt;</span>
-      <span className={`${arrow} ${rightArr}`} onClick={() => turnPage(1)}>&gt;</span>
+        {/* elements for turning page*/}
+        <span className={`${arrow} ${leftArr} `} onClick={() => turnPage(-1)}>&lt;</span>
+        <span className={`${arrow} ${rightArr}`} onClick={() => turnPage(1)}>&gt;</span>
+      </Suspense>
     </div>
   );
 }

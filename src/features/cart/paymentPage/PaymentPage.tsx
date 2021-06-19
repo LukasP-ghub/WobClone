@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import TopBarFixed from '../../../commonComponents/topBarFixed/TopBarFixed';
-import HeaderUserLinks from '../../../commonComponents/headerUserLinks/HeaderUserLinks';
-import BigNextLinkBtn from '../../../commonComponents/buttons/BigNextLinkBtn';
-import BigReturnBtn from '../../../commonComponents/buttons/BigReturnBtn';
-
-import PriceSummary from '../PriceSummary';
-import OrderProgress from './OrderProgress';
-import PaymentOptions from './PaymentOptions';
-import PaymentSummary from './PaymentSummary';
-
 import styles from './PaymentPage.module.scss';
+
+const TopBarFixed = lazy(() => import('../../../commonComponents/topBarFixed/TopBarFixed'));
+const HeaderUserLinks = lazy(() => import('../../../commonComponents/headerUserLinks/HeaderUserLinks'));
+const BigNextLinkBtn = lazy(() => import('../../../commonComponents/buttons/BigNextLinkBtn'));
+const BigReturnBtn = lazy(() => import('../../../commonComponents/buttons/BigReturnBtn'));
+const PriceSummary = lazy(() => import('../PriceSummary'));
+const OrderProgress = lazy(() => import('./OrderProgress'));
+const PaymentOptions = lazy(() => import('./PaymentOptions'));
+const PaymentSummary = lazy(() => import('./PaymentSummary'));
 
 const { nextBtn, prevBtn, routesWrapper, wrapper } = styles;
 
@@ -35,23 +34,25 @@ const PaymentPage: React.FC<PaymentPageProps> = () => {
 
   return (
     <div className={wrapper}>
-      <TopBarFixed>
-        <HeaderUserLinks />
-      </TopBarFixed>
+      <Suspense fallback={<div>Loading...</div>}>
+        <TopBarFixed>
+          <HeaderUserLinks />
+        </TopBarFixed>
 
-      <OrderProgress step={paymentStep} />
+        <OrderProgress step={paymentStep} />
 
-      <div className={routesWrapper}>
-        <Switch>
-          <Route path={`/cart/payment`} exact ><PaymentOptions /></Route>
-          <Route path={`/cart/payment/summary`} exact><PaymentSummary /> </Route>
-        </Switch>
-      </div>
-      <span className={nextBtn}>
-        <PriceSummary />
-        {paymentStep !== 3 ? <BigNextLinkBtn linkPath={`/cart/payment/summary`} clickHandler={handleGoNext}>Go to summary</BigNextLinkBtn> : null}
-      </span>
-      <span className={prevBtn}><BigReturnBtn clickHandler={handleGoBack}>Back</BigReturnBtn></span>
+        <div className={routesWrapper}>
+          <Switch>
+            <Route path={`/cart/payment`} exact ><PaymentOptions /></Route>
+            <Route path={`/cart/payment/summary`} exact><PaymentSummary /> </Route>
+          </Switch>
+        </div>
+        <span className={nextBtn}>
+          <PriceSummary />
+          {paymentStep !== 3 ? <BigNextLinkBtn linkPath={`/cart/payment/summary`} clickHandler={handleGoNext}>Go to summary</BigNextLinkBtn> : null}
+        </span>
+        <span className={prevBtn}><BigReturnBtn clickHandler={handleGoBack}>Back</BigReturnBtn></span>
+      </Suspense>
     </div>
   );
 }

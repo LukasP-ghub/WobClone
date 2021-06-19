@@ -16,12 +16,11 @@ const PaymentOptions: React.FC<PaymentOptionsProps> = () => {
   const [prevOption, setPrevOption] = useState<HTMLDivElement | null>(null);
 
   const handlePaymentMethod = (e: any) => {
-    const method = e.target.textContent;
     const paymentOption = e.target;
     if (prevOption) prevOption.classList.toggle(selectedPayment);
     paymentOption.classList.toggle(selectedPayment);
     setPrevOption(paymentOption);
-    cartCtx.choosePaymentMethod(method);
+    cartCtx.choosePaymentMethod(paymentOption.textContent);
   }
 
   return <>

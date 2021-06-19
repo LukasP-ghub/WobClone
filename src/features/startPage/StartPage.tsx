@@ -1,9 +1,10 @@
-import Slider from '../slider/Slider';
-import Banner from '../banner/Banner';
-
+import { lazy, Suspense } from 'react';
 import styles from './StartPage.module.scss';
 
 const { } = styles;
+
+const Slider = lazy(() => import('../slider/Slider'));
+const Banner = lazy(() => import('../banner/Banner'));
 
 export interface StartPageProps {
 
@@ -12,8 +13,10 @@ export interface StartPageProps {
 const StartPage: React.FC<StartPageProps> = () => {
   return (
     <>
-      <Slider />
-      <Banner />
+      <Suspense fallback={<div>Loading</div>}>
+        <Slider />
+        <Banner />
+      </Suspense>
     </>
   );
 }

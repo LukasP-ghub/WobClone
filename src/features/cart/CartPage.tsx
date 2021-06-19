@@ -1,17 +1,15 @@
-import { useContext } from 'react';
+import { lazy, Suspense, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import HeaderUserLinks from '../../commonComponents/headerUserLinks/HeaderUserLinks';
-import TopBarFixed from '../../commonComponents/topBarFixed/TopBarFixed';
-import BigNextLinkBtn from '../../commonComponents/buttons/BigNextLinkBtn';
-import BigReturnBtn from '../../commonComponents/buttons/BigReturnBtn';
 import CartContext from '../../store/cartContext';
-
-import PriceSummary from './PriceSummary';
-
-
 import styles from './CartPage.module.scss'
 import covers from '../../assets/images';
+
+const HeaderUserLinks = lazy(() => import('../../commonComponents/headerUserLinks/HeaderUserLinks'));
+const TopBarFixed = lazy(() => import('../../commonComponents/topBarFixed/TopBarFixed'));
+const BigNextLinkBtn = lazy(() => import('../../commonComponents/buttons/BigNextLinkBtn'));
+const BigReturnBtn = lazy(() => import('../../commonComponents/buttons/BigReturnBtn'));
+const PriceSummary = lazy(() => import('./PriceSummary'));
 
 const { cartTab, cartTabs, product, productsList, productImg, productTitle, productPrice, wrapper } = styles;
 const { removeProductBtn } = styles;
@@ -37,26 +35,28 @@ function CartPage() {
 
   return (
     <div className={wrapper}>
-      {/* --- HEADER --- */}
-      <TopBarFixed>
-        <HeaderUserLinks />
-      </TopBarFixed>
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* --- HEADER --- */}
+        <TopBarFixed>
+          <HeaderUserLinks />
+        </TopBarFixed>
 
-      {/* --- TABS  --- */}
-      <section className={cartTabs}>
-        <div className={cartTab}>Cart {`(${prodInCartQuantity})`}</div>
-      </section>
+        {/* --- TABS  --- */}
+        <section className={cartTabs}>
+          <div className={cartTab}>Cart {`(${prodInCartQuantity})`}</div>
+        </section>
 
-      {/* --- PRODUCTS IN CART --- */}
-      <section>
-        <ul className={productsList}>
-          {cartItems}
-        </ul>
-      </section>
-      <PriceSummary />
+        {/* --- PRODUCTS IN CART --- */}
+        <section>
+          <ul className={productsList}>
+            {cartItems}
+          </ul>
+        </section>
+        <PriceSummary />
 
-      <BigNextLinkBtn linkPath={`cart/payment`} clickHandler={() => { }}>Go to payment</BigNextLinkBtn>
-      <BigReturnBtn clickHandler={handleGoBack}>Back to shop</BigReturnBtn>
+        <BigNextLinkBtn linkPath={`cart/payment`} clickHandler={() => { }}>Go to payment</BigNextLinkBtn>
+        <BigReturnBtn clickHandler={handleGoBack}>Back to shop</BigReturnBtn>
+      </Suspense>
     </div>
   );
 }

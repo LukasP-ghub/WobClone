@@ -1,12 +1,13 @@
+import { lazy, Suspense } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 
 import { selectShowSidePanel, selectSidePanelContent } from './productPageSlice';
 import { setShowSidePanel } from './productPageSlice';
 
-import ProductRating from './ProductRating';
-
 import ChevronLeft from '../../assets/svg/ChevronLeft';
 import styles from './SidePanel.module.scss';
+
+const ProductRating = lazy(() => import('./ProductRating'));
 
 const { content, header, headerContent, headerContentWrapper, showPanel, wrapper, iChevronLeft, } = styles;
 
@@ -24,27 +25,29 @@ function SidePanel() {
 
   return (
     <>
-      <header className={`${header} ${checkShowPanel}`} >
-        <button className={iChevronLeft} onClick={showSidePanel}>
-          <ChevronLeft />
-        </button>
-        <div className={headerContentWrapper}>
-          <div className={headerContent} >
-            {title}
+      <Suspense fallback={<div>Loading...</div>}>
+        <header className={`${header} ${checkShowPanel}`} >
+          <button className={iChevronLeft} onClick={showSidePanel}>
+            <ChevronLeft />
+          </button>
+          <div className={headerContentWrapper}>
+            <div className={headerContent} >
+              {title}
+            </div>
+            {subtitle && <div className={headerContent}>
+              {subtitle}
+            </div>}
           </div>
-          {subtitle && <div className={headerContent}>
-            {subtitle}
-          </div>}
-        </div>
-      </header>
+        </header>
 
-      {/* BODY */}
-      <div className={`${wrapper} ${checkShowPanel}`} >
+        {/* BODY */}
+        <div className={`${wrapper} ${checkShowPanel}`} >
 
-        <div className={content}>
-          {body === 'rating' ? <ProductRating isSidePanel={true} /> : body}
+          <div className={content}>
+            {body === 'rating' ? <ProductRating isSidePanel={true} /> : body}
+          </div>
         </div>
-      </div>
+      </Suspense>
     </>
   );
 }

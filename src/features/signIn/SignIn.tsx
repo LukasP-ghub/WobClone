@@ -1,11 +1,12 @@
+import { lazy, Suspense } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
 
-import TextField from '../../commonComponents/formFields/TextField';
-
 import styles from './SignIn.module.scss'
+
+const TextField = lazy(() => import('../../commonComponents/formFields/TextField'));
 
 const { centerVH, submitBtn, wrapper } = styles;
 
@@ -30,34 +31,35 @@ const SignIn = () => {
 
 
   return <div className={wrapper}>
-    <h1>Sign In</h1>
+    <Suspense fallback={<div>Loading...</div>}>
+      <h1>Sign In</h1>
 
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={Yup.object(validation)}
-      onSubmit={(values, actions) => {
-        signIn(values.email, values.password)
-          .then((res) => {
-            actions.setSubmitting(false);
-            history.push('/');
-          })
-          .catch((error) => {
-            alert(`${error.code} ${error.message}`);
-          });
-      }}
-    >
-      {(props: FormikProps<Values>) => (
-        <Form>
-          <TextField name="email" type="email" label="Email" />
-          <TextField name="password" type="password" label="Password" />
-          <button type="submit" className={submitBtn} disabled={props.isSubmitting}><span className={centerVH}>Sign In</span></button>
-        </Form>
-      )}
-    </Formik>
-
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={Yup.object(validation)}
+        onSubmit={(values, actions) => {
+          signIn(values.email, values.password)
+            .then((res) => {
+              actions.setSubmitting(false);
+              history.push('/');
+            })
+            .catch((error) => {
+              alert(`${error.code} ${error.message}`);
+            });
+        }}
+      >
+        {(props: FormikProps<Values>) => (
+          <Form>
+            <TextField name="email" type="email" label="Email" />
+            <TextField name="password" type="password" label="Password" />
+            <button type="submit" className={submitBtn} disabled={props.isSubmitting}><span className={centerVH}>Sign In</span></button>
+          </Form>
+        )}
+      </Formik>
+    </Suspense>
   </div>
 }
 
