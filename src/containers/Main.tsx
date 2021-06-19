@@ -15,9 +15,9 @@ function Main() {
     <main className={mainPage} >
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route path="/" exact><StartPage /></Route>
           <Route path="/catalog/:tag" exact><Catalog /></Route>
           <Route path="/ebook/:tags" exact render={(props) => <ProductPage {...props} />} />
+          <Route path="/"><StartPage /></Route>
         </Switch>
       </Suspense>
     </main>
