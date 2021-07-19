@@ -4,7 +4,6 @@ import styles from './StartPage.module.scss';
 const { } = styles;
 
 const Slider = lazy(() => import('../slider/Slider'));
-const Banner = lazy(() => import('../banner/Banner'));
 
 export interface StartPageProps {
 
@@ -15,7 +14,6 @@ const StartPage: React.FC<StartPageProps> = () => {
     <>
       <Suspense fallback={<div>Loading</div>}>
         <Slider />
-        <Banner />
       </Suspense>
     </>
   );
