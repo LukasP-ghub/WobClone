@@ -1,0 +1,2 @@
+(this["webpackJsonpwob-clone"]=this["webpackJsonpwob-clone"]||[]).push([[34],{287:function(t,e,s){"use strict";s.r(e);var n=s(288),i=s.n(n),a=s(1),c=i.a.itemList;e.default=function(t){var e=t.slidePage,s=t.children;return Object(a.jsx)("ul",{className:c,style:{transform:"translateX(".concat(-100*e,"%)")},children:s})}},288:function(t,e,s){t.exports={itemList:"SliderPage_itemList__1oS7R"}}}]);
+//# sourceMappingURL=34.775eb3ca.chunk.js.map

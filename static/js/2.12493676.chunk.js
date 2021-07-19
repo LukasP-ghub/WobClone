@@ -1,0 +1,2 @@
+(this["webpackJsonpwob-clone"]=this["webpackJsonpwob-clone"]||[]).push([[2],{110:function(t,n,o){"use strict";o.r(n);var e=o(266),c=o.n(e),r=o(1),a=c.a.topBar;n.default=function(t){return Object(r.jsx)("div",{className:a,children:t.children})}},266:function(t,n,o){t.exports={topBar:"TopBarFixed_topBar__2tP4A"}}}]);
+//# sourceMappingURL=2.12493676.chunk.js.map

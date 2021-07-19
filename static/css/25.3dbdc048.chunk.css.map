@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/features/banner/Banner.module.scss"],"names":[],"mappings":"AAAA,sBACE,YAAa,CACb,SAAU,CACV,oBAAyB,CACzB,aAAc","file":"25.3dbdc048.chunk.css","sourcesContent":[".banner{\r\n  height: 200px;\r\n  width: 90%;\r\n  background-color: #ff0000;\r\n  margin: 15px 0;\r\n}"]}
