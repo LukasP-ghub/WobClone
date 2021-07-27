@@ -18,6 +18,7 @@
     width: 35px;
     margin: 0 2px;
     border: 1px dotted grey;
+    cursor: pointer;
 
     svg{
       display: block;
@@ -27,6 +28,10 @@
       top:50%;
       left:50%;
       transform: translate(-50%,-50%);
+    }
+
+    &.active{
+      border: 1px solid black;
     }
   }
 
