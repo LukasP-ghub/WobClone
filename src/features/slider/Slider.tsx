@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState, useEffect, useCallback, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
+import useWidth from '../../helpers/useWidth';
 
 import { selectProducts, selectError, fetchRandomEbooks } from './sliderSlice';
 
@@ -19,6 +20,7 @@ const Slider: React.FC = () => {
   const products = useAppSelector(selectProducts);
   const fetchError = useAppSelector(selectError);
   const pagesContRef = useRef<HTMLDivElement>(null);
+  const { currWidth } = useWidth();
 
   // function for changing slider pages
   const turnPage = (count: number) => {
@@ -35,7 +37,7 @@ const Slider: React.FC = () => {
 
   //function calculate and fill number of pages and it elements
   const createPages = useCallback(() => {
-    const itemWidth: number = 90;
+    const itemWidth: number = currWidth > 950 ? 150 : 90;
     let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / itemWidth - 1);
     let pagesCount = Math.ceil(products.length / maxItemsCountPerPage);
     let index = 0;

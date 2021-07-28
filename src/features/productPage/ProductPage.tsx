@@ -58,10 +58,6 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
                   <td>Wydawca:</td>
                   <td>WobClone</td>
                 </tr>
-                <tr>
-                  <td>Wydawca:</td>
-                  <td>WobClone</td>
-                </tr>
               </tbody>
             </table>
           </article>

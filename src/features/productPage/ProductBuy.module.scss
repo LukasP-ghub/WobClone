@@ -25,10 +25,13 @@
 }
 
 @media (min-width:950px){
-  
     .toCartWrapper{
       position: static;
       grid-column: 3/4;
       grid-row: 1/2;
+      
+      .price{
+        padding-top: 10px;
+      }
     }
 }

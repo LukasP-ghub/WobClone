@@ -95,7 +95,28 @@ $toCartBtnDimensions: 40px;
     opacity:0.8;
   }
 
-.toCartBtn{
-display: none;
+  .toCartBtn{
+    display: none;
+  } 
 }
+ 
+@media  (min-width:950px) {
+  .cardCover{
+    .productDetails{
+      padding: 10% 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .title{
+        text-align: center;  
+      }
+
+      .price{
+        bottom: 15%;
+        font-size: 2rem;
+        @include centerH;
+      }
+    }
+  }
 }
