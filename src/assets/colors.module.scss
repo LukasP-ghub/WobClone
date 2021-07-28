@@ -3,7 +3,6 @@ $white-smoke: hsla(0, 0%, 99%, 1);
 $light-gray: hsla(217, 17%, 93%, 1);
 $silver: hsla(51, 1%, 88%, 1);
 $green:hsla(146, 50%, 46%,1);
-//$green:rgb(65, 228, 43);
 $light-green:hsl(118, 97%, 44%);
 $light-blue:hsla(202, 100%, 47%, 1);
 $light-skyblue:hsla(203, 92%, 75%,1);
@@ -12,16 +11,3 @@ $reddy: hsla(14, 100%, 50%,1);;
 
 $white-smoke-hover:hsla(0, 0%, 80%, 1);
 $white-smoke-opacityLow: hsla(0, 0%, 99%, 0.8);
-
-$gradient-top: linear-gradient(0deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-right: linear-gradient(90deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-bottom: linear-gradient(180deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-left: linear-gradient(270deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-top-right: linear-gradient(45deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-bottom-right: linear-gradient(135deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-top-left: linear-gradient(225deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-bottom-left: linear-gradient(315deg, #353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-radial: radial-gradient(#353535ff, #ffffffff, #d2d7dfff, #bdbbb0ff);
-
-$gradient-top-3: linear-gradient(0deg,  #ffffffff, #d2d7dfff, #bdbbb0ff);
-$gradient-bottom-3: linear-gradient(180deg, #ffffffff, #d2d7dfff, #bdbbb0ff);
