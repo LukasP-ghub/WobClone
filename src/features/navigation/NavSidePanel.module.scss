@@ -40,10 +40,26 @@
       color: white;
     }
   }
+
+  .linksContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:100%;
+
+    & >*{
+      transform: translateX(-100%);
+      transition: transform .2s;
+    }
+  }
 }
 
 .showSidePanel{
   transform: translateX(100vw);
+
+   & .linksContainer >*{
+    transform: translateX(0%);
+  }
 }
 
 
@@ -66,6 +82,16 @@
 
     .header{
       display: none;
+    }
+
+    .linksContainer{
+      flex-direction: row;
+      justify-content: space-between;
+  
+      & >*{
+        transform: none;
+        transition:none;
+      }
     }
 
   }

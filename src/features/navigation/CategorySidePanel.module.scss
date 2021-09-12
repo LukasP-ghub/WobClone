@@ -11,10 +11,26 @@
   transition: transform 0.2s ;
   z-index: 150;
   overflow-y: scroll;
+
+  .linksContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+
+    & >*{
+      transform: translateX(100%);
+      transition: transform .2s;
+    }
+  }
 }
 
 .showSidePanel{
   transform: translateX(-100%);
+
+  & .linksContainer >*{
+    transform: translateX(0%);
+  }
 }
 
 .headElement{
@@ -51,16 +67,25 @@
     width: 100%;
     height: 250px;
     grid-area: cat;
-    display: grid;
-    grid-template-columns: 150px;
-    grid-auto-rows: 3rem;
-    grid-auto-flow: row;
+    
     padding: 0 10px;
     transform-origin: top;
     transform: scaleY(0);
 
     .headElement{
       display: none;
+    }
+
+    .linksContainer{
+      display: grid;
+      grid-template-columns: 150px;
+      grid-auto-rows: 3rem;
+      grid-auto-flow: row;
+  
+      & >*{
+        transform: none;
+        transition:none;
+      }
     }
   }
 

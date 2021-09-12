@@ -5,12 +5,12 @@ import { selectIsVisibleCatSP, selectCategories, selectError } from './navigatio
 import useWidth from '../../helpers/useWidth';
 
 import NavComponent from './NavComponent';
+import Backdrop from '../../commonComponents/backdrop/Backdrop';
 import styles from './CategorySidePanel.module.scss';
 
-const Backdrop = lazy(() => import('../../commonComponents/backdrop/Backdrop'));
 const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
 
-const { categorySidePanel, showSidePanel, headElement, content } = styles;
+const { categorySidePanel, linksContainer, showSidePanel, headElement, content } = styles;
 
 function CategoryPanel() {
   const isVisibleCat = useAppSelector(selectIsVisibleCatSP);
@@ -25,15 +25,15 @@ function CategoryPanel() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        {isVisibleCat && currWidth < 950 ? <Backdrop /> : null}
-        <div className={`${categorySidePanel} ${isVisibleCat ? showSidePanel : null}`}>
-          <div className={headElement} onClick={() => dispatch(showCatSidePanel())}>
-            <div className={content}>Powrót</div>
-          </div>
-          {fetchError ? <ShowError /> : categories.map(item => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} /> })}
+      {isVisibleCat && currWidth < 950 ? <Backdrop /> : null}
+      <div className={`${categorySidePanel} ${isVisibleCat ? showSidePanel : null}`}>
+        <div className={headElement} onClick={() => dispatch(showCatSidePanel())}>
+          <div className={content}>Powrót</div>
         </div>
-      </Suspense>
+        <div className={linksContainer}>
+          {fetchError ? <Suspense fallback={<div>Loading...</div>}><ShowError /></Suspense> : categories.map((item, index) => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} transDelay={(index + 1) * 100} /> })}
+        </div>
+      </div>
     </>
   );
 }
