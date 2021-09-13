@@ -33,6 +33,15 @@
     &.active{
       border: 1px solid black;
     }
+
+    &:hover::after{
+      content:'';
+      position: absolute;
+      display: block;
+      inset:0;
+      background-color: gray;
+      opacity:.2;
+    }
   }
 
   .dots{

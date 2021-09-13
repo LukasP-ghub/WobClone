@@ -7,7 +7,6 @@ import NavComponent from './NavComponent';
 import Backdrop from '../../commonComponents/backdrop/Backdrop';
 
 import CloseIcon from '../../assets/svg/CloseIcon';
-import addDynamicStyles from '../../helpers/addDynamicStyles';
 import styles from './NavSidePanel.module.scss';
 
 const { header, linksContainer, productType, sidePanel, showSidePanel, closeIcon } = styles;
