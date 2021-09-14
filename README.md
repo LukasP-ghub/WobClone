@@ -17,7 +17,9 @@ In plan:
 
 ## Run
 ### `Live`
-https://lukasxxz.github.io/WobClone/
+https://lukasp-ghub.github.io/WobClone/
+
+### `git clone https://github.com/LukasP-ghub/WobClone.git`
 
 ### `npm install`
 
