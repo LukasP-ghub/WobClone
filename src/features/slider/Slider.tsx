@@ -4,6 +4,7 @@ import useWidth from '../../helpers/useWidth';
 
 import { selectProducts, selectError, fetchRandomEbooks } from './sliderSlice';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './Slider.module.scss';
 
 const { slider, arrow, leftArr, rightArr, pagesContainer, sliderPages, sliderPage, active } = styles;
@@ -68,7 +69,7 @@ const Slider: React.FC = () => {
 
   return (
     <div className={slider}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         {/* slider pages */}
         <div className={pagesContainer} ref={pagesContRef} >
           {fetchError ? <ShowError /> : pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}

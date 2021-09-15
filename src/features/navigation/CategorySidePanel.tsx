@@ -6,6 +6,7 @@ import useWidth from '../../helpers/useWidth';
 
 import NavComponent from './NavComponent';
 import Backdrop from '../../commonComponents/backdrop/Backdrop';
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './CategorySidePanel.module.scss';
 
 const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
@@ -31,7 +32,7 @@ function CategoryPanel() {
           <div className={content}>Powrót</div>
         </div>
         <div className={linksContainer}>
-          {fetchError ? <Suspense fallback={<div>Loading...</div>}><ShowError /></Suspense> : categories.map((item, index) => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} transDelay={(index + 1) * 100} /> })}
+          {fetchError ? <Suspense fallback={<LoadingSpinner />}><ShowError /></Suspense> : categories.map((item, index) => { return <NavComponent key={item.category} name={item.category} onClick={() => dispatch(showCatSidePanel())} transDelay={(index + 1) * 100} /> })}
         </div>
       </div>
     </>

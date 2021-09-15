@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './SignUp.module.scss'
 const { centerVH, submitBtn, wrapper } = styles;
 
@@ -45,7 +46,7 @@ const SignUp = () => {
 
 
   return <div className={wrapper}>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <h1>Registration</h1>
 
       <Formik

@@ -6,8 +6,9 @@ import { setFilters, sortEbooks } from './catalogSlice';
 import { selectFilteredEbooks, selectError } from './catalogSlice';
 import { fetchEbooks } from './catalogSlice';
 
-import styles from './Catalog.module.scss';
 import ProductModel from '../../helpers/types/ProductModel';
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
+import styles from './Catalog.module.scss';
 
 const ProductCard = lazy(() => import('../../commonComponents/productCard/ProductCard'));
 const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
@@ -56,7 +57,7 @@ const Catalog: React.FC = () => {
 
   return (
     <div className={wrapper}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <Filters />
         {/*List of products */}
         <div className={containerCardsWrapper}>

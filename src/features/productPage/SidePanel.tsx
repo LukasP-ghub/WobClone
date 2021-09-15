@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 import { selectShowSidePanel, selectSidePanelContent } from './productPageSlice';
 import { setShowSidePanel } from './productPageSlice';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import ChevronLeft from '../../assets/svg/ChevronLeft';
 import styles from './SidePanel.module.scss';
 
@@ -25,7 +26,7 @@ function SidePanel() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <header className={`${header} ${checkShowPanel}`} >
           <button className={iChevronLeft} onClick={showSidePanel}>
             <ChevronLeft />

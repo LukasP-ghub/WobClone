@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './containers/Header';
 import Main from './containers/Main';
 import PrivateRoute from './commonComponents/privateRoute/PrivateRoute';
+import LoadingSpinner from './commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './App.module.scss';
 
 const SignPage = React.lazy(() => import('./containers/SignPage'));
@@ -15,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className={styles.app}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Switch>
             <Route path="/sign-page"><SignPage /></Route>
             <Route path="/cart" exact><CartPage /></Route>

@@ -2,8 +2,9 @@ import { lazy, Suspense, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import CartContext from '../../store/cartContext';
-import styles from './CartPage.module.scss'
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import covers from '../../assets/images';
+import styles from './CartPage.module.scss'
 
 const HeaderUserLinks = lazy(() => import('../../commonComponents/headerUserLinks/HeaderUserLinks'));
 const TopBarFixed = lazy(() => import('../../commonComponents/topBarFixed/TopBarFixed'));
@@ -35,7 +36,7 @@ function CartPage() {
 
   return (
     <div className={wrapper}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         {/* --- HEADER --- */}
         <TopBarFixed>
           <HeaderUserLinks />

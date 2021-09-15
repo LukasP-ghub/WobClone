@@ -4,6 +4,7 @@ import useWidth from '../../helpers/useWidth';
 
 import { selectShowSearchBar, setShowSearchBar } from './searcherSlice';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import SearchIcon from '../../assets/svg/SearchIcon';
 import styles from './Searcher.module.scss';
 
@@ -28,7 +29,7 @@ function Searcher() {
           <SearchIcon />
         </div>
       </div>
-      {isVisible ? <Suspense fallback={<div>Loading...</div>}><SearchBar /></Suspense> : null}
+      {isVisible ? <Suspense fallback={<LoadingSpinner />}><SearchBar /></Suspense> : null}
     </>
   );
 }

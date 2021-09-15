@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
 import { setShowFilterOptions, setShowCategoriesPanel, setFilters } from './catalogSlice';
 import { selectCategories, selectFilters, selectShowFilterOptions, selectError } from './catalogSlice';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './FilterOptions.module.scss';
 
 const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
@@ -20,7 +21,7 @@ const FilterOptions: React.FC = () => {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <div className={`${panelHead} ${isVisible ? show : null}`}>
           <h2 className={title} onClick={() => dispatch(setShowFilterOptions())}>Filtry i kategorie</h2>
           <button className={clearFiltersBtn}>Wyczyść filtry</button>

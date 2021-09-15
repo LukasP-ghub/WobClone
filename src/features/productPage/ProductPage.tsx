@@ -5,6 +5,7 @@ import useWidth from '../../helpers/useWidth';
 import { selectProduct, selectError } from './productPageSlice';
 import { fetchProduct, setShowSidePanel, setSidePanelContent } from './productPageSlice';
 
+import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import covers from '../../assets/images'
 import ChevronRight from '../../assets/svg/ChevronRight';
 import styles from './ProductPage.module.scss';
@@ -34,7 +35,7 @@ const ProductPage: React.FC<{ location: any }> = ({ location }) => {
   }, [dispatch, id])
 
   return <>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       {!fetchError && product && currWidth < 950 ? <picture >
         <img src={`${cover.medium}`} className={picture} alt="" />
       </picture> : null}
