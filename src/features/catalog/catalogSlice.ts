@@ -1,70 +1,41 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
-import { db } from '../../firebase';
-import { sorting } from '../../helpers/sorting';
-import ProductModel from '../../helpers/types/ProductModel';
+import { sorting } from '../../utils/sorting';
+import { Promotions, ProductModel } from '../../types/types';
 
-interface setFiltersType {
-  filter: string,
-  value: string
+export type filtersT = {
+  category: string,
+  promotion: 'true' | '',
+}
+
+export type filterType<Type extends filtersT> = keyof Type;
+
+type setFiltersType<Type extends filtersT> = {
+  filter: filterType<Type>;
+  value: string,
+}
+
+type filtersType<Type extends filtersT> = {
+  [prop in keyof Type]: string;
 }
 
 interface catalogState {
-  filteredEbooks: ProductModel[],
-  filters: {
-    categoryFilter: string,
-    promotion: 'true' | '',
-    [key: string]: string
-  },
+  filteredProducts: ProductModel[],
+  filters: filtersType<filtersT>,
   showFilterOptions: boolean,
   showCategoriesPanel: boolean,
-  error: any,
-  status: string,
-  currentRequestId: any,
 }
 
 const initialState: catalogState = {
-  filteredEbooks: [],
+  filteredProducts: [],
   filters: {
-    categoryFilter: '',
+    category: '',
     promotion: '',
   },
   showFilterOptions: false,
   showCategoriesPanel: false,
-  error: null,
-  status: 'idle',
-  currentRequestId: undefined,
 }
 
-export const fetchEbooks = createAsyncThunk<any, any, { state: RootState }>(
-  'ebooks/getDataStatus',
-  async (params: any, { getState, requestId }) => {
-    const { currentRequestId, status } = getState().catalog;
-    const getFilters = getState().catalog.filters;
-
-    if (status !== 'pending' || requestId !== currentRequestId) {
-      return;
-    }
-
-    let output: any = [];
-    let ebooksRef;
-
-    if (getFilters.categoryFilter === 'Wszystkie Ebooki') {
-      ebooksRef = await db.collection("ebooks").get();
-    } else {
-      ebooksRef = await db.collection("ebooks").where("category", "==", getFilters.categoryFilter).get();
-    }
-
-    await ebooksRef.forEach((doc) => {
-      output.push(doc.data());
-    });
-
-    output = sorting(output, 'alphabetical');
-    return output;
-  }
-)
-
-/* --- SLICE --- */
 
 export const catalogSlice = createSlice({
   name: 'catalog',
@@ -76,51 +47,35 @@ export const catalogSlice = createSlice({
     setShowCategoriesPanel: (state) => {
       state.showCategoriesPanel = !state.showCategoriesPanel;
     },
-    setFilters: (state, action: PayloadAction<setFiltersType>) => {
+    setFilters: (state, action: PayloadAction<setFiltersType<filtersT>>) => {
       state.filters[action.payload.filter] = action.payload.value;
     },
-    sortEbooks: (state, action) => {
-      state.filteredEbooks = sorting(state.filteredEbooks, action.payload);
+    sortProducts: (state, action) => {
+      state.filteredProducts = sorting(state.filteredProducts, action.payload);
     },
+    filterProducts: (state, action: PayloadAction<{ products: ProductModel[], promotions: Promotions }>) => {
+      const promCategories = Object.keys(action.payload.promotions.category);
+      state.filteredProducts = action.payload.products.filter(item => {
+        let flag = true;
+        if (state.filters.promotion) {
+          flag = promCategories.includes(item.category);
+          item.discount = action.payload.promotions.category[item.category];
+        }
+        if (state.filters.category) {
+          flag = item.category === state.filters.category;
+        }
+        return flag;
+      });
+    }
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchEbooks.pending, (state, action) => {
-      if (state.status === 'idle') {
-        state.filteredEbooks = [];
-        state.status = 'pending';
-        state.currentRequestId = action.meta.requestId;
-      }
-    })
-    builder.addCase(fetchEbooks.fulfilled, (state, action) => {
-      const { requestId } = action.meta;
-      if (state.status === 'pending' && state.currentRequestId === requestId) {
-        state.filteredEbooks.push(...action.payload);
-        state.status = 'idle';
-        state.currentRequestId = undefined;
-      }
-    })
-    builder.addCase(fetchEbooks.rejected, (state, action) => {
-      const { requestId } = action.meta;
-      if (state.status === 'pending' && state.currentRequestId === requestId) {
-        state.status = 'idle';
-        state.error = action.error;
-        state.currentRequestId = undefined;
-      }
-    })
-  }
 });
 
-/* --- SELECTORS --- */
 
 export const selectShowFilterOptions = (state: RootState) => state.catalog.showFilterOptions;
 export const selectShowCategoriesPanel = (state: RootState) => state.catalog.showCategoriesPanel;
-export const selectFilteredEbooks = (state: RootState) => state.catalog.filteredEbooks;
+export const selectFilteredProducts = (state: RootState) => state.catalog.filteredProducts;
 export const selectFilters = (state: RootState) => state.catalog.filters;
-export const selectError = (state: RootState) => state.catalog.error;
 
-export const selectCategories = (state: RootState) => state.container.categories;
 
-/* --- EXPORTS --- */
-
-export const { setShowFilterOptions, setShowCategoriesPanel, setFilters, sortEbooks } = catalogSlice.actions;
+export const { setShowFilterOptions, setShowCategoriesPanel, setFilters, sortProducts, filterProducts } = catalogSlice.actions;
 export default catalogSlice.reducer;

@@ -1,3 +1,5 @@
+@import '../../styles/colors.module.scss';
+
 .paginationWrapper{
   position: relative;
   display: flex;
@@ -19,6 +21,17 @@
     margin: 0 2px;
     border: 1px dotted grey;
     cursor: pointer;
+    background-color: whitesmoke;
+    transition:background-color .2s linear;
+
+    &:first-of-type, &:last-of-type{
+      border: none;
+    }
+
+    &:hover{
+      border-color: $phantom-gray;
+      background-color: $phantom-gray;
+    }
 
     svg{
       display: block;
@@ -32,15 +45,6 @@
 
     &.active{
       border: 1px solid black;
-    }
-
-    &:hover::after{
-      content:'';
-      position: absolute;
-      display: block;
-      inset:0;
-      background-color: gray;
-      opacity:.2;
     }
   }
 

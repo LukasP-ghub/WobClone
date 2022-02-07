@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
+import { useAppSelector, useAppDispatch } from '../../types/hooks';
 import { Link } from 'react-router-dom';
-
-import { selectEbooks, selectSearchKey, selectSearchResults } from './searcherSlice';
+import { useGetEbooksQuery } from '../../services/apiSlice';
+import { selectSearchKey, selectSearchResults } from './searcherSlice';
 import { setShowSearchBar, setSearchKey, setSearchResults } from './searcherSlice';
-import { fetchForSearch } from './searcherSlice';
 import { SearchResultsPayload } from './searcherSlice';
 
 import SearchIcon from '../../assets/svg/SearchIcon';
@@ -14,8 +13,8 @@ import styles from './SearchBar.module.scss';
 const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchResultsList, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
+  const { data: ebooks = [] } = useGetEbooksQuery('');
   const dispatch = useAppDispatch();
-  const ebooks = useAppSelector(selectEbooks);
   const searchKey = useAppSelector(selectSearchKey);
   const searchResults = useAppSelector(selectSearchResults);
   const listElRef = useRef<HTMLAnchorElement[]>([]);
@@ -57,10 +56,6 @@ const SearchBar: React.FC = () => {
     return [...authors, ...titles];
   }
 
-  //fetching all ebooks for searching simulation 
-  useEffect(() => {
-    dispatch(fetchForSearch(''));
-  }, [dispatch])
 
   //searching with debounce and avoid empty key searching, 
   useEffect((): any => {
@@ -78,12 +73,11 @@ const SearchBar: React.FC = () => {
 
   //Handling arrow key navigation through list
   const onKeyHandle = (e: any) => {
-    let itemFocus = null;
     if (e.keyCode !== 40 && e.keyCode !== 38) return;
     if (e.keyCode === 40 && listCursor < searchResults.length - 1) listCursor++;
     if (e.keyCode === 38 && listCursor > 0) listCursor--;
-    if (searchResults.length > 0) itemFocus = listElRef.current[listCursor]?.focus();
-    return itemFocus;
+    if (searchResults.length > 0) listElRef.current[listCursor]?.focus();
+    e.preventDefault();
   };
 
   //Handling mouse navigation with remembering actual focused item for keyboard navigation
@@ -103,9 +97,9 @@ const SearchBar: React.FC = () => {
       tabIndex={-1}>
       <div className={wrapper}>
 
-        <button className={searchBtn}>
+        <div className={searchBtn}>
           <SearchIcon />
-        </button>
+        </div>
 
         <input className={searchInput} ref={inputRef} type="text" autoComplete='off' placeholder="Szukaj" name="searchField" onChange={(e) => { dispatch(setSearchKey(e.target.value)) }} />
 

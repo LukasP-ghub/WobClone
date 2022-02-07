@@ -1,0 +1,134 @@
+@import '../../styles/colors.module.scss';
+@import '../../styles/mixins.module.scss';
+@import 'catalogMixins.scss';
+
+.wrapper{
+  @include mobileSidePanel;
+  left:100%;
+  height: min-content;
+  padding: 0 10%;
+  padding-top: $headHeight;
+  z-index: 200;
+
+  &.show{
+    transform: translateX(-100%);
+   }
+  
+}
+
+.title{
+  display: inline-block;
+}
+
+.panelHead{
+  @include panelHeadM;
+  z-index: 201;
+}
+
+.categoryList{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  font-size: 2rem;
+  @include sequentTransDelay;
+  @include elementsTransStart(100vw);
+
+  .catListItemWarp{
+    width: 100%;
+    flex-basis: 5rem;
+    line-height: 5rem;
+    padding: 0 1rem;
+    border-bottom:1px solid gray;
+
+    &.show{
+      transform: translateX(0);
+     }
+
+    &:first-child{
+      background-color: $white-smoke-darker;
+      margin-top: 1rem;
+      text-align: center;
+      border-bottom: none;
+      border-radius: 5px;
+      transform: none;
+      transition: none;
+    }
+
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+}
+
+@media  (min-width:750px) {
+  .wrapper,.panelHead{
+    width:400px;
+  }
+  .wrapper{
+    padding: 0 5%;
+  }
+}
+
+
+@media (min-width:950px){
+  .panelHead{
+    display: none;
+  }
+
+ .wrapper{
+   grid-column: 1/2;
+   position: static;
+   height: fit-content;
+   width: 100%;
+   padding: 0;
+   box-shadow: 0 0 5px 1px $phantom-gray;
+   background-color: transparent;
+   z-index: auto;
+
+   .categoryList{
+    font-size: 1.8rem;
+    
+    .catListItemWarp{
+      flex-basis: 2rem;
+      line-height: 2rem;
+      padding: 0.4em 0;
+      border-bottom:none;
+      text-align: center;
+      transform: none;
+      transition: transform 0.1s;
+
+      &:hover{
+        transform: scale(1.2);
+      }
+
+      &:first-child{
+        background-color: $light-skyblue;
+        margin-top: 0;
+        border-radius: 0;
+        border-bottom: none;
+        transform: none;
+      }
+
+      .catListItemLink{
+        position: relative;
+
+         &::after{
+            position: absolute;
+            content: '';
+            bottom: -1px;
+            left: 50%;
+            width: 100%;
+            border-bottom: 1px solid $light-blue;
+            transform: translateX(-50%) scaleX(0);
+            transition: transform 0.2s;
+        }
+
+        &:hover::after{
+          transform: translateX(-50%) scaleX(1);
+        }
+      }
+      
+    }
+  }
+ }
+}

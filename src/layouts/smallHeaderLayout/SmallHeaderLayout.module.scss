@@ -1,0 +1,19 @@
+@import '../../styles/mixins.module.scss';
+
+.wrapper{
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 80px fit-content;
+  grid-template-areas: "header"
+                        "main";
+  padding-top: $padding-topBar-sync;
+}
+
+
+.main{
+  grid-template: main;
+  margin-top: 30px;
+}
+

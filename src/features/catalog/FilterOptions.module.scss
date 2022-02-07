@@ -1,4 +1,4 @@
-@import '../../assets/colors.module.scss';
+@import '../../styles/colors.module.scss';
 @import 'catalogMixins.scss';
 
 .wrapper{
@@ -8,7 +8,7 @@
   width:100%;
   height: 100%;
   padding-top: $headHeight;
-  background-color: $silver;
+  background-color: $white-smoke;
   z-index: 198;
   transition: $trTrans;
 
@@ -24,23 +24,6 @@
 .panelHead{
   @include panelHeadM;
   z-index: 199;
-  
-  & .title::before{
-    content: '\003C';
-    font-size: 2rem;
-    margin-right: 5px;
-   } 
-   
-  .clearFiltersBtn{
-    position: absolute;
-    right:20px;
-    line-height: $headHeight;
-    font-size: 1.5rem;
-  }
-
-  &.show{
-    transform: translateX(-100%);
-   }
 }
 
 
@@ -48,7 +31,7 @@
   position: relative;
   width: 100%;
   min-height: 30px;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem;
   margin-bottom: 10px;
   background-color: white;
 
@@ -86,7 +69,7 @@
 
   .filtersGroup{
     width:100%;
-    margin: 1rem 0;
+    margin: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -100,26 +83,34 @@
       font-size: 1.5rem;
       border: 1px dotted $light-blue;
       border-radius: 10px;
-    
+      transition: box-shadow .3s linear;
+
       a {
-        position: relative;
-        display: block;  
+        display: grid;
+        place-items: center;
         width:100%;
         height: 100%;
         
         span{
-          position: absolute;
-          top: 50%;
-          left:50%;
-          transform: translate(-50%,-50%);
-          text-align:center;
+           text-align:center;
+           transition: transform .3s;
         }
       }
       
       &:hover{
-        box-shadow: 0px 0px 5px 1px inset $light-blue;
+        box-shadow: 0px 0px 2px 1px inset $light-blue;
+
+        span{
+          transform: scale(1.05);
+        }
       }
     }
+  }
+}
+
+@media  (min-width:750px) {
+  .wrapper,.panelHead{
+    width:400px;
   }
 }
 
@@ -132,9 +123,10 @@
    grid-column: 1/2;
    position: static;
    height: min-content;
+   width: 100%;
    padding-top: 0;
    margin-top: $desktopMarginTop;
-   box-shadow: 0 0 5px 1px $silver;
+   box-shadow: 0 0 5px 1px $phantom-gray;
    background-color: transparent;
    z-index: auto;
 

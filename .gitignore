@@ -21,8 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-src/firebaseWriteData.js
+
+legacy/
 src/.env
-src/features/1counter/Counter.js
-src/features/1counter/Counter.module.css
-src/features/1counter/counterSlice.js
+src/utils/firebaseWriteData.js

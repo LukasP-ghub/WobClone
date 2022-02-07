@@ -1,0 +1,63 @@
+@import './colors.module.scss';
+
+$padding-topBar-sync: 60px;
+
+@mixin centerVH{
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+@mixin centerH{
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+}
+
+@mixin centerV{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin ellipsis($value){
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: $value; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+@mixin mobileSidePanel{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: $white-smoke;
+  transition: transform 0.2s;
+}
+
+@mixin sequentTransDelay{
+  @for $i from 1 to 15 {
+    &>:nth-child(n + #{$i}) {
+      transition-delay: ($i * 50ms);
+    }
+  }
+}
+
+@mixin elementsTransStart($translate){
+  & >*{
+    transform: translateX($translate);
+    transition: transform .2s;
+  }
+}
+
+@mixin elementsTransEnd($translate){
+  & >*{
+    transform: translateX($translate);
+  }
+}

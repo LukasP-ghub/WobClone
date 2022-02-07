@@ -1,0 +1,50 @@
+@import '../../styles/colors.module.scss';
+
+.header {
+  position:fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 60px;
+  width:100%;
+
+  border-bottom: 1px solid gray;
+  background-color: $green;
+  z-index: 100;
+  
+}
+
+@media  (min-width:950px) {
+    .header{
+      position: relative;
+      height:fit-content;
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr; 
+      grid-template-rows: 50px 70px 50px 0px;
+      grid-template-areas: "logo logo logo"
+                           "searcher user cart"
+                           "nav nav nav"
+                           "cat cat cat";
+    }
+
+    .userItemWrapper{
+      grid-area: user;
+    }
+    .searchItemWrapper{
+      display: none;
+    }
+    .cartItemWrapper{
+      grid-area: cart;
+    }
+    .logoItemWrapper{
+      grid-area: logo;
+    }
+    .navItemWrapper{
+      display: none;
+    }
+}

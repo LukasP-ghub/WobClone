@@ -7,21 +7,20 @@ const { active, dots, paginationWrapper } = styles;
 
 export interface PaginationProps {
   pagesCount: number,
-  ebooksForScreenArrLength: number,
   page: number,
   setPage: (value: number | ((prevVar: number) => number)) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ pagesCount, ebooksForScreenArrLength, page, setPage }) => {
+const Pagination: React.FC<PaginationProps> = ({ pagesCount, page, setPage }) => {
   const liRef = useRef<HTMLLIElement[]>([]);
   const handleSetPage = (e: any) => {
     setPage(e.target.innerText * 1)
   }
 
-  return <>
-    {ebooksForScreenArrLength > 0 && <ul className={paginationWrapper}>
+  return (
+    <ul className={paginationWrapper}>
       <li onClick={() => { return page <= 1 ? null : setPage(prevPage => --prevPage) }}>
-        <ChevronLeft width={20} height={20} />
+        <ChevronLeft />
       </li>
 
       {page > 3 ? <li onClick={() => setPage(1)} ref={(e: any) => liRef.current[0] = e}><span>1</span></li> : null}
@@ -39,8 +38,8 @@ const Pagination: React.FC<PaginationProps> = ({ pagesCount, ebooksForScreenArrL
       <li onClick={() => { return page >= pagesCount ? null : setPage(prevPage => ++prevPage) }} >
         <ChevronRight />
       </li>
-    </ul>}
-  </>
+    </ul>
+  )
 }
 
 export default Pagination;

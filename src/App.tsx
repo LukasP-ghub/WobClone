@@ -1,33 +1,41 @@
-import React, { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useGetEbooksQuery, useGetCategoriesQuery, useGetPromotionsQuery } from './services/apiSlice';
 
-import Header from './containers/Header';
-import Main from './containers/Main';
-import PrivateRoute from './commonComponents/privateRoute/PrivateRoute';
-import LoadingSpinner from './commonComponents/loadingSpinner/LoadingSpinner';
+import MainPage from './pages/mainPage/MainPage';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
+import LoadingSpinner from './components/loadingSpinner/LoadingSpinner';
 import styles from './App.module.scss';
 
-const SignPage = React.lazy(() => import('./containers/SignPage'));
-const CartPage = React.lazy(() => import('./features/cart/CartPage'));
-const PaymentPage = React.lazy(() => import('./features/cart/paymentPage/PaymentPage'));
+const ProductPage = lazy(() => import('./pages/productPage/ProductPage'));
+const SignInPage = lazy(() => import('./pages/signInPage/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/signUpPage/SignUpPage'));
+const CartPage = lazy(() => import('./pages/cartPage/CartPage'));
+const PaymentPage = lazy(() => import('./pages/paymentPage/PaymentPage'));
+const CatalogPage = lazy(() => import('./pages/catalogPage/CatalogPage'));
 
 function App() {
+  const { data: ebooksData, isError: ebooksIsError, isLoading: ebooksIsLoading } = useGetEbooksQuery('');
+  const { data: categoryData, isError: categoryIsError, isLoading: categoryIsLoading } = useGetCategoriesQuery('');
+  const { data: promotionsData, isError: promotionIsError, isLoading: promotionIsLoading } = useGetPromotionsQuery('');
 
   return (
     <BrowserRouter>
-      <div className={styles.app}>
-        <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingSpinner />}>
+        <div className={styles.app}>
+
           <Switch>
-            <Route path="/sign-page"><SignPage /></Route>
-            <Route path="/cart" exact><CartPage /></Route>
             <PrivateRoute path="/cart/payment" component={PaymentPage} />
-            <Route path="/" >
-              <Header />
-              <Main />
-            </Route>
+            <Route path="/sign-in"><SignInPage /></Route>
+            <Route path="/sign-up"><SignUpPage /></Route>
+            <Route path="/cart" exact><CartPage /></Route>
+            <Route path="/ebook/:tags" exact render={(props) => <ProductPage {...props} />} />
+            <Route path="/catalog/:tag" exact render={(props) => <CatalogPage {...props} />} />
+            <Route path="/" ><MainPage /></Route>
           </Switch>
-        </Suspense>
-      </div>
+
+        </div>
+      </Suspense>
     </BrowserRouter>
   );
 }

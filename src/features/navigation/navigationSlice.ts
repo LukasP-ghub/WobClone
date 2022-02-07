@@ -11,8 +11,6 @@ const initialState: NavigationState = {
   isVisibleCatSP: false,
 }
 
-/* --- SLICE --- */
-
 export const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
@@ -27,13 +25,10 @@ export const navigationSlice = createSlice({
 
 });
 
-/* --- SELECTORS --- */
+
 export const selectIsVisibleNavSP = (state: RootState) => state.navigation.isVisibleNavSP;
 export const selectIsVisibleCatSP = (state: RootState) => state.navigation.isVisibleCatSP;
-export const selectCategories = (state: RootState) => state.container.categories;
-export const selectError = (state: RootState) => state.container.error;
 
-/* --- EXPORTS --- */
 
 export const { showNavSidePanel, showCatSidePanel } = navigationSlice.actions;
 export default navigationSlice.reducer;

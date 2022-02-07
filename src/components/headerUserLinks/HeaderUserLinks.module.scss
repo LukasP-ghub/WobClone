@@ -1,0 +1,33 @@
+@import '../../styles/colors.module.scss';
+
+.header{
+  width: 100%;
+  max-width: 900px;
+  grid-template: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 1.5rem;
+  background-color: $green;
+
+  .logo{
+    font-size: 3rem;  
+  }
+
+  .topBarItem{
+    margin: 0 0.5rem;
+  }
+
+  .margins{
+    margin: 5px;
+  }
+}
+
+@media(min-width:950px){
+  .header{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+}

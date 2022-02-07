@@ -1,3 +1,24 @@
-$trTrans: transform 0.5s;
-//$categoryPositionSync: 
+@import '../../styles/mixins.module.scss';
 
+@mixin sidePanelTransEnd($translate){
+  .showSidePanel{
+    transform: translateX($translate);
+  
+    & .linksContainer >*{
+      transform: translateX(0%);
+    }
+  }
+}
+
+@mixin linksContainer($translate){
+  .linksContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:100%;
+    padding: 0 10%;
+
+    @include elementsTransStart($translate);
+    @include sequentTransDelay;
+  }
+}

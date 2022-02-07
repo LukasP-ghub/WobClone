@@ -1,18 +1,40 @@
-@import '../../assets/colors.module.scss';
+@import '../../styles/colors.module.scss';
 
 $headHeight: 60px;
-$trTrans: transform 0.5s;
+$trTrans: transform 0.2s;
 $desktopMarginTop: 30px;
 
 @mixin panelHeadM{
   position:fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   top:0;
   left:100%;
   width:100%;
   height:$headHeight;
   line-height: $headHeight;
-  padding: 0 5px;
+  padding: 0 6% 0 5px;
   border-bottom: 1px solid black;
-  background-color: $light-green;
+  background-color: $white-smoke;
   transition: $trTrans;
+
+  .titleWrap{
+    display: flex;
+    align-items: center;
+  }
+
+  .arrow{
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+  }
+  .clearFiltersBtn{
+    font-size: 1.5rem;
+  }
+
+  &.show{
+    transform: translateX(-100%);
+   }
 }

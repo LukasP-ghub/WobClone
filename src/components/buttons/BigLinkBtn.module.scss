@@ -1,0 +1,37 @@
+@import '../../styles/mixins.module.scss'; 
+@import '../../styles/colors.module.scss'; 
+
+.btn{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 400px;
+  height: 50px;
+  margin: 15px auto;
+  font-weight: 600;
+}
+
+.nextBtn{
+  background-color: hsla(332, 78%, 51%,1);
+  color:white;
+}
+
+.backBtn{
+  background-color: $phantom-gray;
+  border: 1px dotted black;
+  border-radius: 10px;
+}
+
+.centerH{
+  @include centerH;
+}
+
+.centerVH{
+  @include centerVH;
+}
+
+.centerV{
+  @include centerV;
+}

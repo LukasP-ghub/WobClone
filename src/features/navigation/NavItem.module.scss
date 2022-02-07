@@ -1,0 +1,67 @@
+@import '../../styles/colors.module.scss';
+
+.navComponent {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-basis: 50px;
+  flex-shrink: 0;
+  border-bottom: 1px solid gray;
+  font-size: 2rem;
+  background-color: $white-smoke;
+  cursor: pointer;
+     
+   .content {
+    padding-left: 3%;
+    line-height: 1em;
+  }
+
+  .arrow{
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  &.opposite{
+    justify-content: space-between;
+  }
+}
+
+@media  (min-width:950px) {
+  .navComponent{
+    flex-basis:auto;
+    background-color:transparent;
+    border: none;
+    
+
+    .arrow{
+      display: none;
+    }
+
+    .content{
+      position: relative;
+      left:0;
+      padding-left: 0;
+      transition: transform .2s;
+
+      &:hover{
+        transform: scaleX(1.05);
+      }
+
+      &::after{
+        position: absolute;
+        content: '';
+        bottom: -4px;
+        left: 50%;
+        width: 100%;
+        border-bottom: 1px solid $jet;
+        transform: translateX(-50%) scaleX(0);
+        transition: transform 0.2s;
+      }
+  
+      &:hover::after{
+         transform: translateX(-50%) scaleX(1);
+      }
+    }
+    
+  }
+}

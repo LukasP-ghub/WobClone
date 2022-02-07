@@ -2,28 +2,26 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
 
-import containerReducer from '../containers/containerSlice';
+import containerReducer from './containerSlice';
 import navigationReducer from '../features/navigation/navigationSlice';
-import sliderReducer from '../features/slider/sliderSlice';
 import searcherReducer from '../features/searcher/searcherSlice';
 import catalogReducer from '../features/catalog/catalogSlice';
-import productPageReducer from '../features/productPage/productPageSlice';
-import productCardReducer from '../commonComponents/productCard/productCardSlice';
-
+import productDetailsReducer from '../features/productDetails/productDetailsSlice';
+import { apiSlice } from '../services/apiSlice';
 
 
 const rootReducer = combineReducers({
   container: containerReducer,
   navigation: navigationReducer,
-  slider: sliderReducer,
   searcher: searcherReducer,
   catalog: catalogReducer,
-  productPage: productPageReducer,
-  productCard: productCardReducer,
+  productDetails: productDetailsReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
 })
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 })
 
 

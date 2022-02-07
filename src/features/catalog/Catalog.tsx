@@ -1,78 +1,68 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
-import { useLocation, useParams } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
+import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../types/hooks';
 
-import { setFilters, sortEbooks } from './catalogSlice';
-import { selectFilteredEbooks, selectError } from './catalogSlice';
-import { fetchEbooks } from './catalogSlice';
+import { useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
+import { sortProducts, filterProducts, setFilters } from './catalogSlice';
+import { selectFilteredProducts, selectFilters } from './catalogSlice';
 
-import ProductModel from '../../helpers/types/ProductModel';
-import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
+import { ProductModel } from '../../types/types';
+
+import ProductCard from '../../components/productCard/ProductCard';
+import { ActiveFilters } from './ActiveFilters';
+import FilterOptions from './FilterOptions';
+import { CategoriesList } from './CategoriesList';
+import Pagination from './Pagination';
 import styles from './Catalog.module.scss';
-
-const ProductCard = lazy(() => import('../../commonComponents/productCard/ProductCard'));
-const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
-const Filters = lazy(() => import('./Filters'));
-const FilterOptions = lazy(() => import('./FilterOptions'));
-const FilterCategoriesPanel = lazy(() => import('./FilterCategoriesPanel'));
-const Pagination = lazy(() => import('./Pagination'));
 
 const { containerCards, containerCardsWrapper, wrapper } = styles;
 
-interface ParamsType {
-  tag: string
-}
 
-const Catalog: React.FC = () => {
+const Catalog: React.FC<{ location: any }> = ({ location }) => {
+  const { data: ebooksData = [] } = useGetEbooksQuery('');
+  const { data: promotionsData } = useGetPromotionsQuery('');
   const [page, setPage] = useState<number>(1);
 
   const dispatch = useAppDispatch();
-  const filteredEbooks = useAppSelector(selectFilteredEbooks);
-  const fetchError = useAppSelector(selectError);
-  const searchQuery = useLocation().search;
+  const filteredProducts = useAppSelector(selectFilteredProducts);
+  const filters = useAppSelector(selectFilters);
+  const searchQuery = location.search;
+  const filterTag: string = location.state?.tag ?? '';
 
-  let { tag } = useParams<ParamsType>();
   let itemsPerPage = 4;
-  let pagesCount: number = Math.ceil(filteredEbooks.length / itemsPerPage) || 0;
-  let ebooksForScreenArr: ProductModel[] = filteredEbooks.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page) || [];
-
-
+  let pagesCount: number = Math.ceil(filteredProducts.length / itemsPerPage) || 0;
+  let displayProducts: ProductModel[] = filteredProducts.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page) || [];
 
   useEffect(() => {
-    dispatch(setFilters({ filter: 'categoryFilter', value: tag }));
-  }, [tag, dispatch])
+    dispatch(setFilters({ filter: 'category', value: filterTag }))
+  }, [filterTag, dispatch])
 
-  //fetching ebooks by url tag
   useEffect(() => {
-    dispatch(fetchEbooks(''));
-  }, [tag, dispatch])
+    if (promotionsData) {
+      dispatch(filterProducts({ products: ebooksData, promotions: promotionsData }));
+    }
+  }, [filters, ebooksData, promotionsData, dispatch])
 
-  //sorting results in store by url query
   useEffect(() => {
     const query = new URLSearchParams(searchQuery);
     for (let param of query.entries()) {
-      dispatch(sortEbooks(param[1]));
+      dispatch(sortProducts(param[1]));
     }
   }, [searchQuery, dispatch]);
 
   return (
     <div className={wrapper}>
-      <Suspense fallback={<LoadingSpinner />}>
-        <Filters />
-        {/*List of products */}
-        <div className={containerCardsWrapper}>
-          <ul className={containerCards}>
-            {ebooksForScreenArr.length > 0 && ebooksForScreenArr.map(ebook => {
-              return <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
-            })}
-          </ul>
-          <Pagination pagesCount={pagesCount} ebooksForScreenArrLength={ebooksForScreenArr.length} page={page} setPage={setPage} />
-        </div>
+      <ActiveFilters />
+      <div className={containerCardsWrapper}>
+        <ul className={containerCards}>
+          {displayProducts.length > 0 && displayProducts.map(ebook => {
+            return <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
+          })}
+        </ul>
+        {displayProducts.length && <Pagination pagesCount={pagesCount} page={page} setPage={setPage} />}
+      </div>
 
-        <FilterOptions />
-        <FilterCategoriesPanel />
-        {fetchError ? <ShowError /> : null}
-      </Suspense>
+      <FilterOptions />
+      <CategoriesList />
     </div>
   );
 }

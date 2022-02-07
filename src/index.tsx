@@ -5,8 +5,8 @@ import './index.css';
 import App from './App';
 import store from './store/store';
 import { Provider } from 'react-redux';
-import { CartContextProvider } from './store/cartContext';
-import { AuthContextProvider } from './store/AuthContext';
+import { CartContextProvider } from './contexts/cartContext';
+import { AuthContextProvider } from './contexts/AuthContext';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -18,7 +18,7 @@ ReactDOM.render(
         </CartContextProvider>
       </Provider>
     </AuthContextProvider>,
-   </React.StrictMode>,
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

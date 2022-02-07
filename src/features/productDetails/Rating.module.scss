@@ -1,0 +1,28 @@
+@import '../../styles/mixins.module.scss';
+
+.wrapper{
+ display: flex;
+ align-items: center;
+ margin:5px 0;
+}
+
+.flexColumn{
+  flex-direction: column-reverse;
+}
+
+.starIcon{
+  display: inline-block;
+  width: 32px;
+  height:32px;
+  fill:white;
+  stroke: black;
+}
+
+.starFilled{
+  fill:gold;
+}
+
+.numberRating{
+ order:2;
+ font-size: 2rem;
+}

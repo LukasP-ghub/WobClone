@@ -1,25 +1,27 @@
-import { lazy, Suspense, useState, useEffect, useCallback, useRef } from 'react';
-import { useAppSelector, useAppDispatch } from '../../helpers/types/hooks';
-import useWidth from '../../helpers/useWidth';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import useWidth from '../../hooks/useWidth';
+import { ProductModel } from '../../types/types';
+import { MQBreakpoints } from '../../constants/constants';
 
-import { selectProducts, selectError, fetchRandomEbooks } from './sliderSlice';
+import ProductCard from '../../components/productCard/ProductCard';
+import SliderPage from './SliderPage';
+import { Pagination } from './Pagination';
 
-import LoadingSpinner from '../../commonComponents/loadingSpinner/LoadingSpinner';
 import styles from './Slider.module.scss';
 
-const { slider, arrow, leftArr, rightArr, pagesContainer, sliderPages, sliderPage, active } = styles;
+const { slider, pagesContainer } = styles;
 
-const ProductCard = lazy(() => import('../../commonComponents/productCard/ProductCard'));
-const ShowError = lazy(() => import('../../commonComponents/showError/ShowError'));
-const SliderPage = lazy(() => import('./SliderPage'));
+type dataType = ProductModel[];
 
-const Slider: React.FC = () => {
+interface sliderOptions {
+  itemsCount: number;
+  data: dataType | undefined;
+}
+
+export const Slider: React.FC<sliderOptions> = ({ itemsCount, data }) => {
   const [slidePage, setSlidePage] = useState(0);
-  const [pagesArray, setPagesArray] = useState([]);
+  const [pagesArray, setPagesArray] = useState<JSX.Element[][]>([]);
 
-  const dispatch = useAppDispatch();
-  const products = useAppSelector(selectProducts);
-  const fetchError = useAppSelector(selectError);
   const pagesContRef = useRef<HTMLDivElement>(null);
   const { currWidth } = useWidth();
 
@@ -38,59 +40,39 @@ const Slider: React.FC = () => {
 
   //function calculate and fill number of pages and it elements
   const createPages = useCallback(() => {
-    const itemWidth: number = currWidth > 950 ? 150 : 90;
+    const itemWidthDesktop = 150;
+    const itemWidthMobile = 90;
+    const itemWidth: number = currWidth > MQBreakpoints.DESKTOP ? itemWidthDesktop : itemWidthMobile;
     let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / itemWidth - 1);
-    let pagesCount = Math.ceil(products.length / maxItemsCountPerPage);
-    let index = 0;
-    let pagesArr: any = [];
+    let pagesCount = Math.ceil(itemsCount / maxItemsCountPerPage);
+    let itemsCounter = 0;
+    let pagesArr: JSX.Element[][] = [];
 
     for (let i = 0; i < pagesCount; i++) {
-      const itemsForPageArr = [];
+      const itemsForPageArr: JSX.Element[] = [];
 
       for (let i = 0; i < maxItemsCountPerPage; i++) {
-        if (index === products.length) break;
-        itemsForPageArr.push(<ProductCard key={products[index].id} ebook={products[index]} cardStyleVersion='cover' itemWidth={itemWidth} />);
-        index++;
+        if (itemsCounter === itemsCount) break;
+        const [product] = (data as dataType).filter((item, index) => index === itemsCounter);
+        itemsForPageArr.push(<ProductCard key={product!.id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
+        itemsCounter++;
       }
 
       pagesArr.push(itemsForPageArr);
     }
     setPagesArray(pagesArr);
-  }, [products]);
+  }, [data, currWidth, itemsCount]);
 
   useEffect(() => {
-    dispatch(fetchRandomEbooks({ productsCount: 12, category: 'Wszystkie Ebooki' }));
-  }, [dispatch])
-
-  useEffect(() => {
-    if (!fetchError) createPages();
+    createPages();
   }, [createPages])
-
 
   return (
     <div className={slider}>
-      <Suspense fallback={<LoadingSpinner />}>
-        {/* slider pages */}
-        <div className={pagesContainer} ref={pagesContRef} >
-          {fetchError ? <ShowError /> : pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
-        </div>
-
-        {/* elements for selecting page  */}
-        <ul className={sliderPages}>
-          {pagesArray.map((item, index) => {
-            return <li
-              key={Math.random()}
-              className={`${sliderPage} ${slidePage === index ? active : null}`}
-              onClick={() => turnPage(index + 100)} />
-          })}
-        </ul>
-
-        {/* elements for turning page*/}
-        <span className={`${arrow} ${leftArr} `} onClick={() => turnPage(-1)}>&lt;</span>
-        <span className={`${arrow} ${rightArr}`} onClick={() => turnPage(1)}>&gt;</span>
-      </Suspense>
+      <div className={pagesContainer} ref={pagesContRef} >
+        {pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
+      </div>
+      <Pagination pagesArray={pagesArray} slidePage={slidePage} turnPage={turnPage} />
     </div>
   );
 }
-
-export default Slider;

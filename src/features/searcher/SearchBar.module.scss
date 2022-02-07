@@ -1,5 +1,5 @@
-@import '../../assets/colors.module.scss';
-@import '../../assets/mixins.module.scss';
+@import '../../styles/colors.module.scss';
+@import '../../styles/mixins.module.scss';
 
 .searchBar{
   position:absolute;
@@ -31,8 +31,11 @@
       height:16px;
     }
     .searchBtn{
-      width: 16px;
-      height: 16px;
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
     }
 
     .searchInput{
