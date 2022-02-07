@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../types/hooks';
 import useWidth from '../../hooks/useWidth';
-//import { fetchCategories } from './containerSlice';
 
+import { MQBreakpoints } from '../../constants/constants';
 import SearchBar from '../searcher/SearchBar';
 import NavItem from './NavItem';
 import LogoItem from './LogoItem';
@@ -21,13 +21,9 @@ function AppHeader() {
   const { currWidth, prevWidth } = useWidth();
 
   useEffect(() => {
-    if (currWidth < 950 && prevWidth >= 950) setIsSearchBarVisible(false);
-    if (currWidth >= 950) setIsSearchBarVisible(true);
+    if (currWidth < MQBreakpoints.DESKTOP && prevWidth >= MQBreakpoints.DESKTOP) setIsSearchBarVisible(false);
+    if (currWidth >= MQBreakpoints.DESKTOP) setIsSearchBarVisible(true);
   }, [currWidth, prevWidth, dispatch])
-
-  // useEffect(() => {
-  //   dispatch(fetchCategories(''));
-  // }, [dispatch])
 
   return (
     <header className={header}>

@@ -7,7 +7,7 @@
   left:0;
   height: 100%;
   width: 100%;
-  background-color: gray;
+  background-color: $phantom-gray;
   z-index: 50;
 
   .wrapper{
@@ -92,6 +92,10 @@
     grid-area: searcher;
     background-color: transparent;
     z-index: 500;
+
+    .wrapper{
+      background-color: $phantom-skyblue;
+    }
 
     .closeIcon{
       display: none;

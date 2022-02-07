@@ -18,7 +18,6 @@
     position: relative;
     height: 35px;
     width: 35px;
-    margin: 0 2px;
     border: 1px dotted grey;
     cursor: pointer;
     background-color: whitesmoke;
@@ -26,6 +25,7 @@
 
     &:first-of-type, &:last-of-type{
       border: none;
+      background-color: $white-smoke;
     }
 
     &:hover{
