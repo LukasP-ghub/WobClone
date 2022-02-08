@@ -23,7 +23,7 @@
     width:80%;
     max-width: 400px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     box-shadow: inset 1px 0 1px 1px $phantom-gray;
     background-color: white;
@@ -31,35 +31,65 @@
     transform: translate(-50%,-50%);
 
     .closeIcon{
+      position: relative;
       width:16px;
       height:16px;
+
+      &::before{
+        left: -10px;
+      }
     }
+
     .searchBtn{
+      position: relative;
       display: grid;
       place-items: center;
       width: 20px;
       height: 20px;
       cursor: pointer;
+
+      &::after{
+        right: -11px;
+      }
     }
 
-    .searchInput{
-      margin: 0 15px;
-      height: 30px;
+    .closeIcon::before,.searchBtn::after{
+      position: absolute;
+      content: '';
+      height: 130%;
+      width: 1px;
+      box-shadow:  0 0 1px 1px $phantom-gray;
+      border-radius: 50%;
     }
+
+
+
+    .searchInputLabel{
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+
+      .searchInput{
+        height: 3rem;
+        max-height: 100%;
+        border: none;
+        background-color: transparent;
+        outline-color: $phantom-gray;
+      }
+    }
+
+    
 
     .searchResultsList{
       position: absolute;
       top:70%;
-      left:50%;
       width:60%;
       max-height: 200px;
       overflow-y: scroll;
-
       padding: 5px;
       font-size: 1.5rem;
       background-color: white;
       list-style: none;
-      transform: translateX(-50%);
 
       li{
         height:40px;

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../types/hooks';
 import { Link } from 'react-router-dom';
 import { useGetEbooksQuery } from '../../services/apiSlice';
@@ -10,7 +10,7 @@ import SearchIcon from '../../assets/svg/SearchIcon';
 import CloseIcon from '../../assets/svg/CloseIcon';
 import styles from './SearchBar.module.scss';
 
-const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchResultsList, showSearchBar, underText, wrapper } = styles;
+const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchInputLabel, searchResultsList, showSearchBar, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
   const { data: ebooks = [] } = useGetEbooksQuery('');
@@ -20,6 +20,8 @@ const SearchBar: React.FC = () => {
   const isVisible = useAppSelector(selectShowSearchBar);
   const listElRef = useRef<HTMLAnchorElement[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLUListElement>(null);
+  const labelRef = useRef<HTMLLabelElement>(null);
 
   let listCursor = -1;
 
@@ -57,6 +59,12 @@ const SearchBar: React.FC = () => {
     return [...authors, ...titles];
   }
 
+  useLayoutEffect(() => {
+    if (labelRef.current && dropdownRef.current) {
+      const inputPosition = labelRef.current!.offsetLeft;
+      dropdownRef.current!.style!.left = `${inputPosition}px`;
+    }
+  });
 
   //searching with debounce and avoid empty key searching, 
   useEffect((): any => {
@@ -101,16 +109,16 @@ const SearchBar: React.FC = () => {
         <div className={searchBtn}>
           <SearchIcon />
         </div>
-
-        <input className={searchInput} ref={inputRef} type="text" autoComplete='off' placeholder="Szukaj" name="searchField" onChange={(e) => { dispatch(setSearchKey(e.target.value)) }} />
-
+        <label className={searchInputLabel} ref={labelRef}>
+          <input className={searchInput} ref={inputRef} type="text" autoComplete='off' placeholder="Szukaj" name="searchField" onChange={(e) => { dispatch(setSearchKey(e.target.value)) }} />
+        </label>
         <button className={closeIcon} onClick={() => { dispatch(setShowSearchBar()) }}>
           <CloseIcon />
         </button>
 
         {/*---Search Dropdown--- */}
         {searchResults.length > 0 ?
-          <ul className={searchResultsList} onMouseLeave={onMouseLeaveHandle}>
+          <ul className={searchResultsList} ref={dropdownRef} onMouseLeave={onMouseLeaveHandle}>
 
             {searchResults.map((item: SearchResultsPayload, index: number) => (
               <li key={index} >
