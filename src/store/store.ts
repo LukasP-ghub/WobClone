@@ -2,11 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
 
-import containerReducer from './containerSlice';
+import containerReducer from './appSlice';
 import navigationReducer from '../features/navigation/navigationSlice';
 import searcherReducer from '../features/searcher/searcherSlice';
 import catalogReducer from '../features/catalog/catalogSlice';
 import productDetailsReducer from '../features/productDetails/productDetailsSlice';
+import appSliceReducer from './appSlice';
 import { apiSlice } from '../services/apiSlice';
 
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   searcher: searcherReducer,
   catalog: catalogReducer,
   productDetails: productDetailsReducer,
+  app: appSliceReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 })
 

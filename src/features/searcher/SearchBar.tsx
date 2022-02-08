@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../types/hooks';
 import { Link } from 'react-router-dom';
 import { useGetEbooksQuery } from '../../services/apiSlice';
-import { selectSearchKey, selectSearchResults } from './searcherSlice';
+import { selectSearchKey, selectSearchResults, selectShowSearchBar } from './searcherSlice';
 import { setShowSearchBar, setSearchKey, setSearchResults } from './searcherSlice';
 import { SearchResultsPayload } from './searcherSlice';
 
@@ -10,13 +10,14 @@ import SearchIcon from '../../assets/svg/SearchIcon';
 import CloseIcon from '../../assets/svg/CloseIcon';
 import styles from './SearchBar.module.scss';
 
-const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchResultsList, underText, wrapper } = styles;
+const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchResultsList, showSearchBar, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
   const { data: ebooks = [] } = useGetEbooksQuery('');
   const dispatch = useAppDispatch();
   const searchKey = useAppSelector(selectSearchKey);
   const searchResults = useAppSelector(selectSearchResults);
+  const isVisible = useAppSelector(selectShowSearchBar);
   const listElRef = useRef<HTMLAnchorElement[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -93,7 +94,7 @@ const SearchBar: React.FC = () => {
   }
 
   return (
-    <div className={searchBar} onKeyDown={onKeyHandle}
+    <div className={`${searchBar} ${isVisible ? showSearchBar : null}`} onKeyDown={onKeyHandle}
       tabIndex={-1}>
       <div className={wrapper}>
 

@@ -1,8 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../types/hooks';
-import useWidth from '../../hooks/useWidth';
-
-import { MQBreakpoints } from '../../constants/constants';
 import SearchBar from '../searcher/SearchBar';
 import NavItem from './NavItem';
 import LogoItem from './LogoItem';
@@ -16,14 +11,6 @@ import styles from './AppHeader.module.scss';
 const { header } = styles;
 
 function AppHeader() {
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
-  const dispatch = useAppDispatch();
-  const { currWidth, prevWidth } = useWidth();
-
-  useEffect(() => {
-    if (currWidth < MQBreakpoints.DESKTOP && prevWidth >= MQBreakpoints.DESKTOP) setIsSearchBarVisible(false);
-    if (currWidth >= MQBreakpoints.DESKTOP) setIsSearchBarVisible(true);
-  }, [currWidth, prevWidth, dispatch])
 
   return (
     <header className={header}>
@@ -34,7 +21,7 @@ function AppHeader() {
       <CartItem />
       <NavPanel />
       <CategoryPanel />
-      {isSearchBarVisible ? <SearchBar /> : null}
+      <SearchBar />
     </header>
   );
 }

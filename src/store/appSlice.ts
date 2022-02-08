@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store/store';
+import { RootState } from './store';
 
 type containerState = {
   categories: { category: string, popular: string }[],
@@ -14,7 +14,7 @@ const initialState: containerState = {
   ],
 }
 
-export const containerSlice = createSlice({
+export const appSlice = createSlice({
   name: 'container',
   initialState,
   reducers: {
@@ -22,4 +22,6 @@ export const containerSlice = createSlice({
   },
 });
 
-export default containerSlice.reducer;
+export const selectShowSearchBar = (state: RootState) => state.searcher.showSearchBar;
+
+export default appSlice.reducer;

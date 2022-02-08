@@ -9,6 +9,11 @@
   width: 100%;
   background-color: $phantom-gray;
   z-index: 50;
+  display: none;
+
+  &.showSearchBar{
+    display: initial;
+  }
 
   .wrapper{
     position: relative;
@@ -17,11 +22,10 @@
     height: 80%;
     width:80%;
     max-width: 400px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
+    box-shadow: inset 1px 0 1px 1px $phantom-gray;
     background-color: white;
     border-radius: 100px;
     transform: translate(-50%,-50%);
@@ -92,9 +96,10 @@
     grid-area: searcher;
     background-color: transparent;
     z-index: 500;
+    display: initial;
 
     .wrapper{
-      background-color: $phantom-skyblue;
+      background-color: $phantom-jet;
     }
 
     .closeIcon{
