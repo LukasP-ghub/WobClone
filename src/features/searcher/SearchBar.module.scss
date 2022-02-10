@@ -83,22 +83,23 @@
     .searchResultsList{
       position: absolute;
       top:70%;
-      width:60%;
+      width:65%;
       max-height: 200px;
       overflow-y: scroll;
-      padding: 5px;
       font-size: 1.5rem;
       background-color: white;
       list-style: none;
 
       li{
-        height:40px;
-       
+        height:45px;
+        border-bottom: 1px dotted $phantom-gray;
+
         a{
           display: block;
           width: 100%;
           height: 100%;
-          border-bottom: 1px dotted gray;
+          padding: 5px 0 0 5px;
+          
           
           .underText{
             font-size: 1rem;
@@ -108,7 +109,7 @@
 
         }
         a:focus{
-          background-color: $white-smoke-hover;
+          background-color: $phantom-jet;
         }
       }
      
