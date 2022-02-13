@@ -6,7 +6,7 @@ import { selectFilters, selectShowFilterOptions } from './catalogSlice';
 import ChevronLeft from '../../assets/svg/ChevronLeft';
 import styles from './FilterOptions.module.scss';
 
-const { arrow, clearFiltersBtn, filter, filtersGroup, optionsGroup, panelHead, shiftBtn, shiftBtnActive, show, showCategoryListBtn, title, titleWrap, wrapper } = styles;
+const { arrow, clearFiltersBtn, filter, filtersGroup, flexVCenter, optionsGroup, panelHead, shiftBtn, shiftBtnActive, show, showCategoryListBtn, title, titleWrap, wrapper } = styles;
 
 const FilterOptions: React.FC = () => {
   const { data: categories = [] } = useGetCategoriesQuery('');
@@ -25,7 +25,7 @@ const FilterOptions: React.FC = () => {
       </div>
 
       <div className={`${wrapper} ${isVisible ? show : null}`}>
-        <div className={optionsGroup}>
+        <div className={`${optionsGroup} ${flexVCenter}`}>
           <h3 className={title}>Tylko w promocji</h3>
           <button className={`${shiftBtn} ${filters.promotion === 'true' ? shiftBtnActive : null}`} onClick={() => dispatch(setFilters({ filter: 'promotion', value: filters.promotion === 'true' ? '' : 'true' }))} />
         </div>
