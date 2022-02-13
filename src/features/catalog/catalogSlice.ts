@@ -55,17 +55,21 @@ export const catalogSlice = createSlice({
     },
     filterProducts: (state, action: PayloadAction<{ products: ProductModel[], promotions: Promotions }>) => {
       const promCategories = Object.keys(action.payload.promotions.category);
-      state.filteredProducts = action.payload.products.filter(item => {
+      const tempArr: ProductModel[] = [];
+      action.payload.products.reduce((acc, item) => {
         let flag = true;
+        const newItem = { ...item };
         if (state.filters.promotion) {
           flag = promCategories.includes(item.category);
-          item.discount = action.payload.promotions.category[item.category];
+          newItem.discount = action.payload.promotions.category[item.category];
         }
         if (state.filters.category) {
           flag = item.category === state.filters.category;
         }
-        return flag;
-      });
+        if (flag) tempArr.push(newItem);
+        return acc++;
+      }, 0);
+      state.filteredProducts = tempArr;
     }
   },
 });
