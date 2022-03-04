@@ -117,7 +117,7 @@ const SearchBar: React.FC = () => {
         </button>
 
         {/*---Search Dropdown--- */}
-        {searchResults.length > 0 ?
+        {searchResults.length > 0 && inputRef.current?.value ?
           <ul className={searchResultsList} ref={dropdownRef} onMouseLeave={onMouseLeaveHandle}>
 
             {searchResults.map((item: SearchResultsPayload, index: number) => (
