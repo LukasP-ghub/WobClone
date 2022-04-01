@@ -7,7 +7,7 @@ import styles from './ProductCard.module.scss';
 import covers from '../../assets/images';
 import CartIcon from '../../assets/svg/CartIcon';
 
-const { card, cardCover, cardFull, picture, price, productDetails, title } = styles;
+const { author, card, cardCover, cardFull, picture, price, productDetails, title } = styles;
 const { toCartBtn } = styles;
 
 type cardStyleVersionType = 'full' | 'cover';
@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemW
 
         <div className={productDetails}>
           <h3 className={title}>{ebook.title}</h3>
-          <cite>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
+          <cite className={author}>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
           <div className={price}>{`${ebook.price} zł`}</div>
         </div>
       </Link>
