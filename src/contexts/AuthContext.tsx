@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../services/firebase';
 
 interface AuthContextProviderProps {
 

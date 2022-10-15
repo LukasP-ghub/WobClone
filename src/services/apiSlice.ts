@@ -4,7 +4,7 @@ import { ProductCategories, Promotions, ProductModel } from '../types/types';
 
 
 export const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: `https://firestore.googleapis.com/v1/projects/wobclone-3d29b/databases/(default)/documents/` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `https://localhost:3001/` }),
   reducerPath: 'apiSlice',
   endpoints: (build) => ({
     getEbooks: build.query<ProductModel[], string>({
