@@ -1,5 +1,5 @@
 export type ProductCategories = {
-  category: string;
+  category_name: string;
   popular: boolean;
 }
 
@@ -13,18 +13,27 @@ export interface ProductModel {
   title: string;
   description: string;
   author: {
-    firstName: string,
-    lastName: string,
-  };
-  category: string;
+    author_id: string,
+    author_name: string
+  }[];
+  category: ProductCategories[];
   date: string;
   price: number;
   rating: {
     value: string,
     maxValue: string,
   };
-  id: string;
+  ebook_id: string;
   cover: string;
   discount?: number;
+  pages: number;
+  publication_date: string;
+  language_id: {
+    language_name: string,
+    language_code: string
+  },
+  publisher_id: {
+    publisher_name: string
+  }
 }
 
