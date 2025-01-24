@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ProductModel } from '../types/types';
 
+type Props = {
+  children: React.ReactNode;
+};
+
 type pricingType = {
   nominalPrice: number,
   actualPrice: number,
@@ -34,7 +38,7 @@ const CartContext = React.createContext<ProductContextObj>({
 });
 
 
-export const CartContextProvider: React.FC = (props) => {
+export const CartContextProvider: React.FC<Props> = ({ children }) => {
   const [productsInCart, setProductsInCart] = useState<ProductModel[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [currentPaymentStep, setPaymentStep] = useState<number>(2);
@@ -95,7 +99,7 @@ export const CartContextProvider: React.FC = (props) => {
   }
 
   return <CartContext.Provider value={contextValue}>
-    {props.children}
+    {children}
   </CartContext.Provider>
 }
 

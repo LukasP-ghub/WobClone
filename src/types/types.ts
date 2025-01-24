@@ -10,6 +10,7 @@ export type Promotions = {
 }
 
 export interface ProductModel {
+  id: string;
   title: string;
   description: string;
   author: {
@@ -37,3 +38,6 @@ export interface ProductModel {
   }
 }
 
+export type ChildrenProps = {
+  children?: React.ReactNode;
+};

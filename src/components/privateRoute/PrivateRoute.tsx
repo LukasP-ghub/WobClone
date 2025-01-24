@@ -1,15 +1,19 @@
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 export interface PrivateRouteProps {
-  component: any,
-  path: string,
+  children?: React.ReactNode; // Dla tras zagnieżdżonych
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { currentUser } = useAuth();
 
-  return (<Route {...rest} render={props => currentUser ? <Component {...props} /> : <Redirect to="/sign-page" />} />)
-}
+  if (!currentUser) {
+    return <Navigate to="/sign-page" replace />;
+  }
+
+  return children ? <>{children}</> : <Outlet />;
+};
 
 export default PrivateRoute;

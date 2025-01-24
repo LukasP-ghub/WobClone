@@ -1,23 +1,26 @@
 import React from 'react';
-import { useAppDispatch } from '../../types/hooks';
+import { useLocation } from 'react-router-dom';
 import useWidth from '../../hooks/useWidth';
+import { useAppDispatch } from '../../types/hooks';
 
 import { setShowSidePanel, setSidePanelContent } from './productDetailsSlice';
 
-import { ProductModel } from '../../types/types';
-import covers from '../../assets/images'
+import covers from '../../assets/images';
 import ChevronRight from '../../assets/svg/ChevronRight';
-import { SidePanel } from './SidePanel';
-import { Rating } from './Rating';
+import { ProductModel } from '../../types/types';
 import BuyBtn from './BuyBtn';
 import styles from './ProductDetails.module.scss';
+import { Rating } from './Rating';
+import { SidePanel } from './SidePanel';
 
 const { ellipsis, indent, picture, productInfo, productRating, productDescription, section, sectionContent, sidePanelArrow, wrapper } = styles;
 
-const ProductDetails: React.FC<{ location: any }> = ({ location }) => {
+const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const { currWidth } = useWidth();
   const product: ProductModel = location.state.product;
+  const productAuthors = product?.author.map(author => author.author_name).join(", ");
   const cover = covers.get(product?.cover) || { small: '', medium: '' };
 
   const showSidePanel = (params: { title: string, subtitle: string | null, body: string }) => {
@@ -44,7 +47,7 @@ const ProductDetails: React.FC<{ location: any }> = ({ location }) => {
             <tbody>
               <tr>
                 <td>Autor:</td>
-                <td>{`${product?.author.firstName} ${product?.author.lastName}`}</td>
+                <td>{`${productAuthors}`}</td>
               </tr>
               <tr>
                 <td>Wydawca:</td>
@@ -84,7 +87,7 @@ const ProductDetails: React.FC<{ location: any }> = ({ location }) => {
         <button className={sidePanelArrow}
           onClick={() => showSidePanel({
             title: product.title,
-            subtitle: `${product.author.firstName} ${product.author.lastName}`,
+            subtitle: `${productAuthors}`,
             body: product.description,
           })}>
 

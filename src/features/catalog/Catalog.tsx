@@ -1,26 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../types/hooks';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
+import { useLocation } from 'react-router-dom';
 import { useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
-import { sortProducts, filterProducts, setFilters } from './catalogSlice';
-import { selectFilteredProducts, selectFilters } from './catalogSlice';
+import { filterProducts, selectFilteredProducts, selectFilters, setFilters, sortProducts } from './catalogSlice';
 
 import { ProductModel } from '../../types/types';
 
 import ProductCard from '../../components/productCard/ProductCard';
 import { ActiveFilters } from './ActiveFilters';
-import FilterOptions from './FilterOptions';
-import { CategoriesList } from './CategoriesList';
-import Pagination from './Pagination';
 import styles from './Catalog.module.scss';
+import { CategoriesList } from './CategoriesList';
+import FilterOptions from './FilterOptions';
+import Pagination from './Pagination';
 
 const { containerCards, containerCardsWrapper, wrapper } = styles;
 
 
-const Catalog: React.FC<{ location: any }> = ({ location }) => {
+const Catalog: React.FC = () => {
   const { data: ebooksData = [] } = useGetEbooksQuery('');
   const { data: promotionsData } = useGetPromotionsQuery('');
   const [page, setPage] = useState<number>(1);
+  const location = useLocation();
 
   const dispatch = useAppDispatch();
   const filteredProducts = useAppSelector(selectFilteredProducts);
