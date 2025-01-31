@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 interface AuthContextProviderProps {
-
+  children?: React.ReactNode;
 }
 
 interface contextType {

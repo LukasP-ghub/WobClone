@@ -1,13 +1,14 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+// Replace useHistory with useNavigate
+import { useNavigate } from 'react-router-dom';
 
-import CartContext from '../../contexts/cartContext';
 import covers from '../../assets/images';
+import CartContext from '../../contexts/cartContext';
 
 import BigNextLinkBtn from '../../components/buttons/BigNextLinkBtn';
 import BigReturnBtn from '../../components/buttons/BigReturnBtn';
+import styles from './Cart.module.scss';
 import PriceSummary from './PriceSummary';
-import styles from './Cart.module.scss'
 
 const { cartTab, cartTabs, product, productsList, productImg, productTitle, productPrice, wrapper } = styles;
 const { removeProductBtn } = styles;
@@ -15,9 +16,10 @@ const { centerVH } = styles;
 
 function Cart() {
   const cartCtx = useContext(CartContext);
-  const history = useHistory();
+  // Replace useHistory with useNavigate
+  const navigate = useNavigate();
 
-  const handleGoBack = () => history.goBack();
+  const handleGoBack = () => navigate(-1);
 
   const prodInCartQuantity = cartCtx.productsInCart.length;
 

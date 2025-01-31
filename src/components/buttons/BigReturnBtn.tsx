@@ -3,6 +3,7 @@ import styles from './BigLinkBtn.module.scss';
 const { btn, backBtn } = styles;
 
 export interface BigReturnBtnProps {
+  children?: React.ReactNode;
   clickHandler: () => void
 }
 

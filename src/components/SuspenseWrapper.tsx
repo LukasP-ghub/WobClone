@@ -6,7 +6,11 @@ type Props = {
 };
 
 const SuspenseWrapper: React.FC<Props> = ({ children }) => {
-  return <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      {children}
+    </Suspense>
+  );
 };
 
 export default SuspenseWrapper;

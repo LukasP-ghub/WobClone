@@ -1,12 +1,12 @@
-import { Formik, Form, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
-import TextField from '../../components/formFields/TextField';
 import Checkbox from '../../components/formFields/Checkbox';
 import SelectField from '../../components/formFields/SelectField';
-import styles from './SignUp.module.scss'
+import TextField from '../../components/formFields/TextField';
+import styles from './SignUp.module.scss';
 const { centerVH, submitBtn, wrapper } = styles;
 
 
@@ -19,7 +19,7 @@ interface Values {
 
 const SignUp = () => {
   const { signUp } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const validation: any = {
     email: Yup.string()
@@ -30,7 +30,7 @@ const SignUp = () => {
       .matches(/^[a-zA-Z0-9]*$/, 'Password can contain only letters and numbers')
       .required('Required'),
     passwordRepeat: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
       .required('Required'),
     acceptedTerms: Yup.boolean()
       .required('Required')
@@ -58,7 +58,7 @@ const SignUp = () => {
         signUp(values.email, values.password)
           .then((res: any) => {
             actions.setSubmitting(false);
-            history.push('/');
+            navigate('/');
           })
           .catch((error: any) => {
             alert(`${error.code} ${error.message}`);

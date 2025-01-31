@@ -1,8 +1,13 @@
-import styles from './SliderPage.module.scss'
+import styles from './SliderPage.module.scss';
 
 const { itemList } = styles;
 
-const SliderPage: React.FC<{ slidePage: number }> = ({ slidePage, children }) => {
+interface SliderPageProps {
+  slidePage: number;
+  children: React.ReactNode;
+}
+
+const SliderPage: React.FC<SliderPageProps> = ({ slidePage, children }) => {
   return (
     <ul className={itemList} style={{ transform: `translateX(${slidePage * -100}%)` }}>
       {children}

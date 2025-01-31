@@ -1,24 +1,24 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { JSX, useCallback, useEffect, useRef, useState } from 'react';
+import { MQBreakpoints } from '../../constants/constants';
 import useWidth from '../../hooks/useWidth';
 import { ProductModel } from '../../types/types';
-import { MQBreakpoints } from '../../constants/constants';
 
 import ProductCard from '../../components/productCard/ProductCard';
-import SliderPage from './SliderPage';
 import { Pagination } from './Pagination';
+import SliderPage from './SliderPage';
 
 import styles from './Slider.module.scss';
 
 const { slider, pagesContainer } = styles;
 
-type dataType = ProductModel[];
+type DataType = ProductModel[];
 
-interface sliderOptions {
+interface SliderOptions {
   itemsCount: number;
-  data: dataType | undefined;
+  data: DataType | undefined;
 }
 
-export const Slider: React.FC<sliderOptions> = ({ itemsCount, data }) => {
+export const Slider: React.FC<SliderOptions> = ({ itemsCount, data }) => {
   const [slidePage, setSlidePage] = useState(0);
   const [pagesArray, setPagesArray] = useState<JSX.Element[][]>([]);
 
@@ -38,7 +38,7 @@ export const Slider: React.FC<sliderOptions> = ({ itemsCount, data }) => {
     }
   }
 
-  //function calculate and fill number of pages and it elements
+  // function to calculate and fill number of pages and their elements
   const createPages = useCallback(() => {
     const itemWidthDesktop = 150;
     const itemWidthMobile = 90;
@@ -51,9 +51,9 @@ export const Slider: React.FC<sliderOptions> = ({ itemsCount, data }) => {
     for (let i = 0; i < pagesCount; i++) {
       const itemsForPageArr: JSX.Element[] = [];
 
-      for (let i = 0; i < maxItemsCountPerPage; i++) {
+      for (let j = 0; j < maxItemsCountPerPage; j++) {
         if (itemsCounter === itemsCount) break;
-        const [product] = (data as dataType).filter((item, index) => index === itemsCounter);
+        const [product] = (data as DataType).filter((item, index) => index === itemsCounter);
         itemsForPageArr.push(<ProductCard key={product!.id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
         itemsCounter++;
       }
@@ -70,7 +70,7 @@ export const Slider: React.FC<sliderOptions> = ({ itemsCount, data }) => {
   return (
     <div className={slider}>
       <div className={pagesContainer} ref={pagesContRef} >
-        {pagesArray.map((item, index) => { return <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage> })}
+        {pagesArray.map((item, index) => <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage>)}
       </div>
       <Pagination pagesArray={pagesArray} slidePage={slidePage} turnPage={turnPage} />
     </div>

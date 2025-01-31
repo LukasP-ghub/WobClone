@@ -3,7 +3,7 @@ import styles from './TopBarFixed.module.scss';
 const { topBar } = styles;
 
 export interface TopBarFixedProps {
-
+  children?: React.ReactNode;
 }
 
 const TopBarFixed: React.FC<TopBarFixedProps> = (props) => {

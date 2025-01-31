@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import covers from '../../assets/images';
+import CartIcon from '../../assets/svg/CartIcon';
 import CartContext from '../../contexts/cartContext';
 import { ProductModel } from '../../types/types';
 import styles from './ProductCard.module.scss';
-import covers from '../../assets/images';
-import CartIcon from '../../assets/svg/CartIcon';
 
 const { author, card, cardCover, cardFull, picture, price, productDetails, title } = styles;
 const { toCartBtn } = styles;
@@ -21,16 +21,13 @@ interface ProductCardType {
 const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemWidth }) => {
   const cartCtx = useContext(CartContext);
   const cover = covers.get(ebook.cover) || { small: '', medium: '' };
+  //mapowanie autorów
+  const authors = ebook.author.map((author) => `${author.author_name}`).join('-');
 
   return (
     <li className={`${card} ${cardStyleVersion === 'cover' ? cardCover : cardFull}`} style={{ width: `${itemWidth}px` }}>
 
-      <Link to={{
-        pathname: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,
-        state: {
-          product: ebook,
-        }
-      }}>
+      <Link to={`/ebook/${ebook.title}-${authors}`} state={{ product: ebook }}>
 
         <picture >
           <source srcSet={`${cover.medium}`} media="(min-width: 1000px)" />
@@ -39,7 +36,7 @@ const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemW
 
         <div className={productDetails}>
           <h3 className={title}>{ebook.title}</h3>
-          <cite className={author}>{`${ebook.author.firstName} ${ebook.author.lastName}`}</cite>
+          <cite className={author}>{`${authors}`}</cite>
           <div className={price}>{`${ebook.price} zł`}</div>
         </div>
       </Link>

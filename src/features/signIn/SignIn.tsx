@@ -1,10 +1,10 @@
-import { Formik, Form, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 import TextField from '../../components/formFields/TextField';
-import styles from './SignIn.module.scss'
+import styles from './SignIn.module.scss';
 
 
 const { centerVH, submitBtn, wrapper } = styles;
@@ -16,7 +16,7 @@ interface Values {
 
 const SignIn = () => {
   const { signIn } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const validation: any = {
     email: Yup.string()
@@ -42,7 +42,7 @@ const SignIn = () => {
         signIn(values.email, values.password)
           .then((res) => {
             actions.setSubmitting(false);
-            history.push('/');
+            navigate('/');
           })
           .catch((error) => {
             alert(`${error.code} ${error.message}`);
