@@ -1,4 +1,5 @@
 export type ProductCategories = {
+  category_id: string;
   category_name: string;
   popular: boolean;
 }
@@ -10,7 +11,7 @@ export type Promotions = {
 }
 
 export interface ProductModel {
-  id: string;
+  ebook_id: string;
   title: string;
   description: string;
   author: {
@@ -24,16 +25,18 @@ export interface ProductModel {
     value: string,
     maxValue: string,
   };
-  ebook_id: string;
   cover: string;
-  discount?: number;
+  discount?: {
+    discount_id: string;
+    discount_name: string
+    discount_value: number;
+  }[];
   pages: number;
   publication_date: string;
-  language_id: {
     language_name: string,
     language_code: string
-  },
-  publisher_id: {
+  publisher: {
+    publisher_id: string;
     publisher_name: string
   }
 }

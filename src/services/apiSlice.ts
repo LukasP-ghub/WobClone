@@ -1,31 +1,65 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { normalizeFirestoreRes } from '../utils/normalizeFirestoreRes';
-import { ProductCategories, Promotions, ProductModel } from '../types/types';
 
-
+// Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
 export const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: `https://localhost:3001/` }),
   reducerPath: 'apiSlice',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://localhost:3001/',
+    prepareHeaders: (headers, { getState }) => {
+      // Jeśli masz token w store, możesz go automatycznie dołączać do nagłówków
+      const token = (getState() as { auth: { token: string } }).auth?.token;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
-    getEbooks: build.query<ProductModel[], string>({
-      query: (param: any) => `ebooks?key=AIzaSyBcPWLW6D0lZqB-FyT0Fdtz1XUi0nhS2Zo&pageSize=50`,
-      transformResponse(response: { documents: { fields: any }[] }) {
-        return response.documents.map(item => normalizeFirestoreRes(item.fields) as ProductModel);
+    // Przykłady endpointów, które już masz:
+    getEbooks: build.query({
+      query: () => 'ebooks?key=YOUR_API_KEY&pageSize=50',
+      transformResponse(response) {
+        return response;
       },
     }),
-    getCategories: build.query<ProductCategories[], string>({
-      query: (param: any) => `categories?key=AIzaSyBcPWLW6D0lZqB-FyT0Fdtz1XUi0nhS2Zo`,
-      transformResponse(response: { documents: { fields: any }[] }) {
-        return response.documents.map(item => normalizeFirestoreRes(item.fields) as ProductCategories);
+    getCategories: build.query({
+      query: () => 'categories?key=YOUR_API_KEY',
+      transformResponse(response) {
+        return response;
       },
     }),
-    getPromotions: build.query<Promotions, string>({
-      query: (param: any) => `promotions?key=AIzaSyBcPWLW6D0lZqB-FyT0Fdtz1XUi0nhS2Zo`,
-      transformResponse(response: { documents: { fields: any }[] }) {
-        return response.documents.map(item => normalizeFirestoreRes(item.fields))[0] as Promotions;
+    getPromotions: build.query({
+      query: () => 'promotions?key=YOUR_API_KEY',
+      transformResponse(response) {
+        return response;
       },
+    }),
+    
+    // Dodajemy endpoint do logowania
+    login: build.mutation({
+      query: (credentials) => ({
+        url: 'auth/login',     // endpoint na backendzie
+        method: 'POST',
+        body: credentials,     // spodziewamy się obiektu { email, password }
+      }),
+    }),
+    
+    // Endpoint do rejestracji
+    register: build.mutation({
+      query: (credentials) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: credentials,     // również { email, password } lub inne wymagane dane
+      }),
     }),
   }),
-})
+});
 
-export const { useGetEbooksQuery, useGetCategoriesQuery, useGetPromotionsQuery } = apiSlice;
+// Eksportujemy hooki, których potem użyjesz w komponentach
+export const {
+  useGetEbooksQuery,
+  useGetCategoriesQuery,
+  useGetPromotionsQuery,
+  useLoginMutation,
+  useRegisterMutation,
+} = apiSlice;
