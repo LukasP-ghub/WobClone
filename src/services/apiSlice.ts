@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ProductModel } from '../types/types';
 
 // Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
 export const apiSlice = createApi({
@@ -19,7 +20,7 @@ export const apiSlice = createApi({
     getEbooks: build.query({
       query: () => 'ebooks?key=YOUR_API_KEY&pageSize=50',
       transformResponse(response) {
-        return response;
+        return response as ProductModel[];
       },
     }),
     getCategories: build.query({

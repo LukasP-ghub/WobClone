@@ -20,8 +20,18 @@ interface ProductCardType {
 
 const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemWidth }) => {
   const cartCtx = useContext(CartContext);
-  const cover = covers.get(ebook.cover) || { small: '', medium: '' };
-  //mapowanie autorów
+
+  const sortedCovers = [...ebook.cover].sort((a, b) => a.cover_size - b.cover_size);
+
+const breakpoints = [600, 1000, 1400];
+
+const adjustedCovers = breakpoints.map((bp, index) => ({
+  media: `(min-width: ${bp}px)`,
+  srcSet: sortedCovers[index]?.cover_url || sortedCovers[sortedCovers.length - 1]?.cover_url || covers.get('default')?.medium,
+}));
+
+const defaultCover = sortedCovers[0]?.cover_url || covers.get('default')?.small;
+ 
   const authors = ebook.author.map((author) => `${author.author_name}`).join('-');
 
   return (
@@ -29,10 +39,12 @@ const ProductCard: React.FC<ProductCardType> = ({ ebook, cardStyleVersion, itemW
 
       <Link to={`/ebook/${ebook.title}-${authors}`} state={{ product: ebook }}>
 
-        <picture >
-          <source srcSet={`${cover.medium}`} media="(min-width: 1000px)" />
-          <img src={`${cover.small}`} className={picture} alt="" />
-        </picture>
+      <picture>
+  {adjustedCovers.map((cover, index) => (
+    <source key={cover.srcSet} srcSet={cover.srcSet} media={cover.media} />
+  ))}
+  <img src={defaultCover} className={picture} alt={`${ebook.title} - okładka`} loading="lazy" />
+</picture>
 
         <div className={productDetails}>
           <h3 className={title}>{ebook.title}</h3>

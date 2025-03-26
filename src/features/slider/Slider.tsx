@@ -54,7 +54,7 @@ export const Slider: React.FC<SliderOptions> = ({ itemsCount, data }) => {
       for (let j = 0; j < maxItemsCountPerPage; j++) {
         if (itemsCounter === itemsCount) break;
         const [product] = (data as DataType).filter((item, index) => index === itemsCounter);
-        itemsForPageArr.push(<ProductCard key={product!.id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
+        itemsForPageArr.push(<ProductCard key={product!.ebook_id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
         itemsCounter++;
       }
 

@@ -4,6 +4,34 @@ export type ProductCategories = {
   popular: boolean;
 }
 
+export type ProductAuthors = {
+  author_id: string;
+  author_name: string;
+}
+
+export type ProductRating = {
+  value: string;
+  maxValue: string;
+}
+
+export type ProductCover = {
+  cover_id: string;
+  cover_name: string;
+  cover_size: number;
+  cover_url: string;
+}
+
+export type ProductDiscount = {
+  discount_id: string;
+  discount_name: string;
+  discount_value: number;
+}
+
+export type ProductPublisher = {
+  publisher_id: string;
+  publisher_name: string;
+}
+
 export type Promotions = {
   category: {
     [key: string]: number,
@@ -14,31 +42,18 @@ export interface ProductModel {
   ebook_id: string;
   title: string;
   description: string;
-  author: {
-    author_id: string,
-    author_name: string
-  }[];
-  category: ProductCategories[];
   date: string;
   price: number;
-  rating: {
-    value: string,
-    maxValue: string,
-  };
-  cover: string;
-  discount?: {
-    discount_id: string;
-    discount_name: string
-    discount_value: number;
-  }[];
   pages: number;
   publication_date: string;
-    language_name: string,
-    language_code: string
-  publisher: {
-    publisher_id: string;
-    publisher_name: string
-  }
+  language_name: string;
+  language_code: string;
+  rating: ProductRating;
+  publisher: ProductPublisher;
+  author: ProductAuthors[];
+  category: ProductCategories[];
+  cover: ProductCover[];
+  discount: ProductDiscount[];
 }
 
 export type ChildrenProps = {
