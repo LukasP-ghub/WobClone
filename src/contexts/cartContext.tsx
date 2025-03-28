@@ -49,7 +49,7 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
   });
 
   const addToCart = (product: ProductModel) => {
-    if (productsInCart.findIndex((element) => element.id === product.id) === -1) {
+    if (productsInCart.findIndex((element) => element.ebook_id === product.ebook_id) === -1) {
       setProductsInCart(prevArr => [...prevArr, product]);
       setPricing(prevObj => ({
         totalDiscount: 0,
@@ -61,7 +61,7 @@ export const CartContextProvider: React.FC<Props> = ({ children }) => {
 
   const removeFromCart = (id: number) => {
     const productsInCartCopy = [...productsInCart];
-    const index = productsInCartCopy.findIndex((element) => Number(element.id) === id);
+    const index = productsInCartCopy.findIndex((element) => Number(element.ebook_id) === id);
 
     if (index > -1) {
       setPricing(prevObj => ({

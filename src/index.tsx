@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
-import { AuthContextProvider } from './contexts/AuthContext';
 import { CartContextProvider } from './contexts/cartContext';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -15,13 +14,11 @@ if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <AuthContextProvider>
         <Provider store={store}>
           <CartContextProvider>
             <App />
           </CartContextProvider>
         </Provider>
-      </AuthContextProvider>
     </React.StrictMode>
   );
 } else {

@@ -1,6 +1,6 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-
+import { logout, selectUser } from '../../store/authSlice';
 import styles from './HeaderUserLinks.module.scss';
 
 const { header, logo, margins, topBarItem } = styles;
@@ -10,7 +10,13 @@ export interface HeaderUserLinksProps {
 }
 
 const HeaderUserLinks: React.FC<HeaderUserLinksProps> = () => {
-  const { currentUser, signOut } = useAuth();
+  const currentUser = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <header className={header}>
       <Link to='/' className={`${topBarItem} ${logo}`}>WobClone</Link>

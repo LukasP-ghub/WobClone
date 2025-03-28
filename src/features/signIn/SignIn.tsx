@@ -1,7 +1,7 @@
 import { Form, Formik, FormikProps } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useAuth } from '../../contexts/AuthContext';
+import { useLoginMutation } from '../../services/apiSlice';
 
 import TextField from '../../components/formFields/TextField';
 import styles from './SignIn.module.scss';
@@ -15,7 +15,7 @@ interface Values {
 }
 
 const SignIn = () => {
-  const { signIn } = useAuth();
+  const [login, { isLoading, error }] = useLoginMutation();
   const navigate = useNavigate();
 
   const validation: any = {
@@ -38,15 +38,15 @@ const SignIn = () => {
         password: '',
       }}
       validationSchema={Yup.object(validation)}
-      onSubmit={(values, actions) => {
-        signIn(values.email, values.password)
-          .then((res) => {
-            actions.setSubmitting(false);
-            navigate('/');
-          })
-          .catch((error) => {
-            alert(`${error.code} ${error.message}`);
-          });
+      onSubmit={async (values, actions) => {
+        try {
+          await login({ email: values.email, password: values.password }).unwrap();
+          actions.setSubmitting(false);
+          navigate('/');
+        } catch (error:any) {
+          actions.setSubmitting(false);
+          alert(`${error?.code} ${error?.message}`);
+        }
       }}
     >
       {(props: FormikProps<Values>) => (

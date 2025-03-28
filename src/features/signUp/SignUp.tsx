@@ -1,11 +1,10 @@
 import { Form, Formik, FormikProps } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useAuth } from '../../contexts/AuthContext';
-
 import Checkbox from '../../components/formFields/Checkbox';
 import SelectField from '../../components/formFields/SelectField';
 import TextField from '../../components/formFields/TextField';
+import { useRegisterMutation } from '../../services/apiSlice';
 import styles from './SignUp.module.scss';
 const { centerVH, submitBtn, wrapper } = styles;
 
@@ -18,7 +17,7 @@ interface Values {
 }
 
 const SignUp = () => {
-  const { signUp } = useAuth();
+  const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
   const validation: any = {
@@ -54,15 +53,18 @@ const SignUp = () => {
         passwordRepeat: '',
       }}
       validationSchema={Yup.object(validation)}
-      onSubmit={(values, actions) => {
-        signUp(values.email, values.password)
-          .then((res: any) => {
-            actions.setSubmitting(false);
-            navigate('/');
-          })
-          .catch((error: any) => {
-            alert(`${error.code} ${error.message}`);
-          });
+      onSubmit={async (values, actions) => {
+        try {
+          await register({
+            email: values.email,
+            password: values.password,
+          }).unwrap();
+          actions.setSubmitting(false);
+          navigate('/');
+        } catch (error: any) {
+          actions.setSubmitting(false);
+          alert(`${error.code || 'Error'}: ${error.message || 'Something went wrong'}`);
+        }
       }}
     >
       {(props: FormikProps<Values>) => (

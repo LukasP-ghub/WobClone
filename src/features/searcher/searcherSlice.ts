@@ -1,19 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
-import { db } from '../../services/firebase';
-import { sorting } from '../../utils/sorting';
-import { ProductModel } from '../../types/types';
 
 export interface SearchResultsPayload {
   linkPathName: string;
   linkContent: {
     title: string | null;
-    authorFirstName: string;
-    authorLastName: string;
+    authorName: string;
   };
   linkState: {
-    authorFirstName: string;
-    authorLastName: string;
+    authorName: string;
     title?: string;
   };
 }

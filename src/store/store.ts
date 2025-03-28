@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
-
-import containerReducer from './appSlice';
-import navigationReducer from '../features/navigation/navigationSlice';
-import searcherReducer from '../features/searcher/searcherSlice';
 import catalogReducer from '../features/catalog/catalogSlice';
+import navigationReducer from '../features/navigation/navigationSlice';
 import productDetailsReducer from '../features/productDetails/productDetailsSlice';
-import appSliceReducer from './appSlice';
+import searcherReducer from '../features/searcher/searcherSlice';
 import { apiSlice } from '../services/apiSlice';
+import { default as appSliceReducer, default as containerReducer } from './appSlice';
+import authReducer from './authSlice';
 
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   container: containerReducer,
   navigation: navigationReducer,
   searcher: searcherReducer,

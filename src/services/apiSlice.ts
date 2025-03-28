@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { loginSuccess, logout } from '../store/authSlice';
 import { ProductModel } from '../types/types';
 
 // Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
@@ -43,6 +44,14 @@ export const apiSlice = createApi({
         method: 'POST',
         body: credentials,     // spodziewamy się obiektu { email, password }
       }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(loginSuccess(data)); // Zapisujemy dane użytkownika do store
+        } catch (error) {
+          console.error('Błąd logowania:', error);
+        }
+      },
     }),
     
     // Endpoint do rejestracji
@@ -52,6 +61,16 @@ export const apiSlice = createApi({
         method: 'POST',
         body: credentials,     // również { email, password } lub inne wymagane dane
       }),
+    }),
+
+    logout: build.mutation({
+      query: () => ({
+        url: 'auth/logout',
+        method: 'POST',
+      }),
+      async onQueryStarted(args, { dispatch }) {
+        dispatch(logout()); // Czyścimy stan użytkownika po wylogowaniu
+      },
     }),
   }),
 });
@@ -63,4 +82,5 @@ export const {
   useGetPromotionsQuery,
   useLoginMutation,
   useRegisterMutation,
+  useLogoutMutation,
 } = apiSlice;
