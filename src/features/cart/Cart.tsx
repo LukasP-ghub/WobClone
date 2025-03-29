@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-// Replace useHistory with useNavigate
 import { useNavigate } from 'react-router-dom';
 
 import covers from '../../assets/images';
@@ -16,20 +15,17 @@ const { centerVH } = styles;
 
 function Cart() {
   const cartCtx = useContext(CartContext);
-  // Replace useHistory with useNavigate
   const navigate = useNavigate();
-
   const handleGoBack = () => navigate(-1);
-
   const prodInCartQuantity = cartCtx.productsInCart.length;
 
   const cartItems = cartCtx.productsInCart.map(item => {
-    const cover = covers.get(item.cover) || { small: '', medium: '' };
-    return <li key={item.id} className={product}>
-      <img src={`${cover.small}`} className={productImg} alt="" />
+    const cover = item.cover[0]?.cover_url || covers.get('default')?.small;
+    return <li key={item.ebook_id} className={product}>
+      <img src={`${cover}`} className={productImg} alt="" />
       <div className={productTitle}>{item.title}</div>
       <div className={productPrice}>{`${item.price} zł`}</div>
-      <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(Number(item.id))}><span className={centerVH}>X</span></button>
+      <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(Number(item.ebook_id))}><span className={centerVH}>X</span></button>
     </li>
   })
 

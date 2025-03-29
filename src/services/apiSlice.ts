@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { loginSuccess, logout } from '../store/authSlice';
-import { ProductModel } from '../types/types';
+import { ProductDiscount, ProductModel, Promotions } from '../types/types';
 
 // Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
 export const apiSlice = createApi({
@@ -32,8 +32,15 @@ export const apiSlice = createApi({
     }),
     getPromotions: build.query({
       query: () => 'promotions?key=YOUR_API_KEY',
-      transformResponse(response) {
-        return response;
+      transformResponse(response:ProductDiscount[]) {
+        const promotions: Promotions = {
+          category: {},
+        };
+        response.forEach((item) => {
+          promotions.category[item.discount_name] = item.discount_value;
+        }
+        );
+        return promotions;
       },
     }),
     

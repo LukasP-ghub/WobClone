@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
+import { ProductModel, Promotions } from '../../types/types';
 import { sorting } from '../../utils/sorting';
-import { Promotions, ProductModel } from '../../types/types';
 
 export type filtersT = {
   category: string,
@@ -56,19 +56,21 @@ export const catalogSlice = createSlice({
     filterProducts: (state, action: PayloadAction<{ products: ProductModel[], promotions: Promotions }>) => {
       const promCategories = Object.keys(action.payload.promotions.category);
       const tempArr: ProductModel[] = [];
-      action.payload.products.reduce((acc, item) => {
-        let flag = true;
-        const newItem = { ...item };
-        if (state.filters.promotion) {
-          flag = promCategories.includes(item.category);
-          newItem.discount = action.payload.promotions.category[item.category];
-        }
-        if (state.filters.category) {
-          flag = item.category === state.filters.category;
-        }
-        if (flag) tempArr.push(newItem);
-        return acc++;
-      }, 0);
+      
+
+      // action.payload.products.reduce((acc, item) => {
+      //   let flag = true;
+      //   const newItem = { ...item };
+      //   if (state.filters.promotion) {
+      //     flag = promCategories.includes(item.category);
+      //     newItem.discount = action.payload.promotions.category[item.category];
+      //   }
+      //   if (state.filters.category) {
+      //     flag = item.category === state.filters.category;
+      //   }
+      //   if (flag) tempArr.push(newItem);
+      //   return acc++;
+      // }, 0);
       state.filteredProducts = tempArr;
     }
   },

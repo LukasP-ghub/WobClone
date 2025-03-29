@@ -56,7 +56,7 @@ const Catalog: React.FC = () => {
       <div className={containerCardsWrapper}>
         <ul className={containerCards}>
           {displayProducts.length > 0 && displayProducts.map(ebook => {
-            return <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
+            return <ProductCard key={ebook.ebook_id} ebook={ebook} cardStyleVersion='full' />
           })}
         </ul>
         {displayProducts.length && <Pagination pagesCount={pagesCount} page={page} setPage={setPage} />}

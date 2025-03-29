@@ -56,6 +56,16 @@ export interface ProductModel {
   discount: ProductDiscount[];
 }
 
+export interface FilterEbookQuery {
+  phrase?: string;
+  maxPrice?: number;
+  minPrice?: number;
+  sorting?: 'ASC' | 'DESC';
+  limit?: number;
+  page?: number;
+  category?: string;
+}
+
 export type ChildrenProps = {
   children?: React.ReactNode;
 };
