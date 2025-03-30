@@ -18,7 +18,7 @@ const { containerCards, containerCardsWrapper, wrapper } = styles;
 
 
 const Catalog: React.FC = () => {
-  const { data: ebooksData = [] } = useGetEbooksQuery('');
+  const { data: ebooksData = [] } = useGetEbooksQuery({});
   const { data: promotionsData } = useGetPromotionsQuery('');
   const [page, setPage] = useState<number>(1);
   const location = useLocation();

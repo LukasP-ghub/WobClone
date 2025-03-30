@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { loginSuccess, logout } from '../store/authSlice';
-import { ProductDiscount, ProductModel, Promotions } from '../types/types';
+import { FilterEbookQuery, ProductDiscount, ProductModel, Promotions } from '../types/types';
 
 // Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
 export const apiSlice = createApi({
@@ -19,7 +19,17 @@ export const apiSlice = createApi({
   endpoints: (build) => ({
     // Przykłady endpointów, które już masz:
     getEbooks: build.query({
-      query: () => 'ebooks?key=YOUR_API_KEY&pageSize=50',
+      query: (filters:FilterEbookQuery) => {
+        const params = new URLSearchParams();
+
+       Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== '' && value !== null) {
+        params.append(key, String(value));
+      }
+      });
+      const queryString = params.toString();
+      return queryString ? `ebooks?key=YOUR_API_KEY&${queryString}` : `ebooks?key=YOUR_API_KEY`;
+      },
       transformResponse(response) {
         return response as ProductModel[];
       },
