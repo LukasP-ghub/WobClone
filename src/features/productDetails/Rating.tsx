@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ProductModel } from '../../types/types';
+import { JSX, useEffect, useState } from 'react';
 import StarIcon from '../../assets/svg/StarIcon';
+import { ProductModel } from '../../types/types';
 import styles from './Rating.module.scss';
 
 const { flexColumn, numberRating, starIcon, starFilled, wrapper } = styles;

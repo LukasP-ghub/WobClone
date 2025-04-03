@@ -7,16 +7,37 @@
   .containerCardsWrapper{
     margin-top: 10px;
 
-    .containerCards{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      flex-wrap: wrap;
-      gap: 10px;
+    // .containerCards{
+    //   display: flex;
+    //   flex-direction: row;
+    //   justify-content: space-evenly;
+    //   flex-wrap: wrap;
+    //   gap: 10px;
     
-      width: 100%;
-      margin: 0 0 10px 0;
+    //   width: 100%;
+    //   margin: 0 0 10px 0;
+    //   list-style: none;
+    // }
+
+    .containerCards {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0;
       list-style: none;
+      display: grid;
+      gap: 10px;
+      // Domyślnie na małych urządzeniach ustawiamy 2 kolumny
+      grid-template-columns: repeat(2, 1fr);
+    
+      // Tablet – 3 kolumny
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    
+      // Desktop – maksymalnie 4 kolumny
+      @media (min-width: 950px) {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
   }
 }
@@ -35,5 +56,6 @@
       margin-top: $desktopMarginTop;
       grid-column: 2/3;
     }
+    
   }
 }

@@ -11,7 +11,7 @@ import styles from './SearchBar.module.scss';
 const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchInputLabel, searchResultsList, showSearchBar, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
-  const { data: ebooks = [] } = useGetEbooksQuery('');
+  const { data: ebooks = [] } = useGetEbooksQuery({});
   const dispatch = useAppDispatch();
   const searchKey = useAppSelector(selectSearchKey);
   const searchResults = useAppSelector(selectSearchResults);
@@ -70,7 +70,8 @@ const SearchBar: React.FC = () => {
   //searching with debounce and avoid empty key searching, 
   useEffect((): any => {
     if (!searchKey) {
-      return dispatch(setSearchResults([]));
+      dispatch(setSearchResults([]));
+      return ;
     }
 
     let timer = setTimeout(() => {

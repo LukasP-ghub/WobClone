@@ -5,125 +5,68 @@ $cardFullHeight: 320px;
 $pictureFullHeight: 220px;
 $toCartBtnDimensions: 40px;
 
-.card{
+.cardFull {
+  display: flex;
+  flex-direction: column;
+  background-color: $white-smoke;
   box-shadow: 0 3px 6px $phantom-gray;
-  a{
+  overflow: hidden; 
+  position: relative;
+  transition: filter 0.3s ease;
+ 
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  .picture {
     position: relative;
+    flex: 0 0 70%;
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
     display: block;
-    height: 100%;
-  }
-
-  .picture{
-    width:100%;
-    object-fit: fill;
-  }
-
-  .productDetails{
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1.5em 1.5em 1fr;
-    grid-template-areas: "title" "author" "price";
-    height: calc(#{$cardFullHeight} - #{$pictureFullHeight});
-    padding: .4em;
-    padding-bottom: .6em;
-      
-    .title{
-      grid-area: title;
-    }
     
-    .author{
-      grid-area: author;
-    }
-
-    .price{
-      grid-area: price;
-      align-self: end;
-      text-shadow: 0px 0px 1px;
-      font-size: 1.5rem;
-    }
   }
-
-  .toCartBtn{
+  .toCartBtn {
     position: absolute;
-    top: calc(#{$pictureFullHeight} - #{$toCartBtnDimensions + 10px});
-    right:10px;
-    width: $toCartBtnDimensions;
-    height:  $toCartBtnDimensions;
+    bottom: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: black;
     opacity: 0.5;
-  
-    svg{
-      @include centerVH;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 26px;
+      height: 26px;
     }
   }
-}
 
-.cardFull{
-  position: relative;
-  height: $cardFullHeight;
-  width:160px;
-  background-color: $white-smoke;
-  font-size: 1.35rem;
+  .productDetails {
+    flex: 1 0 30%;
+    padding: 0.4em;
+    display: flex;
+    flex-direction: column;
 
-  .picture{
-    height:$pictureFullHeight;
-  }
-}
-
-.cardCover{
-  position: relative;
-  flex-shrink: 0;
-  height: 90%;
-
-  .picture{
-    height:100%;
-  }
-
-  .productDetails{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top:0px;
-    left:0px;
-    opacity: 0;
-    transition: opacity 0.5s;
-    background-color: $white-smoke;
-    font-size: 1.3rem;
-
-    .title{
-      @include ellipsis(3);
+    .title {
+      font-size: 1.35rem;
+      margin-bottom: 0.2em;
     }
-  
-  }
+    
+    .author {
+      font-size: 1.2rem;
+      margin-bottom: 0.4em;
+      font-style: italic;
+    }
 
-  .productDetails:hover{
-    opacity:0.8;
-  }
-
-  .toCartBtn{
-    display: none;
-  } 
-}
- 
-@media  (min-width:950px) {
-  .cardCover{
-    .productDetails{
-      padding: 10% 5px;
-      // display: flex;
-      // flex-direction: column;
-      // align-items: center;
-
-      .title{
-        //text-align: center;  
-      }
-
-      .price{
-        //bottom: 15%;
-        font-size: 2rem;
-        //@include centerH;
-      }
+    .price {
+      font-size: 1.5rem;
+      margin-top: auto; 
+      text-shadow: 0px 0px 1px;
     }
   }
 }

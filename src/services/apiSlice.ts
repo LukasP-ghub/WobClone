@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { loginSuccess, logout } from '../store/authSlice';
-import { FilterEbookQuery, ProductDiscount, ProductModel, Promotions } from '../types/types';
+import { FilterEbookQuery, ProductCategories, ProductDiscount, ProductModel, Promotions } from '../types/types';
 
 // Opcjonalnie, jeśli korzystasz z tokena przechowywanego w store, możesz użyć prepareHeaders:
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://localhost:3001/',
+    baseUrl: 'http://localhost:3001/',
     prepareHeaders: (headers, { getState }) => {
       // Jeśli masz token w store, możesz go automatycznie dołączać do nagłówków
       const token = (getState() as { auth: { token: string } }).auth?.token;
@@ -28,20 +28,22 @@ export const apiSlice = createApi({
       }
       });
       const queryString = params.toString();
-      return queryString ? `ebooks?key=YOUR_API_KEY&${queryString}` : `ebooks?key=YOUR_API_KEY`;
+      return queryString ? `ebooks/filter?${queryString}` : `ebooks/filter`;
       },
       transformResponse(response) {
+        console.log('Ebooks Response:', response); // Debugging line
         return response as ProductModel[];
       },
     }),
     getCategories: build.query({
-      query: () => 'categories?key=YOUR_API_KEY',
+      query: () => 'categories',
       transformResponse(response) {
-        return response;
+        console.log('Categories Response:', response); // Debugging line
+        return response as ProductCategories[];
       },
     }),
     getPromotions: build.query({
-      query: () => 'promotions?key=YOUR_API_KEY',
+      query: () => 'promotions',
       transformResponse(response:ProductDiscount[]) {
         const promotions: Promotions = {
           category: {},

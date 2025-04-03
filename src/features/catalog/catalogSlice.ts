@@ -1,37 +1,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
-import { ProductModel, Promotions } from '../../types/types';
+import { FilterEbookQuery, ProductModel, Promotions } from '../../types/types';
 import { sorting } from '../../utils/sorting';
 
-export type filtersT = {
-  category: string,
-  promotion: 'true' | '',
-}
+// export type filtersT = {
+//   category: string,
+//   promotion: 'true' | '',
+// }
 
-export type filterType<Type extends filtersT> = keyof Type;
+// export type filterType<Type extends filtersT> = keyof Type;
 
-type setFiltersType<Type extends filtersT> = {
-  filter: filterType<Type>;
-  value: string,
-}
+// type setFiltersType<Type extends filtersT> = {
+//   filter: filterType<Type>;
+//   value: string,
+// }
 
-type filtersType<Type extends filtersT> = {
-  [prop in keyof Type]: string;
-}
+// type filtersType<Type extends filtersT> = {
+//   [prop in keyof Type]: string;
+// }
 
 interface catalogState {
   filteredProducts: ProductModel[],
-  filters: filtersType<filtersT>,
+  //filters: filtersType<filtersT>,
+  filters:FilterEbookQuery,
+  onPromotion: boolean,
   showFilterOptions: boolean,
   showCategoriesPanel: boolean,
 }
 
 const initialState: catalogState = {
   filteredProducts: [],
-  filters: {
-    category: '',
-    promotion: '',
-  },
+  // filters: {
+  //   category: '',
+  //   promotion: '',
+  // },
+  filters:{},
+  onPromotion: false,
   showFilterOptions: false,
   showCategoriesPanel: false,
 }
@@ -47,8 +51,14 @@ export const catalogSlice = createSlice({
     setShowCategoriesPanel: (state) => {
       state.showCategoriesPanel = !state.showCategoriesPanel;
     },
-    setFilters: (state, action: PayloadAction<setFiltersType<filtersT>>) => {
-      state.filters[action.payload.filter] = action.payload.value;
+    // setFilters: (state, action: PayloadAction<setFiltersType<filtersT>>) => {
+    //   state.filters[action.payload.filter] = action.payload.value;
+    // },
+    setFilters: (state, action: PayloadAction<FilterEbookQuery>) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
+    setOnPromotion: (state, action: PayloadAction<boolean>) => {
+      state.onPromotion = action.payload;
     },
     sortProducts: (state, action) => {
       state.filteredProducts = sorting(state.filteredProducts, action.payload);
@@ -81,7 +91,8 @@ export const selectShowFilterOptions = (state: RootState) => state.catalog.showF
 export const selectShowCategoriesPanel = (state: RootState) => state.catalog.showCategoriesPanel;
 export const selectFilteredProducts = (state: RootState) => state.catalog.filteredProducts;
 export const selectFilters = (state: RootState) => state.catalog.filters;
+export const selectOnPromotion = (state: RootState) => state.catalog.onPromotion;
 
 
-export const { setShowFilterOptions, setShowCategoriesPanel, setFilters, sortProducts, filterProducts } = catalogSlice.actions;
+export const { setShowFilterOptions, setShowCategoriesPanel, setFilters, sortProducts, filterProducts,setOnPromotion } = catalogSlice.actions;
 export default catalogSlice.reducer;

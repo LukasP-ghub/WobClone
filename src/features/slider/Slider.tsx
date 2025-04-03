@@ -40,21 +40,27 @@ export const Slider: React.FC<SliderOptions> = ({ itemsCount, data }) => {
 
   // function to calculate and fill number of pages and their elements
   const createPages = useCallback(() => {
+    if (!pagesContRef.current) return;
+    const totalDataItems = data?.length || 0;
+    const totalSliderItems = Math.min(totalDataItems, itemsCount);
+
     const itemWidthDesktop = 150;
     const itemWidthMobile = 90;
+
     const itemWidth: number = currWidth > MQBreakpoints.DESKTOP ? itemWidthDesktop : itemWidthMobile;
     let maxItemsCountPerPage = Math.floor(pagesContRef.current!.offsetWidth / itemWidth - 1);
-    let pagesCount = Math.ceil(itemsCount / maxItemsCountPerPage);
+    let pagesCount = Math.ceil(totalSliderItems / maxItemsCountPerPage);
+    
     let itemsCounter = 0;
     let pagesArr: JSX.Element[][] = [];
 
     for (let i = 0; i < pagesCount; i++) {
       const itemsForPageArr: JSX.Element[] = [];
 
-      for (let j = 0; j < maxItemsCountPerPage; j++) {
+      for (let j = 0; j < maxItemsCountPerPage && itemsCounter < totalSliderItems; j++) {
         if (itemsCounter === itemsCount) break;
-        const [product] = (data as DataType).filter((item, index) => index === itemsCounter);
-        itemsForPageArr.push(<ProductCard key={product!.ebook_id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
+        const [product] = (data??[]).filter((item, index) => index === itemsCounter);
+        itemsForPageArr.push(<ProductCard key={product?.ebook_id} ebook={product} cardStyleVersion='cover' itemWidth={itemWidth} />);
         itemsCounter++;
       }
 
@@ -64,13 +70,15 @@ export const Slider: React.FC<SliderOptions> = ({ itemsCount, data }) => {
   }, [data, currWidth, itemsCount]);
 
   useEffect(() => {
-    createPages();
+    if (data && data.length) {
+      createPages();
+    }
   }, [createPages])
 
   return (
     <div className={slider}>
       <div className={pagesContainer} ref={pagesContRef} >
-        {pagesArray.map((item, index) => <SliderPage key={index} slidePage={slidePage}>{item}</SliderPage>)}
+        {pagesArray.length ? pagesArray.map((item, index) => <SliderPage key={`slider${index}`} slidePage={slidePage}>{item}</SliderPage>) : <div className={slider}>No data</div>}
       </div>
       <Pagination pagesArray={pagesArray} slidePage={slidePage} turnPage={turnPage} />
     </div>

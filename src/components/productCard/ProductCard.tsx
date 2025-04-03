@@ -40,11 +40,11 @@ const defaultCover = sortedCovers[0]?.cover_url || covers.get('default')?.small;
       <Link to={`/ebook/${ebook.title}-${authors}`} state={{ product: ebook }}>
 
       <picture>
-  {adjustedCovers.map((cover, index) => (
-    <source key={cover.srcSet} srcSet={cover.srcSet} media={cover.media} />
-  ))}
-  <img src={defaultCover} className={picture} alt={`${ebook.title} - okładka`} loading="lazy" />
-</picture>
+        {adjustedCovers.map((cover, index) => (
+          <source key={`${cover.srcSet}${index}`} srcSet={cover.srcSet} media={cover.media} />
+        ))}
+        <img src={defaultCover} className={picture} alt={`${ebook.title} - okładka`} loading="lazy" />
+      </picture>
 
         <div className={productDetails}>
           <h3 className={title}>{ebook.title}</h3>

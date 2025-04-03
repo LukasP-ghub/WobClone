@@ -21,7 +21,9 @@ const ProductDetails: React.FC = () => {
   const { currWidth } = useWidth();
   const product: ProductModel = location.state.product;
   const productAuthors = product?.author.map(author => author.author_name).join(", ");
-  const cover = covers.get(product?.cover) || { small: '', medium: '' };
+  const productCovers = [...product.cover].sort((a, b) => a.cover_size - b.cover_size);
+  const coverSmall = productCovers[0] || covers.get('default')?.small;
+  const coverMedium= productCovers[1] || covers.get('default')?.medium;
 
   const showSidePanel = (params: { title: string, subtitle: string | null, body: string }) => {
     dispatch(setShowSidePanel());
@@ -31,12 +33,12 @@ const ProductDetails: React.FC = () => {
 
   return <>
     {product && currWidth < 950 ? <picture >
-      <img src={`${cover.medium}`} className={picture} alt="" />
+      <img src={`${coverMedium.cover_url}`} className={picture} alt="" />
     </picture> : null}
 
     {<div className={wrapper}>
 
-      {currWidth >= 950 && <img src={`${cover.medium}`} className={picture} alt="" />}
+      {currWidth >= 950 && <img src={`${coverMedium.cover_url}`} className={picture} alt="" />}
 
       <BuyBtn product={product} />
 

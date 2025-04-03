@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../types/hooks';
-import { useGetCategoriesQuery } from '../../services/apiSlice';
-import { setShowFilterOptions, setShowCategoriesPanel, setFilters } from './catalogSlice';
-import { selectFilters, selectShowFilterOptions } from './catalogSlice';
 import ChevronLeft from '../../assets/svg/ChevronLeft';
+import { useGetCategoriesQuery } from '../../services/apiSlice';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { selectFilters, selectOnPromotion, selectShowFilterOptions, setFilters, setOnPromotion, setShowCategoriesPanel, setShowFilterOptions } from './catalogSlice';
 import styles from './FilterOptions.module.scss';
 
 const { arrow, clearFiltersBtn, filter, filtersGroup, flexVCenter, optionsGroup, panelHead, shiftBtn, shiftBtnActive, show, showCategoryListBtn, title, titleWrap, wrapper } = styles;
@@ -13,6 +12,7 @@ const FilterOptions: React.FC = () => {
   const dispatch = useAppDispatch();
   const isVisible = useAppSelector(selectShowFilterOptions);
   const filters = useAppSelector(selectFilters);
+  const onPromotion = useAppSelector(selectOnPromotion);
 
   return (
     <>
@@ -27,7 +27,7 @@ const FilterOptions: React.FC = () => {
       <div className={`${wrapper} ${isVisible ? show : null}`}>
         <div className={`${optionsGroup} ${flexVCenter}`}>
           <h3 className={title}>Tylko w promocji</h3>
-          <button className={`${shiftBtn} ${filters.promotion === 'true' ? shiftBtnActive : null}`} onClick={() => dispatch(setFilters({ filter: 'promotion', value: filters.promotion === 'true' ? '' : 'true' }))} />
+          <button className={`${shiftBtn} ${onPromotion === true ? shiftBtnActive : null}`} onClick={() => dispatch(setOnPromotion(!onPromotion))} />
         </div>
 
         <div className={optionsGroup}>
@@ -46,10 +46,10 @@ const FilterOptions: React.FC = () => {
           <ul className={filtersGroup}>
             {categories.map(category => {
               return (category.popular &&
-                <li className={filter} key={category.category}>
-                  {<Link to={'/catalog/' + category.category}
-                    onClick={() => dispatch(setFilters({ filter: 'category', value: category.category }))}>
-                    <span>{category.category}</span>
+                <li className={filter} key={category.category_id}>
+                  {<Link to={'/catalog/' + category.category_name}
+                    onClick={() => dispatch(setFilters({ category: category.category_name }))}>
+                    <span>{category.category_name}</span>
                   </Link>}
                 </li>)
             })}

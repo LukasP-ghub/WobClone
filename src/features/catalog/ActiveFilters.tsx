@@ -1,9 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../types/hooks';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-import { setFilters, setShowFilterOptions } from './catalogSlice';
-import { selectFilters } from './catalogSlice';
-import { filterType, filtersT } from './catalogSlice';
+import { selectFilters, setFilters, setShowFilterOptions } from './catalogSlice';
 
 import CloseIcon from '../../assets/svg/CloseIcon';
 import OptionsIcon from '../../assets/svg/OptionsIcon';
@@ -27,7 +25,7 @@ export const ActiveFilters = () => {
 
       <ul className={activeFiltersList}>
         {Object.entries(filters).map((item) => {
-          const filterType = item[0] as filterType<filtersT>;
+          const filterType = item[0];
           const filterValue = item[1];
           return (filterValue &&
             <li className={activeFilter} key={filterType} >
@@ -35,7 +33,7 @@ export const ActiveFilters = () => {
                 pathname: `${filterType === 'category' ? "/catalog/Wszystkie Ebooki" : filters.category}`,
                 // search: `${filterType === 'searchFilter' ? null : searchQuery}`
               }}
-                onClick={() => dispatch(setFilters({ filter: filterType, value: '' }))}>
+                onClick={() => dispatch(setFilters({ }))}>
 
                 <span className={content}>{filterType === 'category' ? filterValue : filterType}</span>
                 <button className={removeBtn}>

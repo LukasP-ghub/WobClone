@@ -1,6 +1,5 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Używamy Routes zamiast Switch
-import { useGetCategoriesQuery, useGetEbooksQuery, useGetPromotionsQuery } from './services/apiSlice';
 
 import styles from './App.module.scss';
 import PrivateRoute from './components/privateRoute/PrivateRoute'; // Zakładam, że obsługuje logikę dla React Router v6
@@ -15,12 +14,12 @@ const PaymentPage = lazy(() => import('./pages/paymentPage/PaymentPage'));
 const CatalogPage = lazy(() => import('./pages/catalogPage/CatalogPage'));
 
 function App() {
-  const { data: ebooksData, isError: ebooksIsError, isLoading: ebooksIsLoading } = useGetEbooksQuery('');
-  const { data: categoryData, isError: categoryIsError, isLoading: categoryIsLoading } = useGetCategoriesQuery('');
-  const { data: promotionsData, isError: promotionIsError, isLoading: promotionIsLoading } = useGetPromotionsQuery('');
+  // const { data: ebooksData, isError: ebooksIsError, isLoading: ebooksIsLoading } = useGetEbooksQuery({});
+  // const { data: categoryData, isError: categoryIsError, isLoading: categoryIsLoading } = useGetCategoriesQuery('');
+  // const { data: promotionsData, isError: promotionIsError, isLoading: promotionIsLoading } = useGetPromotionsQuery('');
 
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <SuspenseWrapper>
         <div className={styles.app}>
           <Routes>
