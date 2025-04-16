@@ -1,72 +1,97 @@
 @import '../../styles/colors.module.scss';
 @import '../../styles/mixins.module.scss';
 
-$cardFullHeight: 320px;
-$pictureFullHeight: 220px;
-$toCartBtnDimensions: 40px;
-
 .cardFull {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 70% 30%; 
   background-color: $white-smoke;
   box-shadow: 0 3px 6px $phantom-gray;
-  overflow: hidden; 
+  overflow: hidden;
   position: relative;
   transition: filter 0.3s ease;
- 
+  max-height: 100%;
+  
+  
   &:hover {
     filter: brightness(1.1);
   }
 
-  .picture {
-    position: relative;
-    flex: 0 0 70%;
-    overflow: hidden;
-    width: 100%;
-    object-fit: cover;
-    display: block;
-    
+  a {
+    display: contents; 
   }
-  .toCartBtn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: black;
-    opacity: 0.5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    svg {
-      width: 26px;
-      height: 26px;
-    }
+  .picture {
+    grid-row: 1;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  height: 100%; 
+  object-fit: cover;
   }
 
   .productDetails {
-    flex: 1 0 30%;
+    grid-row: 2; 
     padding: 0.4em;
     display: flex;
     flex-direction: column;
 
     .title {
+      width: 100%;
+      max-width: 150px;
       font-size: 1.35rem;
       margin-bottom: 0.2em;
+      //add ellispises to long text
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     
     .author {
+      max-width: 150px;
       font-size: 1.2rem;
       margin-bottom: 0.4em;
       font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .price {
       font-size: 1.5rem;
-      margin-top: auto; 
+      margin-top: auto;
       text-shadow: 0px 0px 1px;
+    }
+  }
+
+  .toCartBtn {
+    position: absolute;
+    bottom: 30%;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1E3A8A    ;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      background-color: #2563EB; // blue-600
+      opacity: 1;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+      transform: scale(0.95);
+  }
+
+    svg {
+      width: 26px;
+      height: 26px;
     }
   }
 }

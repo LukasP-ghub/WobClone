@@ -35,9 +35,9 @@ const defaultCover = sortedCovers[0]?.cover_url || covers.get('default')?.small;
   const authors = ebook.author.map((author) => `${author.author_name}`).join('-');
 
   return (
-    <li className={`${card} ${cardStyleVersion === 'cover' ? cardCover : cardFull}`} style={{ width: `${itemWidth}px` }}>
+    <li className={`${cardFull}`}>
 
-      <Link to={`/ebook/${ebook.title}-${authors}`} state={{ product: ebook }}>
+      <Link to={`/ebook/${ebook.title}-${authors}`} state={{ product: ebook }}> 
 
       <picture>
         {adjustedCovers.map((cover, index) => (
@@ -51,7 +51,7 @@ const defaultCover = sortedCovers[0]?.cover_url || covers.get('default')?.small;
           <cite className={author}>{`${authors}`}</cite>
           <div className={price}>{`${ebook.price} zł`}</div>
         </div>
-      </Link>
+        </Link>
 
       {/* --- BUTTON ADD TO CART ---  */}
       <button className={toCartBtn} onClick={() => cartCtx.addToCart(ebook)}>

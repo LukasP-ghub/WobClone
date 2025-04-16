@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 import { useLocation } from 'react-router-dom';
-import { useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
-import { selectFilters } from './catalogSlice';
+import { useGetCountOfEbooksQuery, useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
+import { selectFilters, setFilters } from './catalogSlice';
 
 
 import ProductCard from '../../components/productCard/ProductCard';
@@ -19,8 +18,9 @@ const { containerCards, containerCardsWrapper, wrapper } = styles;
 const Catalog: React.FC = () => {
   const filters = useAppSelector(selectFilters);
   const { data: ebooksCatalog = [] } = useGetEbooksQuery(filters);
+  const { data: ebooksCount=0 } = useGetCountOfEbooksQuery(filters);
   const { data: promotionsData } = useGetPromotionsQuery('');
-  const [page, setPage] = useState<number>(1);
+  //const [page, setPage] = useState<number>(1);
   const location = useLocation();
 
   const dispatch = useAppDispatch();
@@ -28,26 +28,13 @@ const Catalog: React.FC = () => {
   const searchQuery = location.search;
   //const filterTag: string = location.state?.tag ?? '';
 
-  let itemsPerPage = 4;
-  let pagesCount: number = Math.ceil(ebooksCatalog.length / itemsPerPage) || 0;
-  //let displayProducts: ProductModel[] = filteredProducts.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page) || [];
-
-  // useEffect(() => {
-  //   dispatch(setFilters({ filter: 'category', value: filterTag }))
-  // }, [filterTag, dispatch])
-
-  // useEffect(() => {
-  //   if (promotionsData) {
-  //     dispatch(filterProducts({ products: ebooksData, promotions: promotionsData }));
-  //   }
-  // }, [filters, ebooksData, promotionsData, dispatch])
-
-  // useEffect(() => {
-  //   const query = new URLSearchParams(searchQuery);
-  //   for (let param of query.entries()) {
-  //     dispatch(sortProducts(param[1]));
-  //   }
-  // }, [searchQuery, dispatch]);
+  let itemsPerPage = filters.limit || 4;
+  let page: number = filters.page || 1;
+  let pagesCount: number = Math.ceil(ebooksCount / itemsPerPage) || 0;
+ 
+  const setPage = (page: number, limit:number) => {
+    dispatch(setFilters({ page: page, limit: limit }));
+  }
 
   return (
     <div className={wrapper}>
@@ -58,7 +45,7 @@ const Catalog: React.FC = () => {
             return <ProductCard key={ebook.ebook_id} ebook={ebook} cardStyleVersion='full' />
           })}
         </ul>
-        {ebooksCatalog.length && <Pagination pagesCount={pagesCount} page={page} setPage={setPage} />}
+        {ebooksCount && <Pagination pagesCount={pagesCount} page={page} itemsPerPage={itemsPerPage} setPage={setPage} />}
       </div>
 
       <FilterOptions />

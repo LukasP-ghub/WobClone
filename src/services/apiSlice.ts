@@ -20,6 +20,7 @@ export const apiSlice = createApi({
     // Przykłady endpointów, które już masz:
     getEbooks: build.query({
       query: (filters:FilterEbookQuery) => {
+        console.log('Ebooks Filters:', filters); // Debugging line
         const params = new URLSearchParams();
 
        Object.entries(filters).forEach(([key, value]) => {
@@ -33,6 +34,23 @@ export const apiSlice = createApi({
       transformResponse(response) {
         console.log('Ebooks Response:', response); // Debugging line
         return response as ProductModel[];
+      },
+    }),
+    getCountOfEbooks: build.query({
+      query: (filters:FilterEbookQuery) => {
+        const params = new URLSearchParams();
+
+       Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== '' && value !== null) {
+        params.append(key, String(value));
+      }
+      });
+      const queryString = params.toString();
+      return queryString ? `ebooks/filter/count?${queryString}` : `ebooks/filter/count`;
+      },
+      transformResponse(response) {
+        console.log('count Response:', response); // Debugging line
+        return response as number;
       },
     }),
     getCategories: build.query({
@@ -97,6 +115,7 @@ export const apiSlice = createApi({
 // Eksportujemy hooki, których potem użyjesz w komponentach
 export const {
   useGetEbooksQuery,
+  useGetCountOfEbooksQuery,
   useGetCategoriesQuery,
   useGetPromotionsQuery,
   useLoginMutation,
