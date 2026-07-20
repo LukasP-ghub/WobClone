@@ -33,6 +33,8 @@
 
     .userItemWrapper{
       grid-area: user;
+      justify-self: end;
+      
     }
     .searchItemWrapper{
       display: none;

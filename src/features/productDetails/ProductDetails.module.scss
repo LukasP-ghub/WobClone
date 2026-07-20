@@ -2,87 +2,127 @@
 @import '../../styles/colors.module.scss';
 
 
-.wrapper{
+.wrapper {
   position: relative;
   width: 100%;
   height: 150vh;
   margin-top: 60vh;
+  padding-left: 10px;
+  //padding-top: 60vh;
   font-size: 1.5rem;
   background-color: $white-smoke-opacityLow ;
 
-  .section{
-    position: relative;
-    padding: 5px 15px;
-    margin-bottom: 10px;
-    background-color: $white-smoke;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-    .sectionContent{
-      max-height: 300px;  
-      margin: 5px 0; 
+  transition: transform 0.3s ease-in-out;
+
+  .productInfo {
+
+    .productTitle {
+      padding-right: 50px;
+    }
+  }
+
+  .productRating {
+    display: flex;
+    align-items: center;
+  }
+
+  .productDescription {}
+
+  .section {
+
+    // position: relative;
+    // padding: 5px 15px;
+    // margin-bottom: 10px;
+    // background-color: $white-smoke;
+
+
+    .sectionContent {
+      max-height: 300px;
+      margin: 5px 0;
     }
 
-    .ellipsis{
+    .ellipsis {
       @include ellipsis(5);
     }
-    .indent{
+
+    .indent {
       text-indent: 20px;
     }
 
-    .sidePanelArrow{
+    .sidePanelArrow {
       position: absolute;
       right: 10px;
-      top:10px;
+      top: 1px;
+      width: 30px;
+      height: 30px;
+      transform: rotate(-90deg);
+      transition: transform 0.3s ease-in-out;
     }
   }
 }
 
-.picture{
-  position: fixed;
-  top: 0;
-  left:0;
-  width: 100%;
-  height: 100%;
+.wrapperExtended {
+  transform: translateY(-40vh);
+
+  .section {
+    .sidePanelArrow {
+      transform: rotate(90deg);
+    }
+  }
 }
 
-@media (min-width:950px){
-  .wrapper{
+.picture {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width:950px) {
+  .wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 150px 150px 150px min-content;
     justify-items: center;
     align-items: center;
-    margin-top:0;
-    padding: 30px 20px;
+    margin-top: 0;
+    padding: 30px 50px;
 
-    .picture{
+    .picture {
       position: relative;
-      grid-column: 2/3;
+      grid-column: 1/2;
       grid-row: 1/4;
     }
-  
-    .productInfo{
-      grid-column: 1/2;
+
+    .productInfo {
+      grid-column: 2/3;
       grid-row: 1/2;
       justify-self: start;
       margin-left: 7%;
     }
 
-    .productRating{
-      grid-column: 1/2;
+    .productRating {
+      grid-column: 2/3;
       grid-row: 2/3;
       justify-self: start;
       margin-left: 7%;
     }
 
-    .productDescription{
+    .productDescription {
       grid-column: 1/4;
       grid-row: 4/5;
-      margin:0 10%;
+      margin: 0 10%;
       line-height: 1.5em;
     }
   }
 
-  .sidePanelArrow{
+  .sidePanelArrow {
     display: none;
   }
 }
