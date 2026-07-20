@@ -1,10 +1,10 @@
-import { useGetEbooksQuery } from '../../services/apiSlice';
-import MainLayout from "../../layouts/mainLayout/MainLayout";
 import { Slider } from "../../features/slider/Slider";
+import MainLayout from "../../layouts/mainLayout/MainLayout";
+import { useGetEbooksQuery } from '../../services/apiSlice';
 
 
 const MainPage = () => {
-  const { data: ebooksData, isError: ebooksIsError, isLoading: ebooksIsLoading } = useGetEbooksQuery('');
+  const { data: ebooksData, isError: ebooksIsError, isLoading: ebooksIsLoading } = useGetEbooksQuery({});
 
   return (
     <MainLayout>

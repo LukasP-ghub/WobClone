@@ -1,13 +1,13 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import CartContext from '../../contexts/cartContext';
 import covers from '../../assets/images';
+import CartContext from '../../contexts/cartContext';
 
 import BigNextLinkBtn from '../../components/buttons/BigNextLinkBtn';
 import BigReturnBtn from '../../components/buttons/BigReturnBtn';
+import styles from './Cart.module.scss';
 import PriceSummary from './PriceSummary';
-import styles from './Cart.module.scss'
 
 const { cartTab, cartTabs, product, productsList, productImg, productTitle, productPrice, wrapper } = styles;
 const { removeProductBtn } = styles;
@@ -15,19 +15,17 @@ const { centerVH } = styles;
 
 function Cart() {
   const cartCtx = useContext(CartContext);
-  const history = useHistory();
-
-  const handleGoBack = () => history.goBack();
-
+  const navigate = useNavigate();
+  const handleGoBack = () => navigate(-1);
   const prodInCartQuantity = cartCtx.productsInCart.length;
 
   const cartItems = cartCtx.productsInCart.map(item => {
-    const cover = covers.get(item.cover) || { small: '', medium: '' };
-    return <li key={item.id} className={product}>
-      <img src={`${cover.small}`} className={productImg} alt="" />
+    const cover = item.cover[0]?.cover_url || covers.get('default')?.small;
+    return <li key={item.ebook_id} className={product}>
+      <img src={`${cover}`} className={productImg} alt="" />
       <div className={productTitle}>{item.title}</div>
       <div className={productPrice}>{`${item.price} zł`}</div>
-      <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(Number(item.id))}><span className={centerVH}>X</span></button>
+      <button className={removeProductBtn} onClick={() => cartCtx.removeFromCart(Number(item.ebook_id))}><span className={centerVH}>X</span></button>
     </li>
   })
 

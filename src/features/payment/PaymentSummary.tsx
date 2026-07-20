@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import CartContext from '../../contexts/cartContext';
 
-import Section from './Section';
 import styles from './PaymentSummary.module.scss';
+import Section from './Section';
 
 const { addressData, itemPrice, listItem, twoColumns } = styles;
 
@@ -32,7 +32,7 @@ const PaymentSummary: React.FC<PaymentSummaryProps> = () => {
     <Section hTitle='Products'>
       <ul>
         {cartCtx.productsInCart.map((item) => {
-          return <li key={item.id} className={listItem}>
+          return <li key={item.ebook_id} className={listItem}>
             <span>{item.title}</span>
             <span className={itemPrice}>{item.price} zł</span>
           </li>

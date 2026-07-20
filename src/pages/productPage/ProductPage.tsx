@@ -1,10 +1,10 @@
-import MainLayout from "../../layouts/mainLayout/MainLayout";
 import ProductDetails from "../../features/productDetails/ProductDetails";
+import MainLayout from "../../layouts/mainLayout/MainLayout";
 
-const ProductPage: React.FC<{ location: any }> = ({ location }) => {
+const ProductPage: React.FC = () => {
   return (
     <MainLayout>
-      <ProductDetails location={location} />
+      <ProductDetails />
     </MainLayout>
   );
 }

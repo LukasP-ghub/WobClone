@@ -5,6 +5,7 @@ const { itemWrapper } = styles;
 
 interface HeaderItemProps {
   classes: string[];
+  children?: React.ReactNode;
   onClick?: () => void;
 }
 

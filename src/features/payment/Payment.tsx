@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import styles from './Payment.module.scss';
 
@@ -18,10 +18,10 @@ export interface PaymentProps {
 
 const Payment: React.FC<PaymentProps> = () => {
   const [paymentStep, setPaymentStep] = useState(2);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleGoBack = () => {
-    history.goBack();
+    navigate(-1);
     setPaymentStep(2);
   };
 
@@ -35,10 +35,10 @@ const Payment: React.FC<PaymentProps> = () => {
       <OrderProgress step={paymentStep} />
 
       <div className={routesWrapper}>
-        <Switch>
-          <Route path={`/cart/payment`} exact ><PaymentOptions /></Route>
-          <Route path={`/cart/payment/summary`} exact><PaymentSummary /> </Route>
-        </Switch>
+        <Routes>
+          <Route path={`/cart/payment`} element={<PaymentOptions />} />
+          <Route path={`/cart/payment/summary`} element={<PaymentSummary />} />
+        </Routes>
       </div>
       <span className={nextBtn}>
         <PriceSummary />

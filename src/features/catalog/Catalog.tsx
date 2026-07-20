@@ -1,64 +1,51 @@
-import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../types/hooks';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-import { useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
-import { sortProducts, filterProducts, setFilters } from './catalogSlice';
-import { selectFilteredProducts, selectFilters } from './catalogSlice';
+import { useLocation } from 'react-router-dom';
+import { useGetCountOfEbooksQuery, useGetEbooksQuery, useGetPromotionsQuery } from '../../services/apiSlice';
+import { selectFilters, setFilters } from './catalogSlice';
 
-import { ProductModel } from '../../types/types';
 
 import ProductCard from '../../components/productCard/ProductCard';
 import { ActiveFilters } from './ActiveFilters';
-import FilterOptions from './FilterOptions';
-import { CategoriesList } from './CategoriesList';
-import Pagination from './Pagination';
 import styles from './Catalog.module.scss';
+import { CategoriesList } from './CategoriesList';
+import FilterOptions from './FilterOptions';
+import Pagination from './Pagination';
 
 const { containerCards, containerCardsWrapper, wrapper } = styles;
 
 
-const Catalog: React.FC<{ location: any }> = ({ location }) => {
-  const { data: ebooksData = [] } = useGetEbooksQuery('');
+const Catalog: React.FC = () => {
+  const filters = useAppSelector(selectFilters);
+  const { data: ebooksCatalog = [] } = useGetEbooksQuery(filters);
+  const { data: ebooksCount=0 } = useGetCountOfEbooksQuery(filters);
   const { data: promotionsData } = useGetPromotionsQuery('');
-  const [page, setPage] = useState<number>(1);
+  //const [page, setPage] = useState<number>(1);
+  const location = useLocation();
 
   const dispatch = useAppDispatch();
-  const filteredProducts = useAppSelector(selectFilteredProducts);
-  const filters = useAppSelector(selectFilters);
+  //const filteredProducts = useAppSelector(selectFilteredProducts);
   const searchQuery = location.search;
-  const filterTag: string = location.state?.tag ?? '';
+  //const filterTag: string = location.state?.tag ?? '';
 
-  let itemsPerPage = 4;
-  let pagesCount: number = Math.ceil(filteredProducts.length / itemsPerPage) || 0;
-  let displayProducts: ProductModel[] = filteredProducts.slice(itemsPerPage * page - itemsPerPage, itemsPerPage * page) || [];
-
-  useEffect(() => {
-    dispatch(setFilters({ filter: 'category', value: filterTag }))
-  }, [filterTag, dispatch])
-
-  useEffect(() => {
-    if (promotionsData) {
-      dispatch(filterProducts({ products: ebooksData, promotions: promotionsData }));
-    }
-  }, [filters, ebooksData, promotionsData, dispatch])
-
-  useEffect(() => {
-    const query = new URLSearchParams(searchQuery);
-    for (let param of query.entries()) {
-      dispatch(sortProducts(param[1]));
-    }
-  }, [searchQuery, dispatch]);
+  let itemsPerPage = filters.limit || 4;
+  let page: number = filters.page || 1;
+  let pagesCount: number = Math.ceil(ebooksCount / itemsPerPage) || 0;
+ 
+  const setPage = (page: number, limit:number) => {
+    dispatch(setFilters({ page: page, limit: limit }));
+  }
 
   return (
     <div className={wrapper}>
       <ActiveFilters />
       <div className={containerCardsWrapper}>
         <ul className={containerCards}>
-          {displayProducts.length > 0 && displayProducts.map(ebook => {
-            return <ProductCard key={ebook.id} ebook={ebook} cardStyleVersion='full' />
+          {ebooksCatalog.length > 0 && ebooksCatalog.map(ebook => {
+            return <ProductCard key={ebook.ebook_id} ebook={ebook} cardStyleVersion='full' />
           })}
         </ul>
-        {displayProducts.length && <Pagination pagesCount={pagesCount} page={page} setPage={setPage} />}
+        {ebooksCount && <Pagination pagesCount={pagesCount} page={page} itemsPerPage={itemsPerPage} setPage={setPage} />}
       </div>
 
       <FilterOptions />

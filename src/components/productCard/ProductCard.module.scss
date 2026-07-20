@@ -1,129 +1,97 @@
 @import '../../styles/colors.module.scss';
 @import '../../styles/mixins.module.scss';
 
-$cardFullHeight: 320px;
-$pictureFullHeight: 220px;
-$toCartBtnDimensions: 40px;
-
-.card{
-  box-shadow: 0 3px 6px $phantom-gray;
-  a{
-    position: relative;
-    display: block;
-    height: 100%;
-  }
-
-  .picture{
-    width:100%;
-    object-fit: fill;
-  }
-
-  .productDetails{
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1.5em 1.5em 1fr;
-    grid-template-areas: "title" "author" "price";
-    height: calc(#{$cardFullHeight} - #{$pictureFullHeight});
-    padding: .4em;
-    padding-bottom: .6em;
-      
-    .title{
-      grid-area: title;
-    }
-    
-    .author{
-      grid-area: author;
-    }
-
-    .price{
-      grid-area: price;
-      align-self: end;
-      text-shadow: 0px 0px 1px;
-      font-size: 1.5rem;
-    }
-  }
-
-  .toCartBtn{
-    position: absolute;
-    top: calc(#{$pictureFullHeight} - #{$toCartBtnDimensions + 10px});
-    right:10px;
-    width: $toCartBtnDimensions;
-    height:  $toCartBtnDimensions;
-    border-radius: 50%;
-    background-color: black;
-    opacity: 0.5;
-  
-    svg{
-      @include centerVH;
-    }
-  }
-}
-
-.cardFull{
-  position: relative;
-  height: $cardFullHeight;
-  width:160px;
+.cardFull {
+  display: grid;
+  grid-template-rows: 70% 30%;
   background-color: $white-smoke;
-  font-size: 1.35rem;
-
-  .picture{
-    height:$pictureFullHeight;
-  }
-}
-
-.cardCover{
+  box-shadow: 0 3px 6px $phantom-gray;
+  overflow: hidden;
   position: relative;
-  flex-shrink: 0;
-  height: 90%;
+  transition: filter 0.3s ease;
+  max-height: 100%;
 
-  .picture{
-    height:100%;
+
+  &:hover {
+    filter: brightness(1.1);
   }
 
-  .productDetails{
-    position: absolute;
-    height: 100%;
+  a {
+    display: contents;
+  }
+
+  .picture {
+    grid-row: 1;
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    top:0px;
-    left:0px;
-    opacity: 0;
-    transition: opacity 0.5s;
-    background-color: $white-smoke;
-    font-size: 1.3rem;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    .title{
-      @include ellipsis(3);
+  .productDetails {
+    grid-row: 2;
+    padding: 0.4em;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      width: 100%;
+      max-width: 150px;
+      font-size: 1.35rem;
+      margin-bottom: 0.2em;
+      //add ellispises to long text
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-  
+
+    .author {
+      max-width: 150px;
+      font-size: 1.2rem;
+      margin-bottom: 0.4em;
+      font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      margin-top: auto;
+      text-shadow: 0px 0px 1px;
+    }
   }
 
-  .productDetails:hover{
-    opacity:0.8;
-  }
+  .toCartBtn {
+    position: absolute;
+    bottom: 32%;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1E3A8A;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 
-  .toCartBtn{
-    display: none;
-  } 
-}
- 
-@media  (min-width:950px) {
-  .cardCover{
-    .productDetails{
-      padding: 10% 5px;
-      // display: flex;
-      // flex-direction: column;
-      // align-items: center;
+    &:hover {
+      background-color: #2563EB; // blue-600
+      opacity: 1;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
 
-      .title{
-        //text-align: center;  
-      }
+    &:active {
+      transform: scale(0.95);
+    }
 
-      .price{
-        //bottom: 15%;
-        font-size: 2rem;
-        //@include centerH;
-      }
+    svg {
+      width: 26px;
+      height: 26px;
     }
   }
 }

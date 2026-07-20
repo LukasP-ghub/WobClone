@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import useWidth from '../../hooks/useWidth';
-import { MQBreakpoints } from '../../constants/constants';
 import ChevronRight from '../../assets/svg/ChevronRight';
+import { MQBreakpoints } from '../../constants/constants';
+import useWidth from '../../hooks/useWidth';
 import styles from './NavItem.module.scss';
 
 const { arrow, content, navComponent, opposite } = styles;
@@ -31,10 +31,8 @@ export const NavItem: React.FC<navItemType> = ({ urlTag, tag = urlTag, extend, o
           </div>
           :
           <Link
-            to={{
-              pathname: '/catalog/' + urlTag,
-              state: { tag }
-            }}
+          to={`/catalog/${urlTag}`} 
+          state={{ tag }} 
             className={navComponent}
             onClick={callback}
           >

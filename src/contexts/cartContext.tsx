@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ProductModel } from '../types/types';
 
+type Props = {
+  children: React.ReactNode;
+};
+
 type pricingType = {
   nominalPrice: number,
   actualPrice: number,
@@ -34,7 +38,7 @@ const CartContext = React.createContext<ProductContextObj>({
 });
 
 
-export const CartContextProvider: React.FC = (props) => {
+export const CartContextProvider: React.FC<Props> = ({ children }) => {
   const [productsInCart, setProductsInCart] = useState<ProductModel[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [currentPaymentStep, setPaymentStep] = useState<number>(2);
@@ -45,7 +49,7 @@ export const CartContextProvider: React.FC = (props) => {
   });
 
   const addToCart = (product: ProductModel) => {
-    if (productsInCart.findIndex((element) => element.id === product.id) === -1) {
+    if (productsInCart.findIndex((element) => element.ebook_id === product.ebook_id) === -1) {
       setProductsInCart(prevArr => [...prevArr, product]);
       setPricing(prevObj => ({
         totalDiscount: 0,
@@ -57,7 +61,7 @@ export const CartContextProvider: React.FC = (props) => {
 
   const removeFromCart = (id: number) => {
     const productsInCartCopy = [...productsInCart];
-    const index = productsInCartCopy.findIndex((element) => Number(element.id) === id);
+    const index = productsInCartCopy.findIndex((element) => Number(element.ebook_id) === id);
 
     if (index > -1) {
       setPricing(prevObj => ({
@@ -95,7 +99,7 @@ export const CartContextProvider: React.FC = (props) => {
   }
 
   return <CartContext.Provider value={contextValue}>
-    {props.children}
+    {children}
   </CartContext.Provider>
 }
 

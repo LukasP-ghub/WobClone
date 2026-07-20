@@ -1,19 +1,17 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { useAppSelector, useAppDispatch } from '../../types/hooks';
 import { Link } from 'react-router-dom';
 import { useGetEbooksQuery } from '../../services/apiSlice';
-import { selectSearchKey, selectSearchResults, selectShowSearchBar } from './searcherSlice';
-import { setShowSearchBar, setSearchKey, setSearchResults } from './searcherSlice';
-import { SearchResultsPayload } from './searcherSlice';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { SearchResultsPayload, selectSearchKey, selectSearchResults, selectShowSearchBar, setSearchKey, setSearchResults, setShowSearchBar } from './searcherSlice';
 
-import SearchIcon from '../../assets/svg/SearchIcon';
 import CloseIcon from '../../assets/svg/CloseIcon';
+import SearchIcon from '../../assets/svg/SearchIcon';
 import styles from './SearchBar.module.scss';
 
 const { closeIcon, ellipsis, searchBar, searchBtn, searchInput, searchInputLabel, searchResultsList, showSearchBar, underText, wrapper } = styles;
 
 const SearchBar: React.FC = () => {
-  const { data: ebooks = [] } = useGetEbooksQuery('');
+  const { data: ebooks = [] } = useGetEbooksQuery({});
   const dispatch = useAppDispatch();
   const searchKey = useAppSelector(selectSearchKey);
   const searchResults = useAppSelector(selectSearchResults);
@@ -27,30 +25,33 @@ const SearchBar: React.FC = () => {
 
   //function search elements by user key and create array of data for router Links
   const searchProducts = () => {
-    const authors = [];
-    const titles = [];
+    const authors: SearchResultsPayload[] = [];
+    const titles:SearchResultsPayload[] = [];
 
     for (const ebook of ebooks) {
-      if (ebook.author.firstName.toLowerCase().includes(searchKey.toLowerCase()) ||
-        ebook.author.lastName.toLowerCase().includes(searchKey.toLowerCase())) {
-        authors.push({
-          linkPathName: `/catalog/${ebook.author.firstName}-${ebook.author.lastName}`,
-          linkContent: { title: null, authorFirstName: ebook.author.firstName, authorLastName: ebook.author.lastName },
-          linkState: {
-            authorFirstName: ebook.author.firstName,
-            authorLastName: ebook.author.lastName
-          }
-        })
-      }
+      ebook.author.map((author) => {
+        if (author.author_name.toLowerCase().includes(searchKey.toLowerCase())) {
+          authors.push({
+            linkPathName: `/catalog/${author.author_name}`,
+            linkContent: { title: null, authorName: author.author_name,},
+            linkState: {
+              authorName: author.author_name,
+              }
+          })
+        }
+
+        
+      });
+     
 
       if (ebook.title.toLowerCase().includes(searchKey.toLowerCase())) {
+        const authorsNames = ebook.author.map((author) => author.author_name).join('-');
         titles.push({
-          linkPathName: `/ebook/${ebook.title}-${ebook.author.firstName}-${ebook.author.lastName}`,
-          linkContent: { title: ebook.title, authorFirstName: ebook.author.firstName, authorLastName: ebook.author.lastName },
+          linkPathName: `/ebook/${ebook.title}-${authorsNames}`,
+          linkContent: { title: ebook.title, authorName: authorsNames },
           linkState: {
             title: ebook.title,
-            authorFirstName: ebook.author.firstName,
-            authorLastName: ebook.author.lastName
+            authorName: authorsNames,
           }
         })
       }
@@ -69,7 +70,8 @@ const SearchBar: React.FC = () => {
   //searching with debounce and avoid empty key searching, 
   useEffect((): any => {
     if (!searchKey) {
-      return dispatch(setSearchResults([]));
+      dispatch(setSearchResults([]));
+      return ;
     }
 
     let timer = setTimeout(() => {
@@ -122,15 +124,14 @@ const SearchBar: React.FC = () => {
 
             {searchResults.map((item: SearchResultsPayload, index: number) => (
               <li key={index} >
-                <Link to={{
-                  pathname: item.linkPathName,
-                  state: { ...item.linkState }
-                }}
+                <Link 
+                  to={item.linkPathName} 
+                  state={{ ...item.linkState }}
                   ref={(e: any) => listElRef.current[index] = e}
                   onMouseEnter={onMouseEnterHandle}
                 >
                   {item.linkContent.title ? <div className={ellipsis}>{item.linkContent.title}</div> : null}
-                  {<div className={`${item.linkContent.title ? underText : null}`}>{`${item.linkContent.authorFirstName} ${item.linkContent.authorLastName}`}</div>}
+                  {<div className={`${item.linkContent.title ? underText : null}`}>{`${item.linkContent.authorName}`}</div>}
                 </Link>
               </li>)
             )}

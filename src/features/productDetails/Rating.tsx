@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
-import { ProductModel } from '../../types/types';
+import { JSX, useEffect, useState } from 'react';
 import StarIcon from '../../assets/svg/StarIcon';
+import { ProductModel } from '../../types/types';
 import styles from './Rating.module.scss';
 
 const { flexColumn, numberRating, starIcon, starFilled, wrapper } = styles;
 
 interface RatingProps {
   isSidePanel: boolean,
-  rating: ProductModel['rating'],
+  rating: ProductModel['rating'] | undefined,
 }
 
 export const Rating: React.FC<RatingProps> = ({ isSidePanel, rating }) => {
   const [ratingStarsArr, setRatingStarsArr] = useState<JSX.Element[]>([]);
-  //const product = useAppSelector(selectProduct);
   const checkSidePanel = isSidePanel ? flexColumn : null;
+  const starCount = 5;
+  const [value, maxValue] = rating ? [rating.value, rating.maxValue] : [0, 0];
 
   //scaling rating system to stars count and filling them with color
   const fillRatingStars = (rating: number, maxRating: number, starsCount: number) => {
@@ -31,13 +32,14 @@ export const Rating: React.FC<RatingProps> = ({ isSidePanel, rating }) => {
   }
 
   useEffect(() => {
-    fillRatingStars(Number(rating.value), Number(rating.maxValue), 5);
+    if (rating === undefined) return;
+    fillRatingStars(Number(value), Number(maxValue), starCount);
   }, [])
 
   return (
     <div className={`${wrapper} ${checkSidePanel}`}>
       <StarIcon />
-      <div className={numberRating}>{`${rating.value} / ${rating.maxValue}`}</div>
+      <div className={numberRating}>{`${value} / ${maxValue}`}</div>
       <span>{ratingStarsArr}</span>
     </div>
   )

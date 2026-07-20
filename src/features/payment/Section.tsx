@@ -4,6 +4,7 @@ const { section, sectionHeading } = styles;
 
 export interface SectionProps {
   hTitle: string;
+  children?: React.ReactNode;
 }
 
 const Section: React.FC<SectionProps> = ({ hTitle, children }) => {

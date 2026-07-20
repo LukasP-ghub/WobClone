@@ -1,10 +1,11 @@
 import HeaderUserLinks from '../../components/headerUserLinks/HeaderUserLinks';
 import TopBarFixed from '../../components/topBarFixed/TopBarFixed';
+import { ChildrenProps } from '../../types/types';
 import styles from './SmallHeaderLayout.module.scss';
 
 const { main, wrapper } = styles;
 
-const SmallHeaderLayout: React.FC = ({ children }) => {
+const SmallHeaderLayout: React.FC<ChildrenProps> = ({ children }) => {
   return <div className={wrapper}>
     <TopBarFixed>
       <HeaderUserLinks />

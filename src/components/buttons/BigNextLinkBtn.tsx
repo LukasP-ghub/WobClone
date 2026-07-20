@@ -5,6 +5,7 @@ const { btn, nextBtn } = styles;
 
 export interface BigNextLinkBtnProps {
   linkPath: any,
+  children?: React.ReactNode;
   clickHandler: () => void,
 }
 
